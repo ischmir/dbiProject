@@ -1,0 +1,10 @@
+<template>
+  <div>
+    <h1>Dashboard</h1>
+    <p>Welcome to the dashboard!</p>
+  </div>
+</template>
+
+<style scoped>
+/* Add styles specific to the Dashboard page */
+</style>

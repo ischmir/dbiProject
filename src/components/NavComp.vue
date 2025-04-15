@@ -1,43 +1,76 @@
 <script setup>
-
+import IconsComp from './IconsComp.vue';
 </script>
 
 <template>
-    <nav class="sidenav">
+    <nav class="sidenav base-container">
         <div class="sidenav__container">
             <ul class="sidenav__menu">
                 <li class="sidenav__item">
-                    <a href="/" class="sidenav__link">Dashboard</a>
+                    <router-link to="/" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Dashboard
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/reports" class="sidenav__link">Rapporter</a>
+                    <router-link to="/reports" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Rapporter
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/deadlines" class="sidenav__link">Overskredet deadline</a>
+                    <router-link to="/deadlines" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Overskredet deadline
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/fill-in-form" class="sidenav__link">Udfyld skema</a>
+                    <router-link to="/fill-in-form" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Udfyld skema
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/form-overview" class="sidenav__link">Skemaoversigt</a>
+                    <router-link to="/form-overview" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Skemaoversigt
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/users" class="sidenav__link">Brugere</a>
+                    <router-link to="/users" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Brugere
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/teams" class="sidenav__link">Grupper</a>
+                    <router-link to="/teams" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Grupper
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/documents" class="sidenav__link">Dokumenter</a>
+                    <router-link to="/documents" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Dokumenter
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/plans" class="sidenav__link">Planlægning</a>
+                    <router-link to="/plans" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Planlægning
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/calendar" class="sidenav__link">Kalender</a>
+                    <router-link to="/calendar" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Kalender
+                    </router-link>
                 </li>
                 <li class="sidenav__item">
-                    <a href="/settings" class="sidenav__link">Administration</a>
+                    <router-link to="/settings" class="sidenav__link">
+                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        Administration
+                    </router-link>
                 </li>
             </ul>
         </div>
@@ -45,4 +78,38 @@
 </template>
 
 <style lang="scss" scoped>
+.sidenav__container {
+    display: flex;
+    justify-content: center;
+}
+.sidenav__menu {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidenav__menu li {
+    padding: 1.5vh;
+}
+
+.sidenav__menu li a {
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: var(--headlines-paragraphs);
+    display: flex;
+    align-items: center; /* Align icon and text */
+}
+
+.sidenav__menu li a:hover {
+    color: var(--cta-button-hover-link-hover);
+}
+
+.sidenav__menu li a:active {
+    color: var(--cta-button-hover-link-hover);
+}
+
+.icon-wrapper {
+    display: inline-flex;
+    margin-right: 1vh;
+}
 </style>

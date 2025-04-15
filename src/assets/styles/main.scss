@@ -1,7 +1,14 @@
 @import './base.css';
 
+/* ─── Body Styles ───────────────────────────── */
 body {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   background-color: var(--cta-button-hover-background);
-  margin: 12px;
+  margin: 1vh;
+}
+
+/* ─── Base Layout Styles ────────────────────── */
+.base-container {
+  border-radius: 4px;
+  background-color: var(--primary-color);
 }
