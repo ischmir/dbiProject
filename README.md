@@ -55,3 +55,12 @@ npm run test:e2e
 ```sh
 npm run lint
 ```
+
+
+### SVG Loader
+
+Install svg loader to handle svg icons easily
+
+```sh
+npm install vite-svg-loader --save-dev
+```

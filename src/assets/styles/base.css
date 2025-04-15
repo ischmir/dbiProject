@@ -1,0 +1,70 @@
+/* color palette from Figma */
+:root {
+  /* ─── Warm Colors ───────────────────────────── */
+  --primary-color: #FFF7E7;
+  --cta-button: #C1121F;
+  --cta-button-hover-link-hover: #780000;
+  
+  /* ─── Cold Colors ───────────────────────────── */
+  --cta-button-light-hover: #F0F4F5;
+  --cta-button-forms-strokes: #01476B;
+  --cta-button-hover-background: #003049;
+
+  /* ─── Grey Colors ───────────────────────────── */
+  --forms-charts: #FFFFFF;
+  --inactive-buttons-backgrounds: #EAEAEA;
+  --strokes-lines: #D5D5D5;
+  --placeholder-text-inactive-text: #ABAFB1;
+  --help-text: #83898C;
+  --headlines-paragraphs: #252323;
+  --display-text-logo-text: #000000;
+
+  /* ─── Alert Colors ───────────────────────────── */
+  --success-light: #EEFFE2;
+  --success-dark: #255900;
+  --warning-light: #FFE0E0;
+  --warning-dark: #9B0000;
+
+
+}
+
+/* ─── Icon Sprites ───────────────────────────── */
+
+.icon-sprite {
+  background-image: url('/icons/icon-sprite.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  position: absolute;
+  top: 16%;
+  right: 0.5rem;
+}
+
+.header__icon-sprite__search-icon {
+  background-position: -360px -120px; /* Position for the search icon */
+}
+
+.header__icon-sprite--help-icon {
+    width: 24px;
+    height: 24px;
+    fill: black; /* Use a CSS variable for the color */   
+}
+
+.header__icon-sprite--settings-icon {
+  
+}
+
+.icon-sprite--notifications-icon {
+  background-position: -240px -0px; /* Adjust based on the sprite sheet */
+}
+
+.icon-sprite--profile-icon {
+  background-position: -480px -0px; /* Adjust based on the sprite sheet */
+}
+
+.icon-sprite--logout-icon {
+  background-position: -600px -0px; /* Adjust based on the sprite sheet */
+}
