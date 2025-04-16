@@ -8,67 +8,67 @@ import IconsComp from './IconsComp.vue';
             <ul class="sidenav__menu">
                 <li class="sidenav__item">
                     <router-link to="/" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="dashboard" /></span>
                         Dashboard
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/reports" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="report" /></span>
                         Rapporter
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/deadlines" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="warning" /></span>
                         Overskredet deadline
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/fill-in-form" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="edit-schedule" /></span>
                         Udfyld skema
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/form-overview" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="schema" /></span>
                         Skemaoversigt
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/users" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="users" /></span>
                         Brugere
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/teams" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="groups" /></span>
                         Grupper
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/documents" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="folder" /></span>
                         Dokumenter
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/plans" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="edit-calendar" /></span>
                         Planlægning
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/calendar" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="calendar" /></span>
                         Kalender
                     </router-link>
                 </li>
                 <li class="sidenav__item">
                     <router-link to="/settings" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp name="help" /></span>
+                        <span class="icon-wrapper"><IconsComp iconName="settings" /></span>
                         Administration
                     </router-link>
                 </li>

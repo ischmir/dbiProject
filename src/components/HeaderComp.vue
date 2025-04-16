@@ -15,24 +15,24 @@
         <h1 class="header__title">Dashboard</h1>
         <div class="header__search">
             <input type="text" class="header__search-input" placeholder="Søg"/>
-            <IconsComp iconname="help" />
+            <IconsComp class="header__search-icon" iconName="search" />
         </div>
         </div>
 
         <!-- Action Buttons -->
          <div class="header__actions ">
             <div class="header__button base-container">
-                <IconsComp iconname="help" />
+                <IconsComp iconName="help" />
             </div>
             <div class="header__button base-container">
-                    <IconsComp iconname="notifications" />
+                    <IconsComp iconName="notifications" />
                     <span class="header__notification-badge"></span>
             </div>
             <div class="header__button base-container">
-                    <IconsComp iconname="user" />
+                    <IconsComp iconName="user" />
             </div>
             <div class="header__button base-container">
-                    <IconsComp iconname="logout" />
+                    <IconsComp iconName="logout" />
             </div>
          </div>
     </header>
@@ -45,7 +45,7 @@
         grid-template-areas: 
             "logo logo logo center center center center center center center center center actions actions actions actions";
         column-gap: 1vh;
-        box-sizing: border-box; /* Include padding in height calculation */
+        box-sizing: border-box;
     }
 
     /* ─── Logo Area ─────────────────────────────── */
@@ -78,10 +78,8 @@
         padding: 0 2vh ;
     }
 
-    .header__title {
-        font-size: 3rem;
-        margin: 1vh 0;
-        font-weight: 600;
+    .header__search {
+        position: relative;
     }
 
     .header__search-input {
@@ -90,6 +88,15 @@
         border-radius: 9999px;
         outline: none;
         font-size: 1rem;
+    }
+
+    .header__search-icon {
+        position: absolute;
+        top: 50%;
+        right: 0.5vh;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: var(--placeholder-text-inactive-text);
     }
 
     /* ─── Actions Area ──────────────────────────── */
