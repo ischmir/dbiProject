@@ -15,24 +15,24 @@
         <h1 class="header__title">Dashboard</h1>
         <div class="header__search">
             <input type="text" class="header__search-input" placeholder="Søg"/>
-            <IconsComp name="help" />
+            <IconsComp iconname="help" />
         </div>
         </div>
 
         <!-- Action Buttons -->
          <div class="header__actions ">
             <div class="header__button base-container">
-                <IconsComp name="help" />
+                <IconsComp iconname="help" />
             </div>
             <div class="header__button base-container">
-                    <IconsComp name="notifications" />
+                    <IconsComp iconname="notifications" />
                     <span class="header__notification-badge"></span>
             </div>
             <div class="header__button base-container">
-                    <IconsComp name="user" />
+                    <IconsComp iconname="user" />
             </div>
             <div class="header__button base-container">
-                    <IconsComp name="logout" />
+                    <IconsComp iconname="logout" />
             </div>
          </div>
     </header>

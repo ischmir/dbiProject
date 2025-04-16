@@ -82,6 +82,7 @@ import IconsComp from './IconsComp.vue';
     display: flex;
     justify-content: center;
 }
+
 .sidenav__menu {
     list-style-type: none;
     padding-left: 0;
@@ -104,8 +105,9 @@ import IconsComp from './IconsComp.vue';
     color: var(--cta-button-hover-link-hover);
 }
 
-.sidenav__menu li a:active {
-    color: var(--cta-button-hover-link-hover);
+/* Highlight the active link */
+.router-link-active {
+    color: var(--cta-button-link-active); /* Change to your desired active color */
 }
 
 .icon-wrapper {

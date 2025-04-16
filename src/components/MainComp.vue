@@ -4,7 +4,7 @@
 
 <template>
     <div class="main-container base-container">
-      <router-view /> <!-- Render the matched route's component here -->
+      <router-view />
     </div>
   </template>
 

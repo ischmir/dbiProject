@@ -2,7 +2,7 @@
 :root {
   /* ─── Warm Colors ───────────────────────────── */
   --primary-color: #FFF7E7;
-  --cta-button: #C1121F;
+  --cta-button-link-active: #C1121F;
   --cta-button-hover-link-hover: #780000;
   
   /* ─── Cold Colors ───────────────────────────── */
