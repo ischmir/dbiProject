@@ -2,6 +2,7 @@
 <script setup>
 import { computed } from 'vue';
 
+// Props for the icon component
 const props = defineProps({
     iconName: {
         type: String,

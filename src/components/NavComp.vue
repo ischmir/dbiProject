@@ -1,117 +1,101 @@
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import IconsComp from './IconsComp.vue';
+
+const router = useRouter();
+const routes = router.options.routes;
+
+// Track hover state for each route
+const hoveredRoute = ref(null);
+
+const handleMouseOver = (path) => {
+  hoveredRoute.value = path;
+};
+
+const handleMouseLeave = () => {
+  hoveredRoute.value = null;
+};
 </script>
 
 <template>
-    <nav class="sidenav base-container">
-        <div class="sidenav__container">
-            <ul class="sidenav__menu">
-                <li class="sidenav__item">
-                    <router-link to="/" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="dashboard" /></span>
-                        Dashboard
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/reports" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="report" /></span>
-                        Rapporter
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/deadlines" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="warning" /></span>
-                        Overskredet deadline
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/fill-in-form" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="edit-schedule" /></span>
-                        Udfyld skema
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/form-overview" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="schema" /></span>
-                        Skemaoversigt
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/users" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="users" /></span>
-                        Brugere
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/teams" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="groups" /></span>
-                        Grupper
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/documents" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="folder" /></span>
-                        Dokumenter
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/plans" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="edit-calendar" /></span>
-                        Planlægning
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/calendar" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="calendar" /></span>
-                        Kalender
-                    </router-link>
-                </li>
-                <li class="sidenav__item">
-                    <router-link to="/settings" class="sidenav__link">
-                        <span class="icon-wrapper"><IconsComp iconName="settings" /></span>
-                        Administration
-                    </router-link>
-                </li>
-            </ul>
-        </div>
-    </nav>
+  <nav class="sidenav base-container">
+    <div class="sidenav__container">
+      <ul class="sidenav__menu">
+        <li
+          v-for="route in routes"
+          :key="route.path"
+          class="sidenav__item"
+          @mouseover="handleMouseOver(route.path)"
+          @mouseleave="handleMouseLeave"
+        >
+          <router-link
+            :to="route.path"
+            class="sidenav__link"
+            v-slot="{ isActive }"
+          >
+            <span
+              class="icon-wrapper"
+              :style="{
+                filter: isActive
+                  ? 'invert(14%) sepia(100%) saturate(4437%) hue-rotate(349deg) brightness(78%) contrast(95%)'
+                  : hoveredRoute === route.path
+                  ? 'invert(13%) sepia(96%) saturate(748%) hue-rotate(356deg) brightness(85%) contrast(119%)'
+                  : 'none',
+              }"
+            >
+              <IconsComp :iconName="route.meta.iconName" />
+            </span>
+            <span
+              class="link-text"
+              :style="{
+                color: isActive
+                  ? 'var(--cta-button-link-active)'
+                  : hoveredRoute === route.path
+                  ? 'var(--cta-button-hover-link-hover)'
+                  : 'var(--headlines-paragraphs)',
+              }"
+            >
+              {{ route.meta.title || route.name || route.path }}
+            </span>
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
 .sidenav__container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  margin: 1vh;
 }
 
 .sidenav__menu {
-    list-style-type: none;
-    padding-left: 0;
+  list-style-type: none;
+  padding-left: 0;
 }
 
 .sidenav__menu li {
-    padding: 1.5vh;
+  padding: 1.5vh;
 }
 
 .sidenav__menu li a {
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: bolder;
-    color: var(--headlines-paragraphs);
-    display: flex;
-    align-items: center; /* Align icon and text */
-}
-
-.sidenav__menu li a:hover {
-    color: var(--cta-button-hover-link-hover);
-}
-
-/* Highlight the active link */
-.router-link-active {
-    color: var(--cta-button-link-active); /* Change to your desired active color */
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
 }
 
 .icon-wrapper {
-    display: inline-flex;
-    margin-right: 1vh;
+  display: inline-flex;
+  margin-right: 1vh;
+}
+
+.link-text {
+  font-size: 1rem;
+  font-weight: bolder;
 }
 </style>

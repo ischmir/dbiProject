@@ -1,9 +1,10 @@
+<!-- Main Component -->
 <script setup>
-
 </script>
 
 <template>
-    <div class="main-container base-container">
+    <div class="main-container main-comp base-container">
+      
       <router-view />
     </div>
   </template>
