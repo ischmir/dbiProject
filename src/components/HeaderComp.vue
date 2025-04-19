@@ -37,38 +37,42 @@ const handleMouseLeave = () => {
 
         <!-- Action Buttons -->
         <div class="header__actions">
-            <div
+            <button
                 class="header__button base-container"
                 @mouseover="handleMouseOver('Help')"
                 @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('Help')"
             >
                 <IconsComp class="header__button-icon" iconName="help" />
                 <div v-if="hoveredButton === 'Help'" class="modal">Help</div>
-            </div>
-            <div
+            </button>
+            <button
                 class="header__button base-container"
                 @mouseover="handleMouseOver('Notifications')"
                 @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('Notifications')"
             >
                 <IconsComp class="header__button-icon" iconName="notifications" />
                 <div v-if="hoveredButton === 'Notifications'" class="modal">Notifications</div>
-            </div>
-            <div
+            </button>
+            <button
                 class="header__button base-container"
                 @mouseover="handleMouseOver('User')"
                 @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('User')"
             >
                 <IconsComp class="header__button-icon" iconName="user" />
                 <div v-if="hoveredButton === 'User'" class="modal">User</div>
-            </div>
-            <div
+            </button>
+            <button
                 class="header__button base-container"
                 @mouseover="handleMouseOver('Logout')"
                 @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('Logout')"
             >
                 <IconsComp class="header__button-icon" iconName="logout" />
                 <div v-if="hoveredButton === 'Logout'" class="modal">Logout</div>
-            </div>
+            </button>
         </div>
     </header>
 </template>
@@ -151,6 +155,7 @@ header {
     justify-content: center;
     background-color: var(--primary-color);
     position: relative;
+    border: none;
 }
 
 .header__button-icon {
