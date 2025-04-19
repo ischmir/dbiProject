@@ -18,7 +18,7 @@ const router = createRouter({
     {
       path: '/reports',
       name: 'Reports',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Rapporter',
         iconName: 'report',
@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: '/deadlines',
       name: 'Deadlines',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Overskredet Deadline',
         iconName: 'warning',
@@ -36,7 +36,7 @@ const router = createRouter({
     {
       path: '/fill-in-form',
       name: 'Fill in form',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Udfyld skema',
         iconName: 'edit-schedule',
@@ -54,7 +54,7 @@ const router = createRouter({
     {
       path: '/users',
       name: 'Users',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Brugere',
         iconName: 'users',
@@ -63,7 +63,7 @@ const router = createRouter({
     {
       path: '/groups',
       name: 'Groups',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Grupper',
         iconName: 'groups',
@@ -72,7 +72,7 @@ const router = createRouter({
     {
       path: '/documents',
       name: 'Documents',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Dokumenter',
         iconName: 'folder',
@@ -81,7 +81,7 @@ const router = createRouter({
     {
       path: '/plans',
       name: 'Plans',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Planlægning',
         iconName: 'edit-calendar',
@@ -90,7 +90,7 @@ const router = createRouter({
     {
       path: '/calendar',
       name: 'Calendar',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Kalender',
         iconName: 'calendar',
@@ -99,7 +99,7 @@ const router = createRouter({
     {
       path: '/settings',
       name: 'Administration',
-      component: MockupComponent, // Mockup route
+      component: MockupComponent,
       meta: {
         title: 'Administration',
         iconName: 'settings',
