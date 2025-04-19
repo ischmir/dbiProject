@@ -4,7 +4,7 @@
 
 <template>
     <div class="main-container main-comp base-container">
-      
+
       <router-view />
     </div>
   </template>

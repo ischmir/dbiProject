@@ -81,7 +81,7 @@ const handleMouseLeave = () => {
 header {
     display: grid;
     grid-template-columns: repeat(16, 1fr);
-    grid-template-areas: 
+    grid-template-areas:
         "logo logo logo center center center center center center center center center actions actions actions actions";
     column-gap: 1vh;
     box-sizing: border-box;
