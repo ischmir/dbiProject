@@ -35,7 +35,7 @@ const handleMouseLeave = () => {
             v-slot="{ isActive }"
           >
             <span
-              class="icon-wrapper"
+              class="sidenav__icon-wrapper"
               :style="{
                 filter: isActive
                   ? 'invert(14%) sepia(100%) saturate(4437%) hue-rotate(349deg) brightness(78%) contrast(95%)'
@@ -47,7 +47,7 @@ const handleMouseLeave = () => {
               <IconsComp :iconName="route.meta.iconName" />
             </span>
             <span
-              class="link-text"
+              class="sidenav__link-text"
               :style="{
                 color: isActive
                   ? 'var(--cta-button-link-active)'
@@ -89,12 +89,12 @@ const handleMouseLeave = () => {
   align-items: center;
 }
 
-.icon-wrapper {
+.sidenav__icon-wrapper {
   display: inline-flex;
   margin-right: 1vh;
 }
 
-.link-text {
+.sidenav__link-text {
   font-size: 1rem;
   font-weight: bolder;
 }

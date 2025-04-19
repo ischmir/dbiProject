@@ -1,10 +1,21 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import IconsComp from './IconsComp.vue';
 
 const route = useRoute();
 const title = computed(() => route.meta.title);
+
+// Track the hovered button
+const hoveredButton = ref(null);
+
+const handleMouseOver = (label) => {
+  hoveredButton.value = label;
+};
+
+const handleMouseLeave = () => {
+  hoveredButton.value = null;
+};
 </script>
 
 <template>
@@ -26,18 +37,37 @@ const title = computed(() => route.meta.title);
 
         <!-- Action Buttons -->
         <div class="header__actions">
-            <div class="header__button base-container">
+            <div
+                class="header__button base-container"
+                @mouseover="handleMouseOver('Help')"
+                @mouseleave="handleMouseLeave"
+            >
                 <IconsComp iconName="help" />
+                <div v-if="hoveredButton === 'Help'" class="modal">Help</div>
             </div>
-            <div class="header__button base-container">
+            <div
+                class="header__button base-container"
+                @mouseover="handleMouseOver('Notifications')"
+                @mouseleave="handleMouseLeave"
+            >
                 <IconsComp iconName="notifications" />
-                <span class="header__notification-badge"></span>
+                <div v-if="hoveredButton === 'Notifications'" class="modal">Notifications</div>
             </div>
-            <div class="header__button base-container">
+            <div
+                class="header__button base-container"
+                @mouseover="handleMouseOver('User')"
+                @mouseleave="handleMouseLeave"
+            >
                 <IconsComp iconName="user" />
+                <div v-if="hoveredButton === 'User'" class="modal">User</div>
             </div>
-            <div class="header__button base-container">
+            <div
+                class="header__button base-container"
+                @mouseover="handleMouseOver('Logout')"
+                @mouseleave="handleMouseLeave"
+            >
                 <IconsComp iconName="logout" />
+                <div v-if="hoveredButton === 'Logout'" class="modal">Logout</div>
             </div>
         </div>
     </header>
@@ -119,5 +149,34 @@ header {
     align-items: center;
     justify-content: center;
     background-color: var(--primary-color);
+    position: relative;
+}
+
+/* ─── Modal Styling ─────────────────────────── */
+.modal {
+    position: absolute;
+    top: calc(70% + 4px);
+    left: 50%;
+    transform: translateX(-75%);
+    background-color: var(--strokes-lines);
+    color: var(--headlines-paragraphs);
+    padding: 0.5vh 1vh;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* ─── Help Modal Arrow ──────────────────────── */
+.modal::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 75%;
+    transform: translateX(-50%) translateY(-100%);
+    border-width: 4px;
+    border-style: solid;
+    border-color: transparent transparent var(--strokes-lines) transparent;
 }
 </style>
