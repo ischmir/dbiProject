@@ -1,8 +1,11 @@
 <script setup>
+// No additional logic needed
 </script>
 
 <template>
-  <router-view />
+  <div>
+    <router-view /> <!-- Render the current route -->
+  </div>
 </template>
 
 <style scoped>

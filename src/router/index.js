@@ -5,8 +5,10 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 // Views
 import DashboardView from '@/views/DashboardView.vue';
-import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
+import LoginView from '@/views/LoginView.vue';
+// Components
+
 
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
@@ -24,6 +26,7 @@ const routes = [
         path: 'login',
         name: 'Login',
         component: LoginView,
+        meta: { title: 'Login' },
       },
       {
         path: 'register',

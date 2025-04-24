@@ -1,14 +1,13 @@
-<!-- uthentication Layout -->
+<!-- Authentication Layout -->
 <script setup>
-
+// No additional logic needed
 </script>
 
 <template>
     <div>
-        <router-view />
+        <router-view /> <!-- This renders child routes -->
     </div>
 </template>
 
-<style lang="scss" scoped>
- //* scoped AuthLayout styles */
+<style scoped>
 </style>

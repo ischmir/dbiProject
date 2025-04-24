@@ -1,26 +1,67 @@
 <script setup>
+import { ref } from 'vue';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'vue-router';
+
+const email = ref('');
+const password = ref('');
+const loginErrorMessage = ref('');
+const router = useRouter();
+const auth = getAuth();
+
+const login = () => {
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      loginErrorMessage.value = '';
+      router.push('/');
+      console.log('User successfully logged in:', user);
+    })
+    .catch((error) => {
+      switch (error.code) {
+      case 'auth/user-not-found':
+        loginErrorMessage.value = 'User not found. Please register.';
+        break;
+      case 'auth/wrong-password':
+        loginErrorMessage.value = 'Incorrect password. Please try again.';
+        break;
+      case 'auth/invalid-email':
+        loginErrorMessage.value = 'Invalid email address.';
+        break;
+      default:
+        loginErrorMessage.value = 'An error occurred. Please try again.';
+      }
+      console.error('Error logging in:', error.code);
+    });
+};
+
+const register = () => {
+  console.log('Redirect to registration page');
+  router.push('/register');
+};
 </script>
 
 <template>
-    <div class="login">
-        <div class="login__container">
-        <h1 class="login__title">Login</h1>
-        <form class="login__form">
-            <div class="login__form-group">
-                <input type="email" id="email" name="email" required />
-                <label for="email">Username</label>
-            </div>
-            <div class="login__form-group">
-                <input type="password" id="password" name="password" required />
-                <label for="password">Password</label>
-            </div>
-        </form>
-        <div class="login__buttons">
-            <button class="login__register-button" type="button" >Register</button>
-            <button class="login__submit-button" type="submit">Login</button>
+  <div class="login">
+    <div class="login__container">
+      <h1 class="login__title">Login</h1>
+      <form class="login__form" @submit.prevent="login">
+        <div class="login__form-group">
+          <input type="email" id="email" v-model="email" required />
+          <label for="email">Email</label>
         </div>
+        <div class="login__form-group">
+          <input type="password" id="password" v-model="password" required />
+          <label for="password">Password</label>
         </div>
+        <p v-if="loginErrorMessage" class="login__error">{{ loginErrorMessage }}</p>
+      </form>
+      <div class="login__buttons">
+        <button class="login__register-button" type="button" @click="register">Register</button>
+        <button class="login__submit-button" type="submit">Login</button>
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -121,5 +162,11 @@
     &:hover {
         background-color: var(--cta-button-light-hover);
     }
+}
+
+.login__error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
 }
 </style>
