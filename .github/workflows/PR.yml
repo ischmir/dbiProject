@@ -20,7 +20,7 @@ jobs:
     #   - name: End-to-end tests
     #     run: npm run test:e2e
       - run: npm run lint
-      - name: Git Diff
+      - name: Linting error check
         shell: bash
         run: |
             if [ -n "$(git status --porcelain)" ]; then
