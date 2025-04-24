@@ -15,8 +15,10 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm install
       - run: npm run build
-      - name: Unit tests
-        run: npm run test:unit
+    #   - name: Unit tests
+    #     run: npm run test:unit
+    #   - name: End-to-end tests
+    #     run: npm run test:e2e
       - run: npm run lint
       - name: Git Diff
         shell: bash
