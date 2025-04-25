@@ -1,5 +1,5 @@
 <script setup>
-import SkemaComp from "@/components/SkemaComp.vue";
+import SkemaComp from '@/components/SkemaComp.vue';
 </script>
 
 <template>
