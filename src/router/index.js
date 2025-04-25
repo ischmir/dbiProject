@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import DashboardView from '@/views/DashboardView.vue';
 
+
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
 const router = createRouter({
