@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const menuItems = ['Skemaer', 'Skemabibliotek', 'Tjekpunkter'];
+const menuItems = ["Skemaer", "Skemabibliotek", "Tjekpunkter"];
 const activeIndex = ref(null);
 
 function handleClick(index) {
@@ -13,7 +13,7 @@ function handleClick(index) {
 <template>
   <nav>
     <div class="menuBox">
-      <h3
+      <h2
         v-for="(item, index) in menuItems"
         :key="index"
         class="skemaMenu"
@@ -21,7 +21,7 @@ function handleClick(index) {
         @click="handleClick(index)"
       >
         {{ item }}
-      </h3>
+      </h2>
     </div>
   </nav>
 </template>

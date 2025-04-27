@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import IconsComp from './IconsComp.vue';
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import IconsComp from "./IconsComp.vue";
 
 const router = useRouter();
 const routes = router.options.routes;
@@ -29,11 +29,7 @@ const handleMouseLeave = () => {
           @mouseover="handleMouseOver(route.path)"
           @mouseleave="handleMouseLeave"
         >
-          <router-link
-            :to="route.path"
-            class="sidenav__link"
-            v-slot="{ isActive }"
-          >
+          <router-link :to="route.path" class="sidenav__link" v-slot="{ isActive }">
             <span
               class="sidenav__icon-wrapper"
               :style="{
