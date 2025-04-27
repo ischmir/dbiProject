@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import IconsComp from "./IconsComp.vue";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import IconsComp from './IconsComp.vue';
 
 const router = useRouter();
 const routes = router.options.routes;

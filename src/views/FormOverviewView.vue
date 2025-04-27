@@ -1,6 +1,6 @@
 <script setup>
-import SkemaComp from "@/components/SkemaComp.vue";
-import TableComp from "@/components/tableComp.vue";
+import SkemaComp from '@/components/SkemaComp.vue';
+import TableComp from '@/components/tableComp.vue';
 </script>
 
 <template>

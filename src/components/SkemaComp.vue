@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from "vue";
+import { ref } from 'vue';
 
-const menuItems = ["Skemaer", "Skemabibliotek", "Tjekpunkter"];
+const menuItems = ['Skemaer', 'Skemabibliotek', 'Tjekpunkter'];
 const activeIndex = ref(null);
 
 function handleClick(index) {

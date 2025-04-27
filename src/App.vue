@@ -1,6 +1,6 @@
 <script setup>
-import DefaultLayout from "@/layout/DefaultLayout.vue";
-import "@fontsource/montserrat";
+import DefaultLayout from '@/layout/DefaultLayout.vue';
+import '@fontsource/montserrat';
 </script>
 
 <template>

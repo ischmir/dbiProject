@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref } from "vue";
-import { useRoute } from "vue-router";
-import IconsComp from "./IconsComp.vue";
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import IconsComp from './IconsComp.vue';
 
 const route = useRoute();
 const title = computed(() => route.meta.title);
