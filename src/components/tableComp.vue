@@ -1,28 +1,23 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  cols: {
+    type: Array,
+    required: true,
+  },
+});
+</script>
 
 <template>
   <div>
     <table>
       <thead>
         <tr>
-          <th><h3>Indhold</h3></th>
-          <th>DBI_icon_sort</th>
-          <th>icon</th>
+          <th v-for="col in props.cols">{{ col }}</th>
         </tr>
       </thead>
+
       <tbody>
-        <tr class="rows">
-          <td>Skemanavn</td>
-          <td>...</td>
-        </tr>
-        <tr class="rows">
-          <td>Førstehjælp</td>
-          <td>...</td>
-        </tr>
-        <tr class="rows">
-          <td>Skemanavn</td>
-          <td>...</td>
-        </tr>
+        <slot></slot>
       </tbody>
     </table>
   </div>
@@ -35,22 +30,12 @@ thead {
 }
 
 th {
-  display: flex;
-  align-items: center;
-}
-
-tr {
-  display: flex;
-
-  justify-content: space-between;
-}
-
-.rows {
-  border-bottom: 1px solid #d5d5d5;
+  padding: 12px 24px;
 }
 
 table {
   width: 100%;
+  border-collapse: collapse;
   background-color: #fff;
   padding-bottom: 6px;
   border-radius: 4px;
