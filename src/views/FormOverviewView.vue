@@ -1,8 +1,8 @@
 <script setup>
-import SkemaComp from "@/components/SkemaComp.vue";
-import TableColumn from "@/components/TableColumn.vue";
-import TableComp from "@/components/TableComp.vue";
-import TableRow from "@/components/TableRow.vue";
+import SkemaComp from '@/components/SkemaComp.vue';
+import TableColumn from '@/components/TableColumn.vue';
+import TableComp from '@/components/TableComp.vue';
+import TableRow from '@/components/TableRow.vue';
 </script>
 
 <template>
