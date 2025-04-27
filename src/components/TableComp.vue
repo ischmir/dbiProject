@@ -12,7 +12,7 @@ const props = defineProps({
     <table>
       <thead>
         <tr>
-          <th v-for="col in props.cols">{{ col }}</th>
+          <th v-for="col in props.cols" v-bind:key="col">{{ col }}</th>
         </tr>
       </thead>
 
