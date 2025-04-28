@@ -24,6 +24,7 @@ h1 {
   line-height: 3.75rem; /* 60px / 16 = 3.75rem */
   letter-spacing: 0%;
   vertical-align: middle;
+  color: aqua;
 }
 
 h2 {
