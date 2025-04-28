@@ -40,7 +40,7 @@ function handleClick(index) {
   transition: background-color 0.3s ease;
   height: 100%;
   padding: 15px 10px;
-  flex-grow: 1; /* Gør menupunkterne lige store og udfylder hele containeren */
+  flex-grow: 1;
 
   &:hover {
     background-color: var(--inactive-buttons-backgrounds);
