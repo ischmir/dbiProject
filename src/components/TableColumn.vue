@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
 td {
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
