@@ -2,11 +2,11 @@
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import IconsComp from './IconsComp.vue';
+import LogoutComp from './LogoutComp.vue';
 
 const route = useRoute();
 const title = computed(() => route.meta.title);
 
-// Track the hovered button
 const hoveredButton = ref(null);
 
 const handleMouseOver = (label) => {
@@ -19,66 +19,63 @@ const handleMouseLeave = () => {
 </script>
 
 <template>
-  <header>
-    <!-- Logo -->
-    <router-link to="/" class="header__logo base-container">
-      <img
-        alt="DBI Logo"
-        class="header__logo-image"
-        src="../assets/img/dbi-logo-black.svg"
-      />
-      <span class="header__logo-title">Egenkontrol</span>
-    </router-link>
 
-    <!-- Title and Search -->
-    <div class="header__center base-container">
-      <h1 class="header__title">{{ title }}</h1>
-      <div class="header__search">
-        <input type="text" class="header__search-input" placeholder="Søg" />
-        <IconsComp class="header__search-icon" iconName="search" />
-      </div>
-    </div>
+    <header>
+        <!-- Logo -->
+        <router-link to="/dashboard" class="header__logo base-container">
+            <img alt="DBI Logo" class="header__logo-image" src="../assets/img/dbi-logo-black.svg" />
+            <span class="header__logo-title">Egenkontrol</span>
+        </router-link>
 
-    <!-- Action Buttons -->
-    <div class="header__actions">
-      <button
-        class="header__button base-container"
-        @mouseover="handleMouseOver('Help')"
-        @mouseleave="handleMouseLeave"
-        @focus="handleMouseOver('Help')"
-      >
-        <IconsComp class="header__button-icon" iconName="help" />
-        <div v-if="hoveredButton === 'Help'" class="modal">Help</div>
-      </button>
-      <button
-        class="header__button base-container"
-        @mouseover="handleMouseOver('Notifications')"
-        @mouseleave="handleMouseLeave"
-        @focus="handleMouseOver('Notifications')"
-      >
-        <IconsComp class="header__button-icon" iconName="notifications" />
-        <div v-if="hoveredButton === 'Notifications'" class="modal">Notifications</div>
-      </button>
-      <button
-        class="header__button base-container"
-        @mouseover="handleMouseOver('User')"
-        @mouseleave="handleMouseLeave"
-        @focus="handleMouseOver('User')"
-      >
-        <IconsComp class="header__button-icon" iconName="user" />
-        <div v-if="hoveredButton === 'User'" class="modal">User</div>
-      </button>
-      <button
-        class="header__button base-container"
-        @mouseover="handleMouseOver('Logout')"
-        @mouseleave="handleMouseLeave"
-        @focus="handleMouseOver('Logout')"
-      >
-        <IconsComp class="header__button-icon" iconName="logout" />
-        <div v-if="hoveredButton === 'Logout'" class="modal">Logout</div>
-      </button>
-    </div>
-  </header>
+        <!-- Title and Search -->
+        <div class="header__center base-container">
+            <h1 class="header__title">{{ title }}</h1>
+            <div class="header__search">
+                <input type="text" class="header__search-input" placeholder="Søg" />
+                <IconsComp class="header__search-icon" iconName="search" />
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="header__actions">
+            <button
+                class="header__button base-container"
+                @mouseover="handleMouseOver('Help')"
+                @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('Help')"
+            >
+                <IconsComp class="header__button-icon" iconName="help" />
+                <div v-if="hoveredButton === 'Help'" class="modal">Help</div>
+            </button>
+            <button
+                class="header__button base-container"
+                @mouseover="handleMouseOver('Notifications')"
+                @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('Notifications')"
+            >
+                <IconsComp class="header__button-icon" iconName="notifications" />
+                <div v-if="hoveredButton === 'Notifications'" class="modal">Notifications</div>
+            </button>
+            <button
+                class="header__button base-container"
+                @mouseover="handleMouseOver('User')"
+                @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('User')"
+            >
+                <IconsComp class="header__button-icon" iconName="user" />
+                <div v-if="hoveredButton === 'User'" class="modal">User</div>
+            </button>
+            <button
+                class="header__button base-container"
+                @mouseover="handleMouseOver('Logout')"
+                @mouseleave="handleMouseLeave"
+                @focus="handleMouseOver('Logout')"
+            >
+                <LogoutComp class="header__button-icon" iconName="logout" />
+                <div v-if="hoveredButton === 'Logout'" @click="logout" class="modal">Logout</div>
+            </button>
+        </div>
+    </header>
 </template>
 
 <style lang="scss" scoped>
