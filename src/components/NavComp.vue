@@ -31,11 +31,7 @@ const handleMouseLeave = () => {
           @mouseover="handleMouseOver(route.path)"
           @mouseleave="handleMouseLeave"
         >
-          <router-link
-            :to="route.path"
-            class="sidenav__link"
-            v-slot="{ isActive }"
-          >
+          <router-link :to="route.path" class="sidenav__link" v-slot="{ isActive }">
             <span
               class="sidenav__icon-wrapper"
               :style="{

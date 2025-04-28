@@ -15,6 +15,7 @@
     "linter": "echo 'perfekt!'"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^5.2.5",
     "firebase": "^11.6.0",
     "pinia": "^2.3.1",
     "vite-svg-loader": "^5.1.0",

@@ -12,30 +12,30 @@ function handleClick(index) {
 
 <template>
   <nav>
-    <div class="menuBox">
-      <h3
+    <div class="nav__menuBox">
+      <h2
         v-for="(item, index) in menuItems"
         :key="index"
-        class="skemaMenu"
+        class="menu-box__title"
         :class="{ active: index === activeIndex }"
         @click="handleClick(index)"
       >
         {{ item }}
-      </h3>
+      </h2>
     </div>
   </nav>
 </template>
 
 <style scoped lang="scss">
-.menuBox {
+.nav__menuBox {
   display: flex;
   justify-content: space-around;
-  background-color: #ffffff;
+  background-color: var(--forms-charts);
   width: 100%;
 }
 
-.skemaMenu {
-  color: #252323;
+.menu-box__title {
+  color: var(--headlines-paragraphs);
   cursor: pointer;
   transition: background-color 0.3s ease;
   height: 100%;
@@ -43,11 +43,11 @@ function handleClick(index) {
   flex-grow: 1; /* Gør menupunkterne lige store og udfylder hele containeren */
 
   &:hover {
-    background-color: #f1f1f1;
+    background-color: var(--inactive-buttons-backgrounds);
   }
 
   &.active {
-    background-color: #fff7e7; /* Baggrund for aktivt menupunkt */
+    background-color: var(--primary-color);
     margin: 0%;
   }
 }
