@@ -1,13 +1,9 @@
 <script setup>
-
+import SkemaComp from '@/components/SkemaComp.vue';
 </script>
 
 <template>
-    <div>
-        <h1>Schemaoversigt</h1>
-    </div>
+  <SkemaComp />
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

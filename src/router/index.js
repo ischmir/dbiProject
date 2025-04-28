@@ -8,6 +8,7 @@ import DashboardView from '@/views/DashboardView.vue';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 
+
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
 const routes = [
