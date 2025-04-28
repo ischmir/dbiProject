@@ -1,13 +1,11 @@
 <script setup>
-
-import DefaultLayout from '@/layout/DefaultLayout.vue';
 import '@fontsource/montserrat';
-
 </script>
 
 <template>
   <div>
-    <router-view /> <!-- Render the current route -->
+    <router-view />
+    <!-- Render the current route -->
   </div>
 </template>
 
