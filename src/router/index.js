@@ -1,145 +1,149 @@
-//
 import { createRouter, createWebHistory } from 'vue-router';
-// Layouts
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import AuthLayout from '@/layouts/AuthLayout.vue';
 // Views
 import DashboardView from '@/views/DashboardView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
-// Components
-
+// Layouts
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
 
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
 const routes = [
   {
-    path: '/auth',
-    name: 'Auth',
-    component: AuthLayout,
+    path: '/login',
+    name: 'Login',
+    component: LoginView,
     meta: {
-      title: 'Authentication',
-      showInNav: false,
+      title: 'Login',
+      requireAuth: false,
     },
-    children: [
-      {
-        path: 'login',
-        name: 'Login',
-        component: LoginView,
-        meta: { title: 'Login' },
-      },
-      {
-        path: 'register',
-        name: 'Register',
-        component: RegisterView,
-      },
-    ],
   },
   {
-    path: '/Dashboard',
+    path: '/register',
+    name: 'Register',
+    component: RegisterView,
+    meta: {
+      title: 'Register',
+      requireAuth: false,
+    },
+  },
+  {
+    path: '/',
     name: 'Default',
     component: DefaultLayout,
+    redirect: '/dashboard',
     meta: {
-      title: 'DefaultLayout',
+      // requireAuth: true,
     },
     children: [
       {
-        path: '/',
+        path: '/dashboard',
         name: 'Dashboard',
         component: DashboardView,
         meta: {
           title: 'Dashboard',
           iconName: 'dashboard',
+          // requireAuth: true,
         },
       },
       {
-        path: '/reports',
+        path: 'reports',
         name: 'Reports',
         component: MockupComponent,
         meta: {
           title: 'Rapporter',
           iconName: 'report',
+          requireAuth: true,
         },
       },
       {
-        path: '/deadlines',
+        path: 'deadlines',
         name: 'Deadlines',
         component: MockupComponent,
         meta: {
           title: 'Overskredet Deadline',
           iconName: 'warning',
+          requireAuth: true,
         },
       },
       {
-        path: '/fill-in-form',
+        path: 'fill-in-form',
         name: 'Fill in form',
         component: MockupComponent,
         meta: {
           title: 'Udfyld skema',
           iconName: 'edit-schedule',
+          requireAuth: true,
         },
       },
       {
-        path: '/form-overview',
+        path: 'form-overview',
         name: 'Form Overview',
         component: () => import('../views/FormOverviewView.vue'),
         meta: {
           title: 'Schemaoversigt',
           iconName: 'schema',
+          // requireAuth: true,
         },
       },
       {
-        path: '/users',
+        path: 'users',
         name: 'Users',
         component: MockupComponent,
         meta: {
           title: 'Brugere',
           iconName: 'users',
+          requireAuth: true,
         },
       },
       {
-        path: '/groups',
+        path: 'groups',
         name: 'Groups',
         component: MockupComponent,
         meta: {
           title: 'Grupper',
           iconName: 'groups',
+          requireAuth: true,
         },
       },
       {
-        path: '/documents',
+        path: 'documents',
         name: 'Documents',
         component: MockupComponent,
         meta: {
           title: 'Dokumenter',
           iconName: 'folder',
+          requireAuth: true,
         },
       },
       {
-        path: '/plans',
+        path: 'plans',
         name: 'Plans',
         component: MockupComponent,
         meta: {
           title: 'Planlægning',
           iconName: 'edit-calendar',
+          requireAuth: true,
         },
       },
       {
-        path: '/calendar',
+        path: 'calendar',
         name: 'Calendar',
         component: MockupComponent,
         meta: {
           title: 'Kalender',
           iconName: 'calendar',
+          requireAuth: true,
         },
       },
       {
-        path: '/settings',
+        path: 'settings',
         name: 'Administration',
         component: MockupComponent,
         meta: {
           title: 'Administration',
           iconName: 'settings',
+          requireAuth: true,
         },
       },
     ],
@@ -153,11 +157,18 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   console.log('before each', to.meta);
-  if (to.meta.requireAuth === true && !localStorage.getItem('token')) {
-    router.push('/login');
-    alert('MAX SECURITY LOGIN ALERT! #safety');
+
+  // Check if any matched route requires authentication
+  const requiresAuth = to.matched.some(record => record.meta.requireAuth);
+
+  if (requiresAuth && !localStorage.getItem('token')) {
+    console.log('Redirecting to login...');
+    // Redirect to login if the user is not authenticated
+    next({ path: '/login', query: { redirect: to.fullPath } });
+  } else {
+    console.log('Proceeding to route...');
+    next();
   }
-  next();
 });
 
 export default router;

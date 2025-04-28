@@ -5,9 +5,10 @@
 
 <template>
     <div>
-        <router-view /> <!-- This renders child routes -->
+        <router-view />
     </div>
 </template>
 
 <style scoped>
+/* Scoped Authentication layout styles */
 </style>

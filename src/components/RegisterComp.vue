@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'vue-router';
+import { auth } from '@/configs/firebase.js';
 
 const email = ref('');
 const password = ref('');
@@ -23,11 +24,11 @@ const register = () => {
     return;
   }
 
-  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+  createUserWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
       const user = userCredential.user;
       registerErrorMessage.value = ''; // Clear error message on success
-      router.push('/');
+      router.push('/dashboard'); // Redirect to dashboard or another page
       console.log('User registered:', user);
     })
     .catch((error) => {
@@ -154,7 +155,7 @@ const register = () => {
 
 .authentication__submit-button {
   width: -webkit-fill-available;
-  padding: 1.5rem;
+  height: 3rem;
   margin-left: 1vh;
   border: none;
   border-radius: 4px;
@@ -172,7 +173,7 @@ const register = () => {
 
 .authentication__register-button {
   width: -webkit-fill-available;
-  padding: 1.5rem;
+  height: 3rem;
   margin-right: 1vh;
   border: solid 1px var(--cta-button-forms-strokes);
   border-radius: 4px;
@@ -192,5 +193,16 @@ const register = () => {
   color: red;
   font-size: 0.9rem;
   margin-top: 0.5rem;
+}
+
+/* Hide spinner controls for number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* For Firefox */
 }
 </style>
