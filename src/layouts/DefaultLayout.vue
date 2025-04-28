@@ -2,14 +2,15 @@
 <script setup>
 import HeaderComp from '@/components/HeaderComp.vue';
 import NavComp from '@/components/NavComp.vue';
-import MainComp from '@/components/MainComp.vue';
 </script>
 
 <template>
     <div class="layout-grid">
         <HeaderComp class="header-comp" />
         <NavComp class="nav-comp" />
-        <MainComp class="main-comp" />
+        <main class="main-comp base-container">
+            <router-view />
+        </main>
     </div>
 </template>
 
