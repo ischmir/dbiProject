@@ -27,8 +27,8 @@ const register = () => {
   createUserWithEmailAndPassword(auth, email.value, password.value)
     .then((userCredential) => {
       const user = userCredential.user;
-      registerErrorMessage.value = ''; // Clear error message on success
-      router.push('/dashboard'); // Redirect to dashboard or another page
+      registerErrorMessage.value = '';
+      router.push('/dashboard');
       console.log('User registered:', user);
     })
     .catch((error) => {
