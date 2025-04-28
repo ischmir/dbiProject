@@ -11,7 +11,8 @@
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
     "test:unit": "cypress run --component",
     "test:unit:dev": "cypress open --component",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "linter": "echo 'perfekt!'"
   },
   "dependencies": {
     "firebase": "^11.6.0",

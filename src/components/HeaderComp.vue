@@ -2,11 +2,11 @@
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import IconsComp from './IconsComp.vue';
+import LogoutComp from './LogoutComp.vue';
 
 const route = useRoute();
 const title = computed(() => route.meta.title);
 
-// Track the hovered button
 const hoveredButton = ref(null);
 
 const handleMouseOver = (label) => {
@@ -21,7 +21,7 @@ const handleMouseLeave = () => {
 <template>
     <header>
         <!-- Logo -->
-        <router-link to="/" class="header__logo base-container">
+        <router-link to="/dashboard" class="header__logo base-container">
             <img alt="DBI Logo" class="header__logo-image" src="../assets/img/dbi-logo-black.svg" />
             <span class="header__logo-title">Egenkontrol</span>
         </router-link>
@@ -70,8 +70,8 @@ const handleMouseLeave = () => {
                 @mouseleave="handleMouseLeave"
                 @focus="handleMouseOver('Logout')"
             >
-                <IconsComp class="header__button-icon" iconName="logout" />
-                <div v-if="hoveredButton === 'Logout'" class="modal">Logout</div>
+                <LogoutComp class="header__button-icon" iconName="logout" />
+                <div v-if="hoveredButton === 'Logout'" @click="logout" class="modal">Logout</div>
             </button>
         </div>
     </header>
