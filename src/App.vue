@@ -1,9 +1,11 @@
 <script setup>
-import DefaultLayout from '@/layout/DefaultLayout.vue';
+// No additional logic needed
 </script>
 
 <template>
-  <DefaultLayout />
+  <div>
+    <router-view /> <!-- Render the current route -->
+  </div>
 </template>
 
 <style scoped>

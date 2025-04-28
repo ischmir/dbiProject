@@ -4,7 +4,9 @@ import { useRouter } from 'vue-router';
 import IconsComp from './IconsComp.vue';
 
 const router = useRouter();
-const routes = router.options.routes;
+
+// Get only the children of the DefaultLayout route
+const routes = router.options.routes.find(route => route.name === 'Default')?.children || [];
 
 // Track hover state for each route
 const hoveredRoute = ref(null);
@@ -44,7 +46,7 @@ const handleMouseLeave = () => {
                   : 'none',
               }"
             >
-              <IconsComp :iconName="route.meta.iconName" />
+              <IconsComp :iconName="route.meta?.iconName" />
             </span>
             <span
               class="sidenav__link-text"
@@ -56,7 +58,7 @@ const handleMouseLeave = () => {
                   : 'var(--headlines-paragraphs)',
               }"
             >
-              {{ route.meta.title || route.name || route.path }}
+              {{ route.meta?.title || route.name || route.path }}
             </span>
           </router-link>
         </li>
