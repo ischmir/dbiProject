@@ -26,7 +26,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 thead {
   border-radius: 4px;
-  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 1px 4px 0px var(--display-text-logo-text);
 }
 
 th {
@@ -36,9 +36,9 @@ th {
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: var(--forms-charts);
   padding-bottom: 6px;
   border-radius: 4px;
-  border: 1px solid #d5d5d5;
+  border: 1px solid var(--strokes-lines);
 }
 </style>

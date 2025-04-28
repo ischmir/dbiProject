@@ -8,6 +8,6 @@
 
 <style lang="scss" scoped>
 tr {
-  border-bottom: 1px solid #d5d5d5;
+  border-bottom: 1px solid var(--strokes-lines);
 }
 </style>
