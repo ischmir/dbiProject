@@ -1,0 +1,29 @@
+/* color palette from Figma */
+:root {
+    /* ─── Warm Colors ───────────────────────────── */
+    --primary-color: #FFF7E7;
+    --cta-button-link-active: #C1121F;
+    --cta-button-hover-link-hover: #780000;
+    
+    /* ─── Cold Colors ───────────────────────────── */
+    --cta-button-light-hover: #F0F4F5;
+    --cta-button-forms-strokes: #01476B;
+    --cta-button-hover-background: #003049;
+  
+    /* ─── Grey Colors ───────────────────────────── */
+    --forms-charts: #FFFFFF;
+    --inactive-buttons-backgrounds: #EAEAEA;
+    --strokes-lines: #D5D5D5;
+    --placeholder-text-inactive-text: #ABAFB1;
+    --help-text: #83898C;
+    --headlines-paragraphs: #252323;
+    --display-text-logo-text: #000000;
+  
+    /* ─── Alert Colors ──────────────────────────── */
+    --success-light: #EEFFE2;
+    --success-dark: #255900;
+    --warning-light: #FFE0E0;
+    --warning-dark: #9B0000;
+  }
+  
+  /* ─── Icon Sprites ────────────────────────────── */

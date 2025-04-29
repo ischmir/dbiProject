@@ -1,0 +1,43 @@
+.button-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .button--primary {
+    width: -webkit-fill-available;
+    height: 3rem;
+    margin-left: 1vh;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--cta-button-forms-strokes);
+    color: var(--forms-charts);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: var(--cta-button-hover-background);
+    }
+  }
+  
+  .button--secondary {
+    width: -webkit-fill-available;
+    height: 3rem;
+    margin-right: 1vh;
+    border: solid 1px var(--cta-button-forms-strokes);
+    border-radius: 4px;
+    background-color: var(--forms-charts);
+    color: var(--cta-button-hover-background);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: var(--cta-button-light-hover);
+    }
+  }

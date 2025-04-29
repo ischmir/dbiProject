@@ -1,0 +1,87 @@
+.authentication {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--background-color);
+  }
+  
+  .authentication__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+  }
+  
+  .authentication__title {
+    margin-bottom: 1rem;
+  }
+  
+  .authentication__form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+  
+    input {
+      width: 22rem;
+      padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+      border: 1px solid var(--placeholder-text-inactive-text);
+      border-radius: 4px;
+      outline: none;
+      font-size: 1rem;
+    }
+  
+    input:focus {
+      border-color: var(--cta-button-forms-strokes);
+    }
+  
+    input:focus + label,
+    input:not(:placeholder-shown) + label {
+      transform: translateY(-1.5rem);
+      font-size: 0.8rem;
+      color: var(--headlines-paragraphs);
+    }
+  
+    label {
+      position: absolute;
+      top: 60%;
+      left: 0.5rem;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+  
+  .authentication__error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    padding: inherit;
+  }
+  
+  #authentication__message {
+    margin-top: 1rem;
+  }
+  
+  #authentication__message p {
+    font-size: 0.8rem;
+    margin: 0.2rem 0;
+  }
+  
+  /* Hide spinner controls for number inputs */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  input[type="number"] {
+    appearance: textfield; /* Standard property for compatibility */
+    -moz-appearance: textfield; /* For Firefox */
+  }
