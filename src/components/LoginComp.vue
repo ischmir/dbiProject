@@ -28,18 +28,12 @@ const login = () => {
       console.log('User successfully logged in:', user);
     })
     .catch((error) => {
-      console.error('Error logging in:', error.code, error.message);
-      switch (error.code) {
-      case 'auth/user-not-found':
+      console.error('Error logging in:', error.code);
+      console.log('Error code:', error.code); // Log the error code
+      console.log('Error message:', error.message); // Log the error message
+      if (error.code === 'auth/invalid-credential') {
         loginErrorMessage.value = 'User not found. Please register.';
-        break;
-      case 'auth/wrong-password':
-        loginErrorMessage.value = 'Incorrect password. Please try again.';
-        break;
-      case 'auth/invalid-email':
-        loginErrorMessage.value = 'Invalid email address.';
-        break;
-      default:
+      } else {
         loginErrorMessage.value = 'An error occurred. Please try again.';
       }
     });
@@ -190,6 +184,7 @@ const register = () => {
 .login__error {
   color: red;
   font-size: 0.9rem;
-  margin-top: 0.5rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
 }
 </style>
