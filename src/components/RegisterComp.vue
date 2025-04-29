@@ -1,17 +1,60 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 import { auth } from '@/configs/firebase.js';
 
+const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const firstname = ref('');
-const surname = ref('');
-const phone = ref('');
-const registerErrorMessage = ref('');
+const registerErrorMessages = ref([]);
 const router = useRouter();
+
+// Password validation regex
+const passwordRegex = {
+  lowercase: /[a-z]/,
+  uppercase: /[A-Z]/,
+  number: /\d/,
+  special: /[@$!%*?&]/,
+  length: /.{16,}/,
+};
+
+// Reactive validation states
+const validationStates = ref({
+  lowercase: false,
+  uppercase: false,
+  number: false,
+  special: false,
+  length: false,
+});
+
+// Track if the fields have been touched
+const touchedFields = ref({
+  password: false,
+  confirmPassword: false,
+});
+
+// Watch password input and update validation states
+const validatePassword = () => {
+  validationStates.value.lowercase = passwordRegex.lowercase.test(password.value);
+  validationStates.value.uppercase = passwordRegex.uppercase.test(password.value);
+  validationStates.value.number = passwordRegex.number.test(password.value);
+  validationStates.value.special = passwordRegex.special.test(password.value);
+  validationStates.value.length = passwordRegex.length.test(password.value);
+
+  // Update error messages for password validation
+  registerErrorMessages.value = [];
+  if (!validationStates.value.lowercase) registerErrorMessages.value.push('Password must contain a lowercase letter.');
+  if (!validationStates.value.uppercase) registerErrorMessages.value.push('Password must contain an uppercase letter.');
+  if (!validationStates.value.number) registerErrorMessages.value.push('Password must contain a number.');
+  if (!validationStates.value.special) registerErrorMessages.value.push('Password must contain a special character.');
+  if (!validationStates.value.length) registerErrorMessages.value.push('Password must be at least 16 characters long.');
+};
+
+const isPasswordValid = computed(() =>
+  Object.values(validationStates.value).every((state) => state),
+);
 
 const login = () => {
   console.log('Redirect to login page');
@@ -19,33 +62,31 @@ const login = () => {
 };
 
 const register = () => {
+  validatePassword();
+
+  if (!isPasswordValid.value) {
+    return; // Password validation errors are already in `registerErrorMessages`
+  }
+
   if (password.value !== confirmPassword.value) {
-    registerErrorMessage.value = 'Passwords do not match.';
+    registerErrorMessages.value = ['Passwords do not match.'];
     return;
   }
 
-  createUserWithEmailAndPassword(auth, email.value, password.value)
+  createUserWithEmailAndPassword(auth, name.value, email.value, password.value)
     .then((userCredential) => {
       const user = userCredential.user;
-      registerErrorMessage.value = '';
+      registerErrorMessages.value = [];
       router.push('/dashboard');
       console.log('User registered:', user);
     })
     .catch((error) => {
-      switch (error.code) {
-      case 'auth/email-already-in-use':
-        registerErrorMessage.value = 'Email is already in use.';
-        break;
-      case 'auth/invalid-email':
-        registerErrorMessage.value = 'Invalid email address.';
-        break;
-      case 'auth/weak-password':
-        registerErrorMessage.value = 'Password is too weak.';
-        break;
-      default:
-        registerErrorMessage.value = 'An error occurred. Please try again.';
+      if (error.code === 'auth/invalid-email') {
+        registerErrorMessages.value = ['Invalid email address.'];
+      } else {
+        registerErrorMessages.value = ['An error occurred. Please try again.'];
       }
-      console.error('Error registering user:', error.code, error.message);
+      console.error('Error registering user:', error.code);
     });
 };
 </script>
@@ -56,33 +97,44 @@ const register = () => {
       <h1 class="authentication__title">Registrer</h1>
       <form class="authentication__form" @submit.prevent="register">
         <div class="authentication__form-group">
-          <input type="text" id="firstname" v-model="firstname" required />
-          <label for="firstname">Fornavn</label>
-        </div>
-        <div class="authentication__form-group">
-          <input type="text" id="surname" v-model="surname" required />
-          <label for="surname">Efternavn</label>
+          <input type="text" id="name" v-model="name" required />
+          <label for="name">Navn</label>
         </div>
         <div class="authentication__form-group">
           <input type="email" id="email" v-model="email" required />
           <label for="email">Email</label>
         </div>
         <div class="authentication__form-group">
-          <input type="number" id="phone" v-model="phone" required />
-          <label for="phone">tlf. nummer</label>
-        </div>
-        <div class="authentication__form-group">
-          <input type="password" id="password" v-model="password" required />
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            @input="validatePassword"
+            @blur="() => { touchedFields.password = true; validatePassword(); }"
+            required
+          />
           <label for="password">Adgangskode</label>
         </div>
         <div class="authentication__form-group">
-          <input type="password" id="confirm-password" v-model="confirmPassword" required />
+          <input
+            type="password"
+            id="confirm-password"
+            v-model="confirmPassword"
+            @blur="touchedFields.confirmPassword = true"
+            required
+          />
           <label for="confirm-password">Gentag adgangskode</label>
         </div>
-        <p v-if="registerErrorMessage" class="authentication__error">{{ registerErrorMessage }}</p>
-        <div class="authentication__buttons">
-          <button class="authentication__register-button" type="button" @click="login">Annuller</button>
-          <button class="authentication__submit-button" type="submit">Opret bruger</button>
+        <div id="message" v-if="touchedFields.password || registerErrorMessages.length > 0">
+          <ul class="authentication__error">
+            <li v-for="(message, index) in registerErrorMessages" :key="index" class="authentication__invalid">
+              {{ message }}
+            </li>
+          </ul>
+        </div>
+        <div class="button-group">
+          <button class="button--secondary" type="button" @click="login">Annuller</button>
+          <button class="button--primary" type="submit">Opret bruger</button>
         </div>
       </form>
     </div>
@@ -90,7 +142,6 @@ const register = () => {
 </template>
 
 <style lang="scss" scoped>
-// scoped styles for the authentication component
 .authentication {
   display: flex;
   align-items: center;
@@ -110,12 +161,16 @@ const register = () => {
   background-color: var(--primary-color);
 }
 
+.authentication__title {
+  margin-bottom: 1rem;
+}
+
 .authentication__form-group {
   position: relative;
   margin-bottom: 1.5rem;
 
   input {
-    width: 20rem;
+    width: 22rem;
     padding: 1.5rem 0.5rem 0.5rem 0.5rem;
     border: 1px solid var(--placeholder-text-inactive-text);
     border-radius: 4px;
@@ -145,15 +200,15 @@ const register = () => {
   }
 }
 
-.authentication__buttons {
+.button-group {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
 }
 
-.authentication__submit-button {
+.button--primary {
   width: -webkit-fill-available;
   height: 3rem;
   margin-left: 1vh;
@@ -171,7 +226,7 @@ const register = () => {
   }
 }
 
-.authentication__register-button {
+.button--secondary {
   width: -webkit-fill-available;
   height: 3rem;
   margin-right: 1vh;
@@ -192,7 +247,28 @@ const register = () => {
 .authentication__error {
   color: red;
   font-size: 0.9rem;
-  margin-top: 0.5rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  padding: inherit;
+}
+
+#authentication__message {
+  margin-top: 1rem;
+}
+
+.password_contains {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+#authentication__message p {
+  font-size: 0.8rem;
+  margin: 0.2rem 0;
+}
+
+.invalid {
+  color: red;
 }
 
 /* Hide spinner controls for number inputs */
