@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useUserStore } from '@/stores/userStore';
 // Views
 import DashboardView from '@/views/DashboardView.vue';
 import RegisterView from '@/views/RegisterView.vue';
@@ -145,6 +146,7 @@ const routes = [
           title: 'Administration',
           iconName: 'settings',
           requireAuth: true,
+          requiresAdmin: true,
         },
       },
     ],
@@ -157,17 +159,30 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log('before each', to.meta);
+  const user = useUserStore();
 
-  // Check if any matched route requires authentication
-  const requiresAuth = to.matched.some(record => record.meta.requireAuth);
-
-  if (requiresAuth && !localStorage.getItem('token')) {
-    console.log('Redirecting to login...');
-    // Redirect to login if the user is not authenticated
-    next({ path: '/login', query: { redirect: to.fullPath } });
+  // If store hasn’t loaded auth state yet, wait for it
+  if (!user.ready) {
+    const unwatch = user.$subscribe(() => {
+      if (user.ready) {
+        unwatch();
+        guardRoute();
+      }
+    });
   } else {
-    console.log('Proceeding to route...');
+    guardRoute();
+  }
+
+  function guardRoute() {
+    const requiresAuth  = to.matched.some(r => r.meta.requireAuth);
+    const requiresAdmin = to.matched.some(r => r.meta.requiresAdmin);
+
+    if (requiresAuth && !user.loggedIn) {
+      return next({ path: '/login', query: { redirect: to.fullPath } });
+    }
+    if (requiresAdmin && user.role !== 'admin') {
+      return next('/not-authorized');
+    }
     next();
   }
 });
