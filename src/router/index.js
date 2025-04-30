@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 import DashboardView from '@/views/DashboardView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
+import FormOverviewView from '@/views/FormOverviewView.vue';
+import FormLibraryComp from '@/components/FormLibraryComp.vue';
+import CheckpointsComp from '@/components/CheckpointsComp.vue';
+
 // Layouts
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 
@@ -145,6 +149,36 @@ const routes = [
           title: 'Administration',
           iconName: 'settings',
           requireAuth: true,
+        },
+      },
+      {
+        path: 'form-overview',
+        name: 'Form Overview',
+        component: FormOverviewView,
+        meta: {
+          title: 'Schemaoversigt',
+          iconName: 'schema',
+          // requireAuth: true,
+        },
+      },
+      {
+        path: 'form-library',
+        name: 'Form Library',
+        component: FormLibraryComp,
+        meta: {
+          title: 'Skemabibliotek',
+          iconName: 'library',
+          // requireAuth: true,
+        },
+      },
+      {
+        path: 'checkpoints',
+        name: 'Checkpoints',
+        component: CheckpointsComp,
+        meta: {
+          title: 'Tjekpunkter',
+          iconName: 'checkpoints',
+          // requireAuth: true,
         },
       },
     ],

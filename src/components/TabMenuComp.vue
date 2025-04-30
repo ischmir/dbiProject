@@ -1,27 +1,23 @@
 <script setup>
-import { ref } from 'vue';
-
-const menuItems = ['Skemaer', 'Skemabibliotek', 'Tjekpunkter'];
-const activeIndex = ref(null);
-
-function handleClick(index) {
-  activeIndex.value = index;
-  console.log(`Klikket på: ${menuItems[index]}`);
-}
+const menuItems = [
+  { name: 'Skemaer', path: '/form-overview' },
+  { name: 'Skemabibliotek', path: '/form-library' },
+  { name: 'Tjekpunkter', path: '/checkpoints' },
+];
 </script>
 
 <template>
   <nav>
     <div class="nav__menuBox">
-      <h2
+      <router-link
         v-for="(item, index) in menuItems"
         :key="index"
+        :to="item.path"
         class="menu-box__title"
-        :class="{ active: index === activeIndex }"
-        @click="handleClick(index)"
+        activeClass="active"
       >
-        {{ item }}
-      </h2>
+        {{ item.name }}
+      </router-link>
     </div>
   </nav>
 </template>
@@ -41,6 +37,14 @@ function handleClick(index) {
   height: 100%;
   padding: 15px 10px;
   flex-grow: 1;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 2rem; /* 32px / 16 = 2rem */
+  line-height: 2.5rem; /* 40px / 16 = 2.5rem */
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
 
   &:hover {
     background-color: var(--inactive-buttons-backgrounds);
@@ -49,6 +53,7 @@ function handleClick(index) {
   &.active {
     background-color: var(--primary-color);
     margin: 0%;
+    box-shadow: 0px -4px 3px 2px var(--strokes-lines);
   }
 }
 </style>
