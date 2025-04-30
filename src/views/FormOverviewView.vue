@@ -8,7 +8,7 @@ import { ref } from 'vue';
 
 const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 
-const count = ref(0);
+// const count = ref(0);
 </script>
 
 <template>
