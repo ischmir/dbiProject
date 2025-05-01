@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useUserStore } from '@/stores/userStore.js';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
+import FormOverviewView from '@/views/FormOverviewView.vue';
+import FormLibraryComp from '@/components/FormLibraryComp.vue';
+import CheckpointsComp from '@/components/CheckpointsComp.vue';
 
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
@@ -142,6 +145,36 @@ const routes = [
           iconName: 'settings',
           requireAuth: true,
           requiresAdmin: true,
+        },
+      },
+      {
+        path: 'form-overview',
+        name: 'Form Overview',
+        component: FormOverviewView,
+        meta: {
+          title: 'Schemaoversigt',
+          iconName: 'schema',
+          // requireAuth: true,
+        },
+      },
+      {
+        path: 'form-library',
+        name: 'Form Library',
+        component: FormLibraryComp,
+        meta: {
+          title: 'Skemabibliotek',
+          iconName: 'library',
+          // requireAuth: true,
+        },
+      },
+      {
+        path: 'checkpoints',
+        name: 'Checkpoints',
+        component: CheckpointsComp,
+        meta: {
+          title: 'Tjekpunkter',
+          iconName: 'checkpoints',
+          // requireAuth: true,
         },
       },
     ],

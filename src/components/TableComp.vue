@@ -26,7 +26,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 thead {
   border-radius: 4px;
-  box-shadow: 0px 1px 4px 0px var(--display-text-logo-text);
+  box-shadow: 0px 1px 4px 0px var(--strokes-lines);
 }
 
 th {
