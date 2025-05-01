@@ -1,40 +1,36 @@
 <script setup>
 import { ref } from 'vue';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter, useRoute } from 'vue-router';
-import { auth } from '@/configs/firebase.js';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useUserStore } from '@/stores/userStore';
 
 const email = ref('');
 const password = ref('');
 const loginErrorMessage = ref('');
+const auth = getAuth();
 const router = useRouter();
 const route = useRoute();
+const userStore = useUserStore();
 
-const login = () => {
-  signInWithEmailAndPassword(auth, email.value, password.value)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      loginErrorMessage.value = '';
+const login = async () => {
+  try {
+    await signInWithEmailAndPassword(auth, email.value, password.value);
 
-      // Store the token in localStorage
-      user.getIdToken().then((token) => {
-        localStorage.setItem('token', token);
-        console.log('Token saved to localStorage:', token);
+    loginErrorMessage.value = '';
 
-        const redirectPath = route.query.redirect || '/dashboard';
-        router.push(redirectPath);
-      });
+    // Update the user store with the logged-in user
+    await userStore.init();
 
-      console.log('User successfully logged in:', user);
-    })
-    .catch((error) => {
-      if (error.code === 'auth/invalid-credential') {
-        loginErrorMessage.value = 'User not found. Please register.';
-      } else {
-        loginErrorMessage.value = 'An error occurred. Please try again.';
-      }
-      console.error('Error registering user:', error.code);
-    });
+    const redirectPath = route.query.redirect || '/dashboard';
+
+    router.replace(redirectPath);
+  } catch (error) {
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-email') {
+      loginErrorMessage.value = 'Forkert email eller adgangskode.';
+    } else {
+      loginErrorMessage.value = 'Noget gik galt. Prøv igen.';
+    }
+  }
 };
 
 const register = () => {
@@ -66,11 +62,11 @@ const register = () => {
             autocomplete="current-password"
             required
           />
-          <label for="password">Password</label>
+          <label for="password">Adgangskode</label>
         </div>
         <p v-if="loginErrorMessage" class="authentication__error">{{ loginErrorMessage }}</p>
         <div class="button-group">
-          <button class="button--secondary" type="button" @click="register">Register</button>
+          <button class="button--secondary" type="button" @click="register">Opret Bruger</button>
           <button class="button--primary" type="submit">Login</button>
         </div>
       </form>

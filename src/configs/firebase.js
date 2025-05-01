@@ -1,8 +1,8 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
+// Web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyDqqXNyUnLbdBq38gU9ssHwaNci6CQBA6U',
   authDomain: 'dbifirestore.firebaseapp.com',
@@ -14,9 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase Authentication
+const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Export the app and auth instances
-export { app, auth };
+export { auth, db };

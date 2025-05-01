@@ -1,4 +1,3 @@
-<!-- Default Layout -->
 <script setup>
 import HeaderComp from '@/components/HeaderComp.vue';
 import NavComp from '@/components/NavComp.vue';

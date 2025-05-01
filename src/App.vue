@@ -1,9 +1,5 @@
-<script setup>
-</script>
-
 <template>
-  <div>
+  <div id="app">
     <router-view />
-    <!-- Render the current route -->
   </div>
 </template>

@@ -1,15 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// Views
-import DashboardView from '@/views/DashboardView.vue';
+import { useUserStore } from '@/stores/userStore.js';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
 import FormOverviewView from '@/views/FormOverviewView.vue';
 import FormLibraryComp from '@/components/FormLibraryComp.vue';
 import CheckpointsComp from '@/components/CheckpointsComp.vue';
-
-// Layouts
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-
 
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
@@ -35,20 +30,20 @@ const routes = [
   {
     path: '/',
     name: 'Default',
-    component: DefaultLayout,
+    component: () => import('@/layouts/DefaultLayout.vue'),
     redirect: '/dashboard',
     meta: {
-      // requireAuth: true,
+      requireAuth: true,
     },
     children: [
       {
         path: '/dashboard',
         name: 'Dashboard',
-        component: DashboardView,
+        component: () => import('@/views/DashboardView.vue'),
         meta: {
           title: 'Dashboard',
           iconName: 'dashboard',
-          // requireAuth: true,
+          requireAuth: true,
         },
       },
       {
@@ -149,6 +144,7 @@ const routes = [
           title: 'Administration',
           iconName: 'settings',
           requireAuth: true,
+          requiresAdmin: true,
         },
       },
       {
@@ -190,20 +186,34 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  console.log('before each', to.meta);
+router.beforeEach(async (to, from, next) => {
+  const user = useUserStore();
 
-  // Check if any matched route requires authentication
-  const requiresAuth = to.matched.some(record => record.meta.requireAuth);
-
-  if (requiresAuth && !localStorage.getItem('token')) {
-    console.log('Redirecting to login...');
-    // Redirect to login if the user is not authenticated
-    next({ path: '/login', query: { redirect: to.fullPath } });
-  } else {
-    console.log('Proceeding to route...');
-    next();
+  // Wait for the user store to initialize if not ready
+  if (!user.ready) {
+    console.log('Waiting for user store to initialize...');
+    await user.init();
   }
+
+  // Guard the route based on meta fields
+  const requiresAuth = to.matched.some((r) => r.meta.requireAuth);
+  const requiresAdmin = to.matched.some((r) => r.meta.requiresAdmin);
+
+  if (requiresAuth && !user.loggedIn) {
+    console.log('Redirecting to login...');
+    if (to.path !== '/login') {
+      return next({ path: '/login', query: { redirect: to.fullPath } });
+    }
+    return next();
+  }
+
+  if (requiresAdmin && user.role !== 'admin') {
+    console.log('Redirecting to not authorized...');
+    return next('/not-authorized');
+  }
+
+  next();
 });
 
-export default router;
+export { routes }; // Export the routes array
+export default router; // Export the router instance
