@@ -1,10 +1,9 @@
-<!-- Logout Component -->
 <script setup>
-import { signOut } from 'firebase/auth';
-import { auth } from '@/configs/firebase';
+import { getAuth, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 import IconsComp from './IconsComp.vue';
 
+const auth = getAuth();
 const router = useRouter();
 
 const logout = () => {
@@ -23,7 +22,3 @@ const logout = () => {
 <template>
   <IconsComp @click="logout" class="header__button-icon" iconName="logout" />
 </template>
-
-<style scoped>
- /* Scoped styles for LogoutComp */
-</style>

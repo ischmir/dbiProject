@@ -1,12 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useUserStore } from '@/stores/userStore';
-// Views
-import DashboardView from '@/views/DashboardView.vue';
+import { useUserStore } from '@/stores/userStore.js';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
-// Layouts
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-
 
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
@@ -32,20 +27,20 @@ const routes = [
   {
     path: '/',
     name: 'Default',
-    component: DefaultLayout,
+    component: () => import('@/layouts/DefaultLayout.vue'),
     redirect: '/dashboard',
     meta: {
-      // requireAuth: true,
+      requireAuth: true,
     },
     children: [
       {
         path: '/dashboard',
         name: 'Dashboard',
-        component: DashboardView,
+        component: () => import('@/views/DashboardView.vue'),
         meta: {
           title: 'Dashboard',
           iconName: 'dashboard',
-          // requireAuth: true,
+          requireAuth: true,
         },
       },
       {
@@ -158,33 +153,34 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const user = useUserStore();
 
-  // If store hasn’t loaded auth state yet, wait for it
+  // Wait for the user store to initialize if not ready
   if (!user.ready) {
-    const unwatch = user.$subscribe(() => {
-      if (user.ready) {
-        unwatch();
-        guardRoute();
-      }
-    });
-  } else {
-    guardRoute();
+    console.log('Waiting for user store to initialize...');
+    await user.init();
   }
 
-  function guardRoute() {
-    const requiresAuth  = to.matched.some(r => r.meta.requireAuth);
-    const requiresAdmin = to.matched.some(r => r.meta.requiresAdmin);
+  // Guard the route based on meta fields
+  const requiresAuth = to.matched.some((r) => r.meta.requireAuth);
+  const requiresAdmin = to.matched.some((r) => r.meta.requiresAdmin);
 
-    if (requiresAuth && !user.loggedIn) {
+  if (requiresAuth && !user.loggedIn) {
+    console.log('Redirecting to login...');
+    if (to.path !== '/login') {
       return next({ path: '/login', query: { redirect: to.fullPath } });
     }
-    if (requiresAdmin && user.role !== 'admin') {
-      return next('/not-authorized');
-    }
-    next();
+    return next();
   }
+
+  if (requiresAdmin && user.role !== 'admin') {
+    console.log('Redirecting to not authorized...');
+    return next('/not-authorized');
+  }
+
+  next();
 });
 
-export default router;
+export { routes }; // Export the routes array
+export default router; // Export the router instance
