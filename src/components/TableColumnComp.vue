@@ -1,7 +1,7 @@
-<script setup></script>
-
 <template>
-  <td><slot></slot></td>
+  <td>
+    <slot />
+  </td>
 </template>
 
 <style lang="scss" scoped>
@@ -13,5 +13,9 @@ td {
   letter-spacing: 0%;
   vertical-align: middle;
   padding: 12px 24px;
+
+  &:last-child {
+    float: right;
+  }
 }
 </style>

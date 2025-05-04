@@ -4,6 +4,7 @@ import IconsComp from '@/components/IconsComp.vue';
 import TableColumn from '@/components/TableColumnComp.vue';
 import TableComp from '@/components/TableComp.vue';
 import TableRow from '@/components/TableRowComp.vue';
+// import { ref } from 'vue';
 
 const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 </script>
@@ -11,26 +12,39 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 <template>
   <TabMenuComp />
   <div class="container">
-    <TableComp :cols="['Mapper']">
+    <TableComp :cols="['Lokation']">
       <template #header>
         <IconsComp iconName="add-folder" />
       </template>
       <TableRow v-for="folderName in dummyFolders" v-bind:key="folderName">
         <TableColumn> {{ folderName }} </TableColumn>
+        <TableColumn> <IconsComp iconName="arrow-right" /> </TableColumn>
       </TableRow>
     </TableComp>
 
-    <TableComp :cols="['Indhold']">
+    <TableComp :cols="['UCL Seebladsgade']">
       <template #header>
         <IconsComp iconName="sort" />
-        <IconsComp iconName="add-schedule" />
+        <IconsComp iconName="print" />
+        <IconsComp iconName="qr-code-group" />
+        <IconsComp iconName="qr-code" />
       </template>
       <TableRow>
-        <TableColumn> skemanavn </TableColumn>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code" />
+            Tjekpunkt
+          </div>
+        </TableColumn>
         <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
       </TableRow>
       <TableRow>
-        <TableColumn> Førstehjælp </TableColumn>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code-group" />
+            Tjekpunkt
+          </div>
+        </TableColumn>
         <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
       </TableRow>
     </TableComp>
@@ -38,6 +52,10 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 </template>
 
 <style lang="scss" scoped>
+.group-container {
+  display: flex;
+  gap: 5px;
+}
 .container {
   display: grid;
   grid-template-columns: 1fr 3fr;

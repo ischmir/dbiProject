@@ -3,8 +3,8 @@ import { useUserStore } from '@/stores/userStore.js';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
 import FormOverviewView from '@/views/FormOverviewView.vue';
-import FormLibraryComp from '@/components/FormLibraryComp.vue';
-import CheckpointsComp from '@/components/CheckpointsComp.vue';
+import FormLibraryView from '@/views/FormLibraryView.vue';
+import CheckpointsView from '@/views/CheckpointsView.vue';
 
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
@@ -77,16 +77,6 @@ const routes = [
         },
       },
       {
-        path: 'form-overview',
-        name: 'Form Overview',
-        component: () => import('../views/FormOverviewView.vue'),
-        meta: {
-          title: 'Schemaoversigt',
-          iconName: 'schema',
-          // requireAuth: true,
-        },
-      },
-      {
         path: 'users',
         name: 'Users',
         component: MockupComponent,
@@ -152,29 +142,28 @@ const routes = [
         name: 'Form Overview',
         component: FormOverviewView,
         meta: {
-          title: 'Schemaoversigt',
+          title: 'Skemaoversigt',
           iconName: 'schema',
-          // requireAuth: true,
         },
       },
       {
         path: 'form-library',
         name: 'Form Library',
-        component: FormLibraryComp,
+        component: FormLibraryView,
         meta: {
           title: 'Skemabibliotek',
           iconName: 'library',
-          // requireAuth: true,
+          hide: true,
         },
       },
       {
         path: 'checkpoints',
         name: 'Checkpoints',
-        component: CheckpointsComp,
+        component: CheckpointsView,
         meta: {
           title: 'Tjekpunkter',
           iconName: 'checkpoints',
-          // requireAuth: true,
+          hide: true,
         },
       },
     ],

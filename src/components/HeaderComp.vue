@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import IconsComp from './IconsComp.vue';
 import LogoutComp from './LogoutComp.vue';
+import SearchInputComp from './SearchInputComp.vue';
 
 const route = useRoute();
 const title = computed(() => route.meta.title);
@@ -33,10 +34,7 @@ const handleMouseLeave = () => {
     <!-- Title and Search -->
     <div class="header__center base-container">
       <h1 class="header__title">{{ title }}</h1>
-      <div class="header__search">
-        <input type="text" class="header__search-input" placeholder="Søg" />
-        <IconsComp class="header__search-icon" iconName="search" />
-      </div>
+      <SearchInputComp />
     </div>
 
     <!-- Action Buttons -->
