@@ -14,9 +14,7 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
   <div class="container">
     <TableComp :cols="['Mapper']">
       <template #header>
-        <th>
-          <IconsComp iconName="add-folder" />
-        </th>
+        <IconsComp iconName="add-folder" />
       </template>
       <TableRow v-for="folderName in dummyFolders" v-bind:key="folderName">
         <TableColumn> {{ folderName }} </TableColumn>
@@ -25,12 +23,8 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 
     <TableComp :cols="['Indhold']">
       <template #header>
-        <th>
-          <div class="icons-th">
-            <IconsComp iconName="sort" />
-            <IconsComp iconName="add-schedule" />
-          </div>
-        </th>
+        <IconsComp iconName="sort" />
+        <IconsComp iconName="add-schedule" />
       </template>
       <TableRow>
         <TableColumn> skemanavn </TableColumn>

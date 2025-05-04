@@ -13,7 +13,11 @@ const props = defineProps({
       <thead>
         <tr>
           <th v-for="col in props.cols" v-bind:key="col">{{ col }}</th>
-          <slot name="header" />
+          <th v-if="$slots.header">
+            <div class="icon-container">
+              <slot name="header" />
+            </div>
+          </th>
         </tr>
       </thead>
 
@@ -30,8 +34,15 @@ thead {
   box-shadow: 0px 1px 4px 0px var(--strokes-lines);
 }
 
+.icon-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
 th {
   padding: 12px 24px;
+  text-align: left;
 }
 
 table {
