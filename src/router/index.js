@@ -77,16 +77,6 @@ const routes = [
         },
       },
       {
-        path: 'form-overview',
-        name: 'Form Overview',
-        component: () => import('../views/FormOverviewView.vue'),
-        meta: {
-          title: 'Schemaoversigt',
-          iconName: 'schema',
-          // requireAuth: true,
-        },
-      },
-      {
         path: 'users',
         name: 'Users',
         component: MockupComponent,
@@ -152,9 +142,8 @@ const routes = [
         name: 'Form Overview',
         component: FormOverviewView,
         meta: {
-          title: 'Schemaoversigt',
+          title: 'Skemaoversigt',
           iconName: 'schema',
-          // requireAuth: true,
         },
       },
       {
@@ -164,7 +153,7 @@ const routes = [
         meta: {
           title: 'Skemabibliotek',
           iconName: 'library',
-          // requireAuth: true,
+          hide: true,
         },
       },
       {
@@ -174,7 +163,7 @@ const routes = [
         meta: {
           title: 'Tjekpunkter',
           iconName: 'checkpoints',
-          // requireAuth: true,
+          hide: true,
         },
       },
     ],

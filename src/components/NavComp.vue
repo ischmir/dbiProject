@@ -6,7 +6,8 @@ import IconsComp from './IconsComp.vue';
 const router = useRouter();
 
 // Get only the children of the DefaultLayout route
-const routes = router.options.routes.find(route => route.name === 'Default')?.children || [];
+const routes =
+  router.options.routes.find((route) => route.name === 'Default')?.children || [];
 
 // Track hover state for each route
 const hoveredRoute = ref(null);
@@ -31,7 +32,12 @@ const handleMouseLeave = () => {
           @mouseover="handleMouseOver(route.path)"
           @mouseleave="handleMouseLeave"
         >
-          <router-link :to="route.path" class="sidenav__link" v-slot="{ isActive }">
+          <router-link
+            :to="route.path"
+            class="sidenav__link"
+            v-slot="{ isActive }"
+            v-if="!route.meta?.hide"
+          >
             <span
               class="sidenav__icon-wrapper"
               :style="{
