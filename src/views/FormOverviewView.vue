@@ -7,28 +7,37 @@ import TableRow from '@/components/TableRowComp.vue';
 // import { ref } from 'vue';
 
 const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
-
-// const count = ref(0);
 </script>
 
 <template>
   <TabMenuComp />
   <div class="container">
-    <TableComp :cols="['Mapper', 'IKON']">
+    <TableComp :cols="['Mapper']">
+      <template #header>
+        <th>
+          <IconsComp iconName="add-folder" />
+        </th>
+      </template>
       <TableRow v-for="folderName in dummyFolders" v-bind:key="folderName">
         <TableColumn> {{ folderName }} </TableColumn>
       </TableRow>
     </TableComp>
 
-    <TableComp :cols="['Indhold', 'IKON', 'IKON']">
+    <TableComp :cols="['Indhold']">
+      <template #header>
+        <th>
+          <div class="icons-th">
+            <IconsComp iconName="sort" />
+            <IconsComp iconName="add-schedule" />
+          </div>
+        </th>
+      </template>
       <TableRow>
         <TableColumn> skemanavn </TableColumn>
-        <TableColumn> </TableColumn>
         <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
       </TableRow>
       <TableRow>
         <TableColumn> Førstehjælp </TableColumn>
-        <TableColumn> </TableColumn>
         <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
       </TableRow>
     </TableComp>
@@ -41,5 +50,10 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
   grid-template-columns: 1fr 3fr;
   gap: 12px;
   padding: 12px;
+}
+
+.icons-th {
+  display: flex;
+  gap: 24px;
 }
 </style>

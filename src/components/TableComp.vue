@@ -13,11 +13,12 @@ const props = defineProps({
       <thead>
         <tr>
           <th v-for="col in props.cols" v-bind:key="col">{{ col }}</th>
+          <slot name="header" />
         </tr>
       </thead>
 
       <tbody>
-        <slot></slot>
+        <slot />
       </tbody>
     </table>
   </div>
