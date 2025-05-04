@@ -3,8 +3,8 @@ import { useUserStore } from '@/stores/userStore.js';
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
 import FormOverviewView from '@/views/FormOverviewView.vue';
-import FormLibraryComp from '@/components/FormLibraryComp.vue';
-import CheckpointsComp from '@/components/CheckpointsComp.vue';
+import FormLibraryView from '@/views/FormLibraryView.vue';
+import CheckpointsView from '@/views/CheckpointsView.vue';
 
 const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
 
@@ -149,7 +149,7 @@ const routes = [
       {
         path: 'form-library',
         name: 'Form Library',
-        component: FormLibraryComp,
+        component: FormLibraryView,
         meta: {
           title: 'Skemabibliotek',
           iconName: 'library',
@@ -159,7 +159,7 @@ const routes = [
       {
         path: 'checkpoints',
         name: 'Checkpoints',
-        component: CheckpointsComp,
+        component: CheckpointsView,
         meta: {
           title: 'Tjekpunkter',
           iconName: 'checkpoints',

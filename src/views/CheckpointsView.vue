@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TabMenuComp from './TabMenuComp.vue';
+import TabMenuComp from '@/components/TabMenuComp.vue';
 </script>
 
 <template>

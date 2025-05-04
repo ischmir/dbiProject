@@ -4,7 +4,7 @@ import IconsComp from '@/components/IconsComp.vue';
 import TableColumn from '@/components/TableColumnComp.vue';
 import TableComp from '@/components/TableComp.vue';
 import TableRow from '@/components/TableRowComp.vue';
-import SearchInputComp from './SearchInputComp.vue';
+import SearchInputComp from '@/components/SearchInputComp.vue';
 const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 </script>
 
