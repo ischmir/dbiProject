@@ -1,33 +1,55 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import IconsComp from '@/components/IconsComp.vue';
 import StepOne from '@/components/steps/StepOne.vue';
 import StepTwo from '@/components/steps/StepTwo.vue';
 
+const router = useRouter();
 const currentPage = ref(1);
 const totalPages = 2;
 
 const formData = ref({
   name: '',
-  email: '',
-  age: '',
   options: {
     opt1: false,
     opt2: false,
     opt3: false,
+    frequency: '',
+    receiverOfBill: '',
+    receiverOfDeviation: '',
+    rights: '',
+    checkpoints: '',
   },
-  description: '',
 });
 
-const canGoNext = computed(() => currentPage.value < totalPages);
+// Only validate the name field on step one
+const canGoNext = computed(() => {
+  if (currentPage.value === 1) {
+    return formData.value.name.length >= 3;
+  }
+  return true; // No requirements for step two
+});
+
 const canGoBack = computed(() => currentPage.value > 1);
 
-const goToNextPage = () => {
-  if (canGoNext.value) {
+const goToNextPage = async () => {
+  if (currentPage.value < totalPages) {
+    // Navigate to the next page if not on the last page
     currentPage.value++;
   } else {
     // Handle form submission when on the last page
-    console.log('Form submitted:', formData.value);
+    try {
+      const db = getFirestore();
+      const formCollection = collection(db, 'forms');
+      await addDoc(formCollection, formData.value);
+      console.log('Form submitted successfully:', formData.value);
+      // Redirect to "skemaoversigt" after submission
+      router.push('/form-overview');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   }
 };
 
@@ -85,7 +107,12 @@ const currentComponent = computed(() => {
         <button class="button--secondary" v-if="canGoBack" type="button" @click="goToPreviousPage">
           Tilbage
         </button>
-        <button class="button--primary" type="button" @click="goToNextPage">
+        <button
+          class="button--primary"
+          type="button"
+          :disabled="currentPage === 1 && !canGoNext"
+          @click="goToNextPage"
+        >
           {{ currentPage === totalPages ? 'Opret' : 'Næste' }}
         </button>
       </div>
@@ -207,9 +234,9 @@ const currentComponent = computed(() => {
 
     #create-form__button-group {
         display: flex;
-        justify-content: flex-end; /* Align buttons to the right */
+        justify-content: flex-end;
         margin-top: 0.5rem;
-        gap: 0.5rem; /* Add spacing between buttons */
+        gap: 0.5rem;
     }
 
     .create-form__input {
@@ -222,5 +249,12 @@ const currentComponent = computed(() => {
         display: block;
         margin-bottom: 0.5rem;
     }
+}
+
+.button--primary:disabled {
+  background-color: var(--cta-button-disabled-background);
+  color: var(--help-text);
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 </style>

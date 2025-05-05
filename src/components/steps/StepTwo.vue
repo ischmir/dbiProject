@@ -10,6 +10,20 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+if (!props.modelValue.options.rights) {
+  emit('update:modelValue', {
+    ...props.modelValue,
+    options: { ...props.modelValue.options, rights: '' },
+  });
+}
+
+if (!props.modelValue.options.checkpoints) {
+  emit('update:modelValue', {
+    ...props.modelValue,
+    options: { ...props.modelValue.options, checkpoints: '' },
+  });
+}
 </script>
 
 <template>
@@ -63,6 +77,7 @@ const emit = defineEmits(['update:modelValue']);
   gap: 1rem;
   background-color: var(--forms-charts);
   border-radius: 8px;
+  height: 58vh;
 }
 
 .create-form__form-group {
@@ -104,15 +119,15 @@ const emit = defineEmits(['update:modelValue']);
 }
 
 .custom-select {
-  appearance: none; // Skjul browserens pil
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background-color: white;
-  background-image: url('@/assets/icons/arrow-right.svg'); // Dit ikon
+  background-image: url('@/assets/icons/arrow-right.svg');
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1rem;
-  padding-right: 2.5rem; // Giv plads til ikonet
+  padding-right: 2.5rem;
   cursor: pointer;
 }
 </style>

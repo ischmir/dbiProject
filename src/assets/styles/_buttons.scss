@@ -22,6 +22,12 @@
     &:hover {
       background-color: var(--cta-button-hover-background);
     }
+
+    &:disabled {
+      background-color: var(--cta-button-disabled-background);
+      color: var(--help-text);
+      cursor: not-allowed;
+    }
   }
   
   .button--secondary {

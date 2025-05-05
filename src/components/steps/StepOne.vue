@@ -22,12 +22,11 @@ const toggleCheckbox = (option) => {
   });
 };
 
-// Computed property to check the length of the form-name input
 const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
 </script>
 
 <template>
-  <div>
+  <div class="create-form">
     <div class="create-form__form-group">
       <input
         class="create-form__input"
@@ -125,6 +124,10 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
 </template>
 
 <style scoped lang="scss">
+    .create-form {
+        height: 58vh;
+    }
+
     .create-form__form-group {
         position: relative;
         margin-bottom: 1.5rem;
@@ -132,7 +135,7 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
 
     .create-form__input {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
     width: 100%;
     height: 60px;
     padding: 1.5rem 0.5rem 0.5rem 0.5rem;
@@ -157,16 +160,17 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     }
 
     .custom-select {
-        appearance: none; // Skjul browserens pil
+        appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
         background-color: white;
-        background-image: url('@/assets/icons/arrow-right.svg'); // Dit ikon
+        background-image: url('@/assets/icons/arrow-right.svg');
         background-repeat: no-repeat;
         background-position: right 1rem center;
         background-size: 1rem;
-        padding-right: 2.5rem; // Giv plads til ikonet
+        padding-right: 2.5rem;
         cursor: pointer;
+        margin: -0.5rem 0;
     }
 
     .form-group__error-handling {
@@ -177,12 +181,14 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     color: var(--warning-dark);
     font-size: 0.7rem;
     margin-top: 0.25rem;
+    position: absolute;
     }
 
     .message--success {
     color: var(--success-dark);
     font-size: 0.7rem;
     margin-top: 0.25rem;
+    position: absolute;
     }
 
     .form-label {
@@ -197,7 +203,7 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     }
 
     .checkbox-group {
-    margin: 2rem auto;
+    margin: 4rem 0 2rem  0;
     }
 
     .checkbox-container {
@@ -215,13 +221,13 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('@/assets/icons/checkbox.svg'); /* Path to unmarked checkbox */
+    background-image: url('@/assets/icons/checkbox.svg');
     background-size: cover;
     background-repeat: no-repeat;
     transition: background-image 0.3s ease;
     }
 
     .custom-checkbox.checked {
-    background-image: url('@/assets/icons/checkbox-checked.svg'); /* Path to marked checkbox */
+    background-image: url('@/assets/icons/checkbox-checked.svg');
     }
 </style>
