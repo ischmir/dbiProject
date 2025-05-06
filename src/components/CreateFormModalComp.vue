@@ -14,10 +14,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  onClose: {
-    type: Function,
-    required: true,
-  },
 });
 console.log('Props', props);
 
