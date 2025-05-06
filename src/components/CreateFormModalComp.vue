@@ -145,7 +145,8 @@ const currentComponent = computed(() => {
         z-index: 2;
         background: #fff;
         width: 65vw;
-        height: 90vh;
+        max-width: 1200px;
+        height: 700px;
         padding: 2rem;
         border-radius: 4px;
         border: solid 10px;

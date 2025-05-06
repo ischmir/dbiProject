@@ -125,9 +125,6 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
 </template>
 
 <style scoped lang="scss">
-    .create-form {
-        height: 58vh;
-    }
 
     .create-form__form-group {
         position: relative;

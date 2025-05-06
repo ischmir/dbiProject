@@ -77,7 +77,7 @@ if (!props.modelValue.options.checkpoints) {
   gap: 1rem;
   background-color: var(--forms-charts);
   border-radius: 8px;
-  height: 58vh;
+  height: 456px;
 }
 
 .create-form__form-group {
@@ -98,7 +98,7 @@ if (!props.modelValue.options.checkpoints) {
 
 .form-group__select {
   display: block;
-  margin-bottom: 0.5rem;
+  margin: 1.5rem 0;
   width: 100%;
   height: 40px;
   padding: 0rem 0rem 0rem 0.5rem;
