@@ -28,43 +28,44 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
 <template>
   <div class="create-form">
     <div class="create-form__form-group">
-      <input
-        class="create-form__input"
-        :class="{ 'input--invalid': props.modelValue.name.length > 0 && !isFormNameValid, 'input--valid': isFormNameValid }"
-        type="text"
-        id="form-name"
-        :value="props.modelValue.name"
-        @input="emit('update:modelValue', { ...props.modelValue, name: $event.target.value })"
-      />
-      <label class="form-label" for="form-name">Skemanavn</label>
-    </div>
-    <div class="form-group__error-handling">
-      <p v-if="props.modelValue.name.length > 0 && !isFormNameValid" class="message--error">
-        Navnet skal være mindst 3 tegn langt.
-      </p>
-      <p v-if="isFormNameValid" class="message--success">
-        Navnet er gyldigt.
-      </p>
+        <input
+            class="form-group__input"
+            :class="{ 'form-group__input--invalid': props.modelValue.name.length > 0 && !isFormNameValid, 'form-group__input--valid': isFormNameValid }"
+            type="text"
+            id="formName"
+            :value="props.modelValue.name"
+            @input="emit('update:modelValue', { ...props.modelValue, name: $event.target.value })"
+        />
+        <label class="form-group__form-label" for="formName">Skemanavn</label>
+        <div class="form-group__error-handling">
+            <p v-if="props.modelValue.name.length > 0 && !isFormNameValid" class="error-handling__message--error">
+                Navnet skal være mindst 3 tegn langt.
+            </p>
+            <p v-if="isFormNameValid" class="error-handling__message--success">
+                Navnet er gyldigt.
+            </p>
+        </div>
     </div>
 
-    <div class="checkbox-group">
-      <div class="checkbox-container" @click="toggleCheckbox('opt1')">
+
+    <div class="create-form__checkbox-group">
+      <div class="checkbox-group__checkbox-container" @click="toggleCheckbox('opt1')">
         <span
-          class="custom-checkbox"
+          class="checkbox-container__custom-checkbox"
           :class="{ checked: props.modelValue.options.opt1 }"
         ></span>
         Tillad at gemme rapporter midlertidigt
       </div>
-      <div class="checkbox-container" @click="toggleCheckbox('opt2')">
+      <div class="checkbox-group__checkbox-container" @click="toggleCheckbox('opt2')">
         <span
-          class="custom-checkbox"
+          class="checkbox-container__custom-checkbox"
           :class="{ checked: props.modelValue.options.opt2 }"
         ></span>
         Vis seneste rapport
       </div>
-      <div class="checkbox-container" @click="toggleCheckbox('opt3')">
+      <div class="checkbox-group__checkbox-container" @click="toggleCheckbox('opt3')">
         <span
-          class="custom-checkbox"
+          class="checkbox-container__custom-checkbox"
           :class="{ checked: props.modelValue.options.opt3 }"
         ></span>
         Beredskabsadgang
@@ -72,10 +73,10 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     </div>
 
     <div class="create-form__form-group custom-select-wrapper">
-      <label for="frequency" class="form-label">Udførelsesinterval</label>
+      <label for="frequency" class="form-group__form-label">Udførelsesinterval</label>
       <select
         id="frequency"
-        class="create-form__input custom-select"
+        class="form-group__input custom-select"
         :value="props.modelValue.options.frequency"
         @change="emit('update:modelValue', { ...props.modelValue, options: { ...props.modelValue.options, frequency: $event.target.value } })"
       >
@@ -92,11 +93,11 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
         <option value="every-ten-years">Hvert tiende år</option>
       </select>
     </div>
-    <div class="authentication__form-group custom-select-wrapper">
-      <label for="receiver-of-bill" class="form-label">Modtager af kvittering</label>
+    <div class="create-form__form-group">
+      <label for="receiverOfBill" class="form-group__form-label">Modtager af kvittering</label>
       <select
-        id="receiver-of-bill"
-        class="create-form__input custom-select"
+        id="receiverOfBill"
+        class="form-group__input custom-select"
         :value="props.modelValue.options.receiverOfBill"
         @change="emit('update:modelValue', { ...props.modelValue, options: { ...props.modelValue.options, receiverOfBill: $event.target.value } })"
       >
@@ -106,11 +107,11 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
         <option value="user-2">John Dådyr</option>
       </select>
     </div>
-    <div class="authentication__form-group custom-select-wrapper">
-      <label for="receiver-of-deviation" class="form-label">Modtager af afvigelse</label>
+    <div class="create-form__form-group">
+      <label for="receiverOfDeviation" class="form-group__form-label">Modtager af afvigelse</label>
       <select
-        id="receiver-of-deviation"
-        class="create-form__input custom-select"
+        id="receiverOfDeviation"
+        class="form-group__input custom-select"
         :value="props.modelValue.options.receiverOfDeviation"
         @change="emit('update:modelValue', { ...props.modelValue, options: { ...props.modelValue.options, receiverOfDeviation: $event.target.value } })"
       >
@@ -133,7 +134,7 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
         margin-bottom: 1.5rem;
     }
 
-    .create-form__input {
+    .form-group__input {
     display: block;
     margin-bottom: 1.5rem;
     width: 100%;
@@ -147,51 +148,37 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    .create-form__input:focus {
+    .form-group__input:focus {
             border-color: var(--cta-button-forms-strokes);
     }
 
-    .input--invalid {
+    .form-group__input--invalid {
     background-color: var(--warning-light);
     }
 
-    .input--valid {
+    .form-group__input--valid {
     background-color: var(--success-light);
-    }
-
-    .custom-select {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-color: white;
-        background-image: url('@/assets/icons/arrow-right.svg');
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1rem;
-        padding-right: 2.5rem;
-        cursor: pointer;
-        margin: -0.5rem 0;
     }
 
     .form-group__error-handling {
         margin: -1.5rem 1rem;
     }
 
-    .message--error {
+    .error-handling__message--error {
     color: var(--warning-dark);
     font-size: 0.7rem;
     margin-top: 0.25rem;
     position: absolute;
     }
 
-    .message--success {
+    .error-handling__message--success {
     color: var(--success-dark);
     font-size: 0.7rem;
     margin-top: 0.25rem;
     position: absolute;
     }
 
-    .form-label {
+    .form-group__form-label {
     position: absolute;
     top: 30%;
     left: 0.5rem;
@@ -202,11 +189,11 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     color: var(--headlines-paragraphs);
     }
 
-    .checkbox-group {
+    .create-form__checkbox-group {
     margin: 4rem 0 2rem  0;
     }
 
-    .checkbox-container {
+    .checkbox-group__checkbox-container {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -214,7 +201,7 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
     font-size: 1rem;
     }
 
-    .custom-checkbox {
+    .checkbox-container__custom-checkbox {
     width: 20px;
     height: 20px;
     margin-right: 0.5rem;
@@ -229,5 +216,19 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
 
     .custom-checkbox.checked {
     background-image: url('@/assets/icons/checkbox-checked.svg');
+    }
+
+    .custom-select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: white;
+        background-image: url('@/assets/icons/arrow-right.svg');
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1rem;
+        padding-right: 2.5rem;
+        cursor: pointer;
+        margin: -0.5rem 0;
     }
 </style>

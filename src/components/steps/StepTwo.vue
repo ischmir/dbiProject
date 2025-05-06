@@ -27,17 +27,17 @@ if (!props.modelValue.options.checkpoints) {
 </script>
 
 <template>
-  <div class="create-form__container">
-    <div class="create-form__form-group custom-select-wrapper">
+  <div class="create-form">
+    <div class="create-form__form-group create-form__container">
       <h4>Tildel adgang</h4>
-      <hr class="create-form-horizontal-line" />
-      <ul class="create-form__list">
+      <hr class="form-group__horizontal-line" />
+      <ul class="form-group__list">
         <li>rettighedshaver</li>
       </ul>
-      <hr class="create-form-horizontal-line" />
+      <hr class="form-group-horizontal-line" />
       <select
         id="rights"
-        class="create-form__select custom-select"
+        class="form-group__select"
         :value="props.modelValue.options.rights"
         @change="emit('update:modelValue', { ...props.modelValue, options: { ...props.modelValue.options, rights: $event.target.value } })"
       >
@@ -50,12 +50,12 @@ if (!props.modelValue.options.checkpoints) {
         <option value="every-half-year">Jimmy Pesto Jr.</option>
       </select>
     </div>
-    <div class="create-form__form-group custom-select-wrapper">
+    <div class="create-form__form-group">
       <h4>Tilføj tjekpunkter</h4>
-      <hr class="create-form-horizontal-line" />
+      <hr class="form-group-horizontal-line" />
       <select
         id="checkpoints"
-        class="create-form__select custom-select"
+        class="form-group__select"
         :value="props.modelValue.options.checkpoints"
         @change="emit('update:modelValue', { ...props.modelValue, options: { ...props.modelValue.options, checkpoints: $event.target.value } })"
       >
@@ -70,7 +70,7 @@ if (!props.modelValue.options.checkpoints) {
 </template>
 
 <style scoped lang="scss">
-.create-form__container {
+.create-form {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -83,19 +83,20 @@ if (!props.modelValue.options.checkpoints) {
 .create-form__form-group {
   position: relative;
   margin-bottom: 1.5rem;
+  width: 50%;
 }
 
-.create-form-horizontal-line {
+.form-group__horizontal-line {
   margin: 0.2rem 0rem 1rem 0rem;
 }
 
-.create-form__list {
+.form-group__list {
   list-style: none;
   padding: 0;
   margin-bottom: 2rem;
 }
 
-.create-form__select {
+.form-group__select {
   display: block;
   margin-bottom: 0.5rem;
   width: 100%;
@@ -107,27 +108,18 @@ if (!props.modelValue.options.checkpoints) {
   outline: none;
   background-color: var(--forms-charts);
   transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.create-form__select:focus {
-  border-color: var(--cta-button-forms-strokes);
-}
-
-.custom-select-wrapper {
-  position: relative;
-  width: 50%;
-}
-
-.custom-select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-color: white;
   background-image: url('@/assets/icons/arrow-right.svg');
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1rem;
   padding-right: 2.5rem;
   cursor: pointer;
+}
+
+.form-group__select:focus {
+  border-color: var(--cta-button-forms-strokes);
 }
 </style>
