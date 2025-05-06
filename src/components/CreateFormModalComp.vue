@@ -1,12 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import IconsComp from '@/components/IconsComp.vue';
 import StepOne from '@/components/steps/StepOne.vue';
 import StepTwo from '@/components/steps/StepTwo.vue';
 
-const router = useRouter();
+const emit = defineEmits(['close']);
 const currentPage = ref(1);
 const totalPages = 2;
 
@@ -15,11 +14,16 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  onClose: {
+    type: Function,
+    required: true,
+  },
 });
 console.log('Props', props);
 
 const formData = ref({
   name: '',
+  folderId: props.folderId,
   options: {
     opt1: false,
     opt2: false,
@@ -54,7 +58,9 @@ const goToNextPage = async () => {
       await addDoc(formCollection, formData.value);
       console.log('Form submitted successfully:', formData.value);
       // Redirect to "skemaoversigt" after submission
-      router.push('/form-overview');
+      // router.push('/form-overview');
+      // props.onClose();
+      emit('close');
     } catch (error) {
       console.error('Error submitting form:', error);
     }
