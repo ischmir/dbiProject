@@ -5,7 +5,30 @@ import TableColumn from '@/components/TableColumnComp.vue';
 import TableComp from '@/components/TableComp.vue';
 import TableRow from '@/components/TableRowComp.vue';
 import SearchInputComp from '@/components/SearchInputComp.vue';
-const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
+// const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
+
+import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
+import { onMounted, ref } from 'vue';
+
+const forms = ref([]);
+const db = getFirestore();
+const formCollection = collection(db, 'forms');
+const ordering = ref('desc');
+
+const getForms = async (order = ordering.value) => {
+  ordering.value = order;
+  const q = query(formCollection, orderBy('name', ordering.value));
+  const querySnapshot = await getDocs(q);
+  const array = [];
+  querySnapshot.forEach((doc) => {
+    array.push({ ...doc.data(), id: doc.id });
+  });
+  forms.value = array;
+};
+
+onMounted(() => {
+  getForms();
+});
 </script>
 
 <template>
@@ -14,10 +37,15 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
     <TableComp :cols="['Skemaer']">
       <template #header>
         <SearchInputComp />
-        <IconsComp iconName="sort" />
+        <IconsComp
+          iconName="sort"
+          title="Sorter alfabetisk"
+          @click="() => getForms(ordering == 'asc' ? 'desc' : 'asc')"
+        />
       </template>
-      <TableRow v-for="folderName in dummyFolders" v-bind:key="folderName">
-        <TableColumn> {{ folderName }} </TableColumn>
+      <TableRow v-for="form in forms" v-bind:key="form.name">
+        <TableColumn> {{ form.name }} </TableColumn>
+        <TableColumn></TableColumn>
       </TableRow>
     </TableComp>
   </div>
