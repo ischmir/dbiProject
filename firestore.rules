@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+
+    // user profiles
+    match /users/{userId} {
+      // anyone can read their own profile
+      allow read:   if request.auth.uid == userId;
+      // users can only create their own profile once
+      allow create: if request.auth.uid == userId;
+      // only admins (per their own profile) can update any profile
+      allow update: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+      allow delete: if false;
+    }
+
+    // form definitions (any authenticated user can create)
+    match /forms/{formId} {
+      allow read:   if true;
+      allow create: if request.auth.uid != null; // Allow any signed-in user to create
+      allow update: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+      allow delete: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+    
+    match /folders {
+   	 allow read: if true;
+    }
+    
+    match /folders/{folderId} {
+   	 allow read: if true;
+    }
+
+    // form responses (any signed-in user creates; admin or owner reads)
+    match /responses/{respId} {
+      allow create: if request.auth.uid != null;
+      allow read:   if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin"
+                     || resource.data.ownerUid == request.auth.uid;
+      allow update: if false;
+      allow delete: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+  }
+} 

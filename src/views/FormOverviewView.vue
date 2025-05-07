@@ -7,15 +7,18 @@ import TableComp from '@/components/TableComp.vue';
 import TableRow from '@/components/TableRowComp.vue';
 import CreateFormModalComp from '@/components/CreateFormModalComp.vue';
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
   getDocs,
   getFirestore,
+  orderBy,
   query,
   where,
 } from 'firebase/firestore';
 
+const ordering = ref('desc');
 const folderId = ref(null);
 const folders = ref([]);
 const forms = ref([]);
@@ -31,15 +34,27 @@ const closeModal = () => {
 };
 
 const db = getFirestore();
-const formCollection = collection(db, 'folders');
+const folderCollection = collection(db, 'folders');
 
 const getFolders = async () => {
-  const querySnapshot = await getDocs(formCollection);
+  const querySnapshot = await getDocs(folderCollection);
   const array = [];
   querySnapshot.forEach((doc) => {
     array.push({ ...doc.data(), id: doc.id });
   });
   folders.value = array;
+};
+
+const addFolder = async () => {
+  const name = prompt('Navn');
+  if (name) {
+    const folderCollection = collection(db, 'folders');
+    const newDoc = await addDoc(folderCollection, {
+      name,
+    });
+    await getFolders();
+    await clickFolder(newDoc.id);
+  }
 };
 
 const deleteForm = async (id) => {
@@ -50,11 +65,16 @@ const deleteForm = async (id) => {
   clickFolder(folderId.value);
 };
 
-const clickFolder = async (id) => {
+const clickFolder = async (id, order = ordering.value) => {
   folderId.value = id;
+  ordering.value = order;
 
   // Find forms med det rigtige folderId
-  const q = query(collection(db, 'forms'), where('folderId', '==', id));
+  const q = query(
+    collection(db, 'forms'),
+    where('folderId', '==', id),
+    orderBy('name', ordering.value),
+  );
 
   const querySnapshot = await getDocs(q);
   const array = [];
@@ -77,7 +97,7 @@ console.log('folders', folders);
   <div class="container">
     <TableComp :cols="['Mapper']">
       <template #header>
-        <IconsComp iconName="add-folder" title="Opret mappe" />
+        <IconsComp iconName="add-folder" title="Opret mappe" @click="addFolder" />
       </template>
       <TableRow
         v-for="folder in folders"
@@ -86,12 +106,17 @@ console.log('folders', folders);
         @click="() => clickFolder(folder.id)"
       >
         <TableColumn> {{ folder.name }} </TableColumn>
+        <TableColumn> <IconsComp iconName="arrow-right" /> </TableColumn>
       </TableRow>
     </TableComp>
 
     <TableComp :cols="['Indhold']" v-if="!!folderId">
       <template #header>
-        <IconsComp iconName="sort" title="Sorter alfabetist" />
+        <IconsComp
+          iconName="sort"
+          title="Sorter alfabetist"
+          @click="() => clickFolder(folderId, ordering == 'asc' ? 'desc' : 'asc')"
+        />
         <IconsComp iconName="add-schedule" title="Opret skema" @click="openModal" />
       </template>
       <TableRow v-for="form in forms" v-bind:key="form.id">
