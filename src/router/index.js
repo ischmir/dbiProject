@@ -166,6 +166,15 @@ const routes = [
           hide: true,
         },
       },
+      {
+        path: 'create-form',
+        name: 'Create Form',
+        component: () => import('@/views/DragAndDropView.vue'),
+        meta: {
+          title: 'Skema',
+          hide: true,
+        },
+      },
     ],
   },
 ];
