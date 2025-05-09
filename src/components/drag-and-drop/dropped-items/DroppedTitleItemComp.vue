@@ -3,7 +3,7 @@ import { reactive } from 'vue';
 import IconsComp from '@/components/IconsComp.vue';
 
 const props = defineProps(['componentData']);
-const emit = defineEmits(['delete', 'duplicate']); // Define emitted events
+const emit = defineEmits(['delete', 'duplicate']);
 const data = reactive({ ...props.componentData });
 
 function save() {
@@ -14,12 +14,11 @@ function revert() {
   Object.assign(data, props.componentData);
 }
 
-// Define actions dynamically
 const actions = [
   { title: 'Gem og se resultat', iconName: 'save', handler: revert },
   { title: 'Gå tilbage', iconName: 'history', handler: save },
-  { title: 'kopier sektion', iconName: 'copy', handler: () => emit('duplicate') }, // Use emit instead of $emit
-  { title: 'Slet sektion', iconName: 'delete', handler: () => emit('delete') }, // Use emit instead of $emit
+  { title: 'kopier sektion', iconName: 'copy', handler: () => emit('duplicate') },
+  { title: 'Slet sektion', iconName: 'delete', handler: () => emit('delete') },
 ];
 </script>
 
@@ -44,6 +43,7 @@ const actions = [
       />
     </div>
   </div>
+  <hr class="droppedItem__divider" />
 </template>
 
 <style scoped>
@@ -54,7 +54,7 @@ const actions = [
         background: var(--primary-color);
         border: 1px solid #ccc;
         padding: 10px;
-        margin: 1rem;
+        margin: 0 1rem;
     }
     .dropped-component__content {
         display: flex;
@@ -101,5 +101,10 @@ const actions = [
         height: 100%;
         justify-content: space-around;
         margin: 0 1rem;
+    }
+
+    .droppedItem__divider {
+        border: 1px solid var(--inactive-buttons-backgrounds);
+        margin: 0.1rem 1rem 1rem 1rem;
     }
 </style>

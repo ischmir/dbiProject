@@ -167,12 +167,14 @@ const routes = [
         },
       },
       {
-        path: 'create-form',
+        path: 'form-editor',
         name: 'Create Form',
-        component: () => import('@/views/DragAndDropView.vue'),
+        component: () => import('@/views/FormEditorView.vue'),
         meta: {
           title: 'Skema',
           hide: true,
+          requireAuth: true,
+          requiresAdmin: true,
         },
       },
     ],

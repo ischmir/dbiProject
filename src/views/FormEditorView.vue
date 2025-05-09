@@ -1,6 +1,6 @@
 <script setup>
 import DropZone from '@/components/drag-and-drop/DropZoneComp.vue';
-import ItemPaletteComp from '@/components/drag-and-drop/ItemPaletteComp.vue';
+import ItemPaletteComp from '@/components/drag-and-drop/PaletteComp.vue';
 </script>
 
 <template>
@@ -27,9 +27,9 @@ import ItemPaletteComp from '@/components/drag-and-drop/ItemPaletteComp.vue';
     gap: 1vh;
   }
   .form-editor__drop-zone {
-    width: 100%;
+    flex-grow: 2;
   }
   .form-editor__palette {
-    width:80%;
+    flex-grow: 0;
   }
   </style>

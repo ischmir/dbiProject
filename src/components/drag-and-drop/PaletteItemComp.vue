@@ -5,7 +5,7 @@ const props = defineProps(['type', 'title', 'icon']);
 
 function onDragStart(event) {
   event.dataTransfer.setData('application/json', JSON.stringify({
-    type: props.type,
+    type: props.type, // Pass the type (e.g., "title" or "text")
     title: props.title,
     iconName: props.icon,
   }));

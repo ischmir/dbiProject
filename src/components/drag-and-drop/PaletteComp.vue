@@ -1,5 +1,5 @@
 <script setup>
-import PaletteItem from '@/components/drag-and-drop/palette-items/TextItemComp.vue';
+import PaletteItem from '@/components/drag-and-drop/PaletteItemComp.vue';
 </script>
 
 <template>
@@ -7,14 +7,14 @@ import PaletteItem from '@/components/drag-and-drop/palette-items/TextItemComp.v
     <h2 class="item-palette__title">Design</h2>
     <hr class="item-palette__divider" />
     <div class="item-palette__items">
-      <PaletteItem type="text" title="Overskrift" icon="title" />
-      <PaletteItem type="text" title="Brødtekst" icon="text" />
+      <PaletteItem type="title" title="Overskrift" icon="title" />
+      <PaletteItem type="text" title="Brødtekst" icon="text-fields" />
     </div>
     <h2 class="item-palette__title">Spørgsmål</h2>
     <hr class="item-palette__divider" />
     <div class="item-palette__items">
       <PaletteItem type="text" title="Kommentar" icon="comment" />
-      <PaletteItem type="text" title="Kommentar" icon="comment" />
+      <PaletteItem type="text" title="Ja / Nej" icon="radio-button-unchecked" />
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ import PaletteItem from '@/components/drag-and-drop/palette-items/TextItemComp.v
     text-align: start;
   }
   .item-palette__divider {
-    border: 1px solid var(--cta-button-light-hover);
+    border: 1px solid var(--placeholder-text-inactive-text);
     margin-bottom: 1rem;
   }
 

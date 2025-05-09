@@ -6,7 +6,6 @@ import IconsComp from '../IconsComp.vue';
 
 const droppedItems = ref([]);
 
-// Map of component types to their respective components
 const componentMap = {
   title: DroppedTitleItemComp,
   text: DroppedTextItemComp,
@@ -75,7 +74,7 @@ function duplicateItem(index) {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    padding: 20px;
+    padding: 1rem;
 }
 
 .header__title {
@@ -97,16 +96,16 @@ function duplicateItem(index) {
 }
 
 .dropzone__divider {
-    border: 1px solid var(--cta-button-light-hover);
-    margin-bottom: 1rem;
+    border: 1px solid var(--placeholder-text-inactive-text);
+    margin: 0.1rem 1rem 2rem 1rem;
 }
 
 .dropzone__container {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 100%; /* Take up remaining space in the parent */
-    overflow-y: auto; /* Enable scrolling for overflow content */
+    height: 100%;
+    overflow-y: auto;
     scroll-behavior: auto;
 }
 </style>
