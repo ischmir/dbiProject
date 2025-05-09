@@ -36,6 +36,5 @@ import NavComp from '@/components/NavComp.vue';
 
     .main-comp {
         grid-area: main;
-        overflow-y: auto;
     }
 </style>

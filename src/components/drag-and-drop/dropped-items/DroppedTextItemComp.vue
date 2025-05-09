@@ -27,9 +27,12 @@ const actions = [
   <div class="dropped-component">
     <div class="dropped-component__content">
       <caption class="content__info">Svartype: {{ data.title }}</caption>
-      <h2 class="content__title">{{ data.inputTitle }}</h2>
+      <p class="content__text">{{ data.inputTitle }}</p>
       <caption class="content__info">Tekst:</caption>
-      <input v-model="data.inputTitle" />
+      <div class="content__input-container">
+        <IconsComp class="content__icon" iconName="title" />
+        <input class="content__input" v-model="data.inputTitle" />
+      </div>
     </div>
     <div class="dropped-component__actions">
       <IconsComp
@@ -50,8 +53,8 @@ const actions = [
         align-items: flex-start;
         background: var(--primary-color);
         border: 1px solid #ccc;
-        margin-top: 10px;
         padding: 10px;
+        margin: 1rem;
     }
     .dropped-component__content {
         display: flex;
@@ -74,6 +77,24 @@ const actions = [
         margin-bottom: 1rem;
     }
 
+    .content__input-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .content__input {
+        width: 100%;
+        padding: 0.5rem 0rem 0.5rem 3rem;
+    }
+
+    .content__icon {
+        position: absolute;
+        left: 0.8rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.5rem;
+        height: 1.5rem;
+    }
     .dropped-component__actions {
         display: flex;
         flex-direction: column;

@@ -1,9 +1,16 @@
 <script setup>
 import { ref } from 'vue';
-import DroppedComponent from '../drag-and-drop/dropped-items/DroppedTextItemComp.vue';
+import DroppedTitleItemComp from '../drag-and-drop/dropped-items/DroppedTitleItemComp.vue';
+import DroppedTextItemComp from '../drag-and-drop/dropped-items/DroppedTextItemComp.vue';
 import IconsComp from '../IconsComp.vue';
 
 const droppedItems = ref([]);
+
+// Map of component types to their respective components
+const componentMap = {
+  title: DroppedTitleItemComp,
+  text: DroppedTextItemComp,
+};
 
 function onDrop(event) {
   const json = event.dataTransfer.getData('application/json');
@@ -28,73 +35,78 @@ function duplicateItem(index) {
 </script>
 
 <template>
-    <div class="dropzone" >
-        <div class="dropzone__header">
-            <h2 class="header__title">Skema Titel</h2>
-        <div class="header__dropzone-actions">
-            <IconsComp class="dropzone-actions__icon" iconName="more-horizon" />
-            <IconsComp class="dropzone-actions__icon" iconName="save" />
-        </div>
-        </div>
-        <hr class="dropzone__divider" />
-        <div
-            class="dropzone__container"
-            @dragover.prevent
-            @drop="onDrop"
-        >
-            <DroppedComponent
-                v-for="(item, index) in droppedItems"
-                :key="item.id"
-                :componentData="item"
-                @delete="() => droppedItems.splice(index, 1)"
-                @duplicate="() => duplicateItem(index)"
-            />
-        </div>
+  <div class="dropzone">
+    <div class="dropzone__header">
+      <h2 class="header__title">Skema Titel</h2>
+      <div class="header__dropzone-actions">
+        <IconsComp class="dropzone-actions__icon" iconName="more-horizon" />
+        <IconsComp class="dropzone-actions__icon" iconName="save" />
+      </div>
     </div>
-  </template>
+    <hr class="dropzone__divider" />
+    <div
+      class="dropzone__container"
+      @dragover.prevent
+      @drop="onDrop"
+    >
+      <component
+        v-for="(item, index) in droppedItems"
+        :is="componentMap[item.type]"
+        :key="item.id"
+        :componentData="item"
+        @delete="() => droppedItems.splice(index, 1)"
+        @duplicate="() => duplicateItem(index)"
+      />
+    </div>
+  </div>
+</template>
 
-  <style scoped>
-    .dropzone {
-        height: 100%;
-        border-radius: 8px;
-        padding: 20px;
-        background: #fff;
-    }
-    .dropzone__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-    }
+<style scoped>
+.dropzone {
+    height: 100%;
+    border-radius: 8px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+}
 
-    .header__title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        text-align: start;
-    }
-    .header__dropzone-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-grow: 1;
-        margin-bottom: 1rem;
-    }
+.dropzone__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 20px;
+}
 
-    .dropzone-actions__icon {
-        cursor: pointer;
-    }
+.header__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: start;
+}
+.header__dropzone-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    margin-bottom: 1rem;
+}
 
-    .dropzone__divider {
-        border: 1px solid var(--cta-button-light-hover);
-        margin-bottom: 1rem;
-    }
+.dropzone-actions__icon {
+    cursor: pointer;
+}
 
-    .dropzone__container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        height: 100%;
-        overflow-y: auto;
-    }
-  </style>
+.dropzone__divider {
+    border: 1px solid var(--cta-button-light-hover);
+    margin-bottom: 1rem;
+}
+
+.dropzone__container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%; /* Take up remaining space in the parent */
+    overflow-y: auto; /* Enable scrolling for overflow content */
+    scroll-behavior: auto;
+}
+</style>
