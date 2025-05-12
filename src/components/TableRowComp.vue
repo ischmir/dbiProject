@@ -10,4 +10,8 @@
 tr {
   border-bottom: 1px solid var(--strokes-lines);
 }
+
+tr:hover {
+  color: var(--cta-button-hover-link-hover);
+}
 </style>
