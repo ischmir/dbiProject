@@ -6,7 +6,17 @@ import TableComp from '@/components/TableComp.vue';
 import TableRow from '@/components/TableRowComp.vue';
 // import { ref } from 'vue';
 
-const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
+const dummyFolders = [
+  'Navn på lokation',
+  'Navn på lokation',
+  'Førstehjælp (skoler)',
+  'Navn på lokation',
+  'Navn på lokation',
+  'Navn på lokation',
+  'Navn på lokation',
+  'Navn på lokation',
+  'Navn på lokation',
+];
 </script>
 
 <template>
@@ -14,9 +24,9 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
   <div class="container">
     <TableComp :cols="['Lokation']">
       <template #header>
-        <IconsComp iconName="add-folder" />
+        <IconsComp iconName="add-folder" title="Opret lokation" />
       </template>
-      <TableRow v-for="folderName in dummyFolders" v-bind:key="folderName">
+      <TableRow v-for="folderName in dummyFolders" v-bind:key="folderName" class="folder">
         <TableColumn> {{ folderName }} </TableColumn>
         <TableColumn> <IconsComp iconName="arrow-right" /> </TableColumn>
       </TableRow>
@@ -24,10 +34,10 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 
     <TableComp :cols="['UCL Seebladsgade']">
       <template #header>
-        <IconsComp iconName="sort" />
-        <IconsComp iconName="print" />
-        <IconsComp iconName="qr-code-group" />
-        <IconsComp iconName="qr-code" />
+        <IconsComp iconName="sort" title="Sorter alfabetisk" />
+        <IconsComp iconName="print" title="Print alle" />
+        <IconsComp iconName="qr-code-group" title="Gruppeopret tjekpunkter" />
+        <IconsComp iconName="qr-code" title="Opret tjekpunkt" />
       </template>
       <TableRow>
         <TableColumn>
@@ -42,7 +52,70 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
         <TableColumn>
           <div class="group-container">
             <IconsComp iconName="qr-code-group" />
+            Førstehjælp
+          </div>
+        </TableColumn>
+        <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
+      </TableRow>
+      <TableRow>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code" />
+            Tjekpunktgruppe
+          </div>
+        </TableColumn>
+        <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
+      </TableRow>
+      <TableRow>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code-group" />
             Tjekpunkt
+          </div>
+        </TableColumn>
+        <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
+      </TableRow>
+      <TableRow>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code" />
+            Tjekpunktgruppe
+          </div>
+        </TableColumn>
+        <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
+      </TableRow>
+      <TableRow>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code-group" />
+            Tjekpunkt
+          </div>
+        </TableColumn>
+        <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
+      </TableRow>
+      <TableRow>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code" />
+            Tjekpunkt
+          </div>
+        </TableColumn>
+        <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
+      </TableRow>
+      <TableRow>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code-group" />
+            Tjekpunktgruppe
+          </div>
+        </TableColumn>
+        <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
+      </TableRow>
+      <TableRow>
+        <TableColumn>
+          <div class="group-container">
+            <IconsComp iconName="qr-code-group" />
+            Tjekpunktgruppe
           </div>
         </TableColumn>
         <TableColumn> <IconsComp iconName="checkpoints" /> </TableColumn>
@@ -66,5 +139,9 @@ const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
 .icons-th {
   display: flex;
   gap: 24px;
+}
+
+.folder {
+  cursor: pointer;
 }
 </style>

@@ -104,6 +104,7 @@ console.log('folders', folders);
         v-bind:key="folder.name"
         :class="{ isActive: folderId == folder.id }"
         @click="() => clickFolder(folder.id)"
+        class="folder"
       >
         <TableColumn> {{ folder.name }} </TableColumn>
         <TableColumn> <IconsComp iconName="arrow-right" /> </TableColumn>
@@ -138,7 +139,7 @@ console.log('folders', folders);
 
 <style lang="scss" scoped>
 .isActive {
-  color: var(--warning-dark);
+  color: var(--cta-button-link-active);
 }
 
 .container {
@@ -151,5 +152,9 @@ console.log('folders', folders);
 .icons-th {
   display: flex;
   gap: 24px;
+}
+
+.folder {
+  cursor: pointer;
 }
 </style>
