@@ -22,6 +22,7 @@ console.log('Props', props);
 const formData = ref({
   name: '',
   folderId: props.folderId,
+  components: [],
   options: {
     opt1: false,
     opt2: false,
