@@ -4,13 +4,14 @@ import DroppedTitleItemComp from '../drag-and-drop/dropped-items/DroppedTitleIte
 import DroppedTextItemComp from '../drag-and-drop/dropped-items/DroppedTextItemComp.vue';
 import IconsComp from '../IconsComp.vue';
 import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const droppedItems = ref([]);
 
 const db = getFirestore();
 
 const route = useRoute();
+const router = useRouter();
 
 const getFormComponents = async () => {
   const formRef = doc(db, 'forms', route.params.id);
@@ -18,7 +19,7 @@ const getFormComponents = async () => {
 
   const data = form.data();
 
-  droppedItems.value = data.components;
+  droppedItems.value = data.components ||[];
 
   console.log(data);
 
@@ -41,6 +42,7 @@ const saveComponents = async () => {
   });
 
   alert('Saved');
+  router.go(-1);
 };
 
 onMounted(() => {
