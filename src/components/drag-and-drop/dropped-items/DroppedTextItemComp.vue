@@ -1,10 +1,15 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 import IconsComp from '@/components/IconsComp.vue';
 
 const props = defineProps(['componentData']);
-const emit = defineEmits(['delete', 'duplicate']);
+const emit = defineEmits(['delete', 'duplicate', 'change']);
 const data = reactive({ ...props.componentData });
+
+// Add a watch effect to emit changes
+watch(data, (newValue) => {
+  emit('change', newValue);
+}, { deep: true });
 
 function save() {
   console.log('Saved:', data);
@@ -15,8 +20,8 @@ function revert() {
 }
 
 const createFormActions = [
-  { title: 'Gem og se resultat', iconName: 'save', handler: revert },
-  { title: 'Gå tilbage', iconName: 'history', handler: save },
+  { title: 'Gem og se resultat', iconName: 'save', handler: save },
+  { title: 'Gå tilbage', iconName: 'history', handler: revert },
   { title: 'kopier sektion', iconName: 'copy', handler: () => emit('duplicate') },
   { title: 'Slet sektion', iconName: 'delete', handler: () => emit('delete') },
 ];

@@ -3,12 +3,12 @@ import { reactive, watch } from 'vue';
 import IconsComp from '@/components/IconsComp.vue';
 
 const props = defineProps(['componentData', 'onChange']);
-const emit = defineEmits(['delete', 'duplicate']);
+const emit = defineEmits(['delete', 'duplicate', 'change']);
 const data = reactive({ ...props.componentData });
 
 function save() {
   console.log('Saved:', data);
-  props.onChange(data);
+  emit('change', data);
 }
 
 function revert() {

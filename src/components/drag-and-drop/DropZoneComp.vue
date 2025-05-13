@@ -98,7 +98,7 @@ console.log('Data', droppedItems.value);
         :componentData="item"
         @delete="() => droppedItems.splice(index, 1)"
         @duplicate="() => duplicateItem(index)"
-        :onChange="(data) => (droppedItems[index] = data)"
+        @change="(data) => (droppedItems[index] = data)"
       />
     </div>
   </div>
