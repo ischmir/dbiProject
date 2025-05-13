@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 import IconsComp from '@/components/IconsComp.vue';
 
 const props = defineProps(['componentData', 'onChange']);
@@ -14,6 +14,11 @@ function save() {
 function revert() {
   Object.assign(data, props.componentData);
 }
+
+// Tilføj watch på data.inputTitle
+watch(() => data.inputTitle, () => {
+  save();
+});
 
 const createFormActions = [
   { title: 'Gem og se resultat', iconName: 'save', handler: save },
