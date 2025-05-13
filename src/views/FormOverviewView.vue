@@ -91,9 +91,9 @@ onMounted(() => {
 });
 
 const clickForm = (id) => {
-  console.log("Clicked", id);
+  console.log('Clicked', id);
   router.push(`/form-editor/${id}`);
-}
+};
 
 console.log('form', forms);
 console.log('folders', folders);
@@ -127,8 +127,8 @@ console.log('folders', folders);
         />
         <IconsComp iconName="add-schedule" title="Opret skema" @click="openModal" />
       </template>
-      <TableRow v-for="form in forms" v-bind:key="form.id" @click="() =>clickForm(form.id)">
-        <TableColumn> {{ form.name }} </TableColumn>
+      <TableRow v-for="form in forms" v-bind:key="form.id">
+        <TableColumn @click="() => clickForm(form.id)"> {{ form.name }} </TableColumn>
         <TableColumn>
           <IconsComp iconName="checkpoints" />
           <IconsComp iconName="delete" @click="() => deleteForm(form.id)" />
