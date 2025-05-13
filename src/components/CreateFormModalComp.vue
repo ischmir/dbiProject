@@ -1,11 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router'; // Import useRouter
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import IconsComp from '@/components/IconsComp.vue';
 import StepOne from '@/components/steps/StepOne.vue';
 import StepTwo from '@/components/steps/StepTwo.vue';
 
 const emit = defineEmits(['close']);
+const router = useRouter(); // Initialize router
 const currentPage = ref(1);
 const totalPages = 2;
 
@@ -51,12 +53,11 @@ const goToNextPage = async () => {
     try {
       const db = getFirestore();
       const formCollection = collection(db, 'forms');
-      await addDoc(formCollection, formData.value);
+      const docRef = await addDoc(formCollection, formData.value);
       console.log('Form submitted successfully:', formData.value);
-      // Redirect to "skemaoversigt" after submission
-      // router.push('/form-overview');
-      // props.onClose();
-      emit('close');
+
+      // Redirect to the form-editor route with the new form ID
+      router.push(`/form-editor/${docRef.id}`);
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -76,7 +77,7 @@ const currentComponent = computed(() => {
 
 <template>
   <div class="create-form__modal">
-    <div class="modal__backdrop" @click="$emit('close')"></div>
+    <div class="modal__backdrop" @click="emit('close')"></div>
     <div class="modal__container">
       <!-- Header -->
       <div class="container__header">
@@ -85,7 +86,7 @@ const currentComponent = computed(() => {
           <IconsComp class="header__icon" iconName="help" />
         </div>
         <div class="header__content">
-          <IconsComp class="header__icon" iconName="close" @click="$emit('close')" />
+          <IconsComp class="header__icon" iconName="close" @click="emit('close')" />
         </div>
       </div>
 

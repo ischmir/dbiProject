@@ -47,7 +47,7 @@ const routes = [
         },
       },
       {
-        path: 'reports',
+        path: '/reports',
         name: 'Reports',
         component: MockupComponent,
         meta: {
@@ -57,7 +57,7 @@ const routes = [
         },
       },
       {
-        path: 'deadlines',
+        path: '/deadlines',
         name: 'Deadlines',
         component: MockupComponent,
         meta: {
@@ -67,7 +67,7 @@ const routes = [
         },
       },
       {
-        path: 'fill-in-form',
+        path: '/fill-in-form',
         name: 'Fill in form',
         component: MockupComponent,
         meta: {
@@ -77,7 +77,7 @@ const routes = [
         },
       },
       {
-        path: 'users',
+        path: '/users',
         name: 'Users',
         component: MockupComponent,
         meta: {
@@ -87,7 +87,7 @@ const routes = [
         },
       },
       {
-        path: 'groups',
+        path: '/groups',
         name: 'Groups',
         component: MockupComponent,
         meta: {
@@ -97,7 +97,7 @@ const routes = [
         },
       },
       {
-        path: 'documents',
+        path: '/documents',
         name: 'Documents',
         component: MockupComponent,
         meta: {
@@ -107,7 +107,7 @@ const routes = [
         },
       },
       {
-        path: 'plans',
+        path: '/plans',
         name: 'Plans',
         component: MockupComponent,
         meta: {
@@ -117,7 +117,7 @@ const routes = [
         },
       },
       {
-        path: 'calendar',
+        path: '/calendar',
         name: 'Calendar',
         component: MockupComponent,
         meta: {
@@ -127,7 +127,7 @@ const routes = [
         },
       },
       {
-        path: 'settings',
+        path: '/settings',
         name: 'Administration',
         component: MockupComponent,
         meta: {
@@ -138,7 +138,7 @@ const routes = [
         },
       },
       {
-        path: 'form-overview',
+        path: '/form-overview',
         name: 'Form Overview',
         component: FormOverviewView,
         meta: {
@@ -147,7 +147,7 @@ const routes = [
         },
       },
       {
-        path: 'form-library',
+        path: '/form-library',
         name: 'Form Library',
         component: FormLibraryView,
         meta: {
@@ -157,13 +157,24 @@ const routes = [
         },
       },
       {
-        path: 'checkpoints',
+        path: '/checkpoints',
         name: 'Checkpoints',
         component: CheckpointsView,
         meta: {
           title: 'Tjekpunkter',
           iconName: 'checkpoints',
           hide: true,
+        },
+      },
+      {
+        path: '/form-editor/:id',
+        name: 'Create Form',
+        component: () => import('@/views/FormEditorView.vue'),
+        meta: {
+          title: 'Skema',
+          hide: true,
+          requireAuth: true,
+          requiresAdmin: true,
         },
       },
     ],
@@ -176,6 +187,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  // from; Not in use
   const user = useUserStore();
 
   // Wait for the user store to initialize if not ready
