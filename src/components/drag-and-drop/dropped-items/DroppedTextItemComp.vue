@@ -14,7 +14,7 @@ function revert() {
   Object.assign(data, props.componentData);
 }
 
-const actions = [
+const createFormActions = [
   { title: 'Gem og se resultat', iconName: 'save', handler: revert },
   { title: 'Gå tilbage', iconName: 'history', handler: save },
   { title: 'kopier sektion', iconName: 'copy', handler: () => emit('duplicate') },
@@ -35,7 +35,7 @@ const actions = [
     </div>
     <div class="dropped-component__actions">
       <IconsComp
-        v-for="(action, index) in actions"
+        v-for="(action, index) in createFormActions"
         :key="index"
         :iconName="action.iconName"
         :title="action.title"

@@ -29,6 +29,7 @@ function onDragStart(event) {
     align-items: center;
     justify-content: flex-start;
     flex-grow: 1;
+    min-width: 12rem;
     padding: 1rem 1.5rem;
     background: var(--forms-charts);
     cursor: grab;

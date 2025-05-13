@@ -19,7 +19,6 @@ function onDrop(event) {
   droppedItems.value.push({
     ...data,
     id: Date.now(),
-    description: '',
     inputValue: '',
   });
 }

@@ -14,9 +14,9 @@ function revert() {
   Object.assign(data, props.componentData);
 }
 
-const actions = [
-  { title: 'Gem og se resultat', iconName: 'save', handler: revert },
-  { title: 'Gå tilbage', iconName: 'history', handler: save },
+const createFormActions = [
+  { title: 'Gem og se resultat', iconName: 'save', handler: save },
+  { title: 'Gå tilbage', iconName: 'history', handler: revert },
   { title: 'kopier sektion', iconName: 'copy', handler: () => emit('duplicate') },
   { title: 'Slet sektion', iconName: 'delete', handler: () => emit('delete') },
 ];
@@ -35,7 +35,7 @@ const actions = [
     </div>
     <div class="dropped-component__actions">
       <IconsComp
-        v-for="(action, index) in actions"
+        v-for="(action, index) in createFormActions"
         :key="index"
         :iconName="action.iconName"
         :title="action.title"
@@ -71,10 +71,12 @@ const actions = [
         color: var(--help-text)
     }
     .content__title {
-        font-size: 2rem;
-        height: 2rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
+      font-size: 2rem;
+      min-height: 2rem;
+      height: auto;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: left;
     }
 
     .content__input-container {
