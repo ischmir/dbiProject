@@ -17,6 +17,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import { useRouter } from 'vue-router';
 
 const ordering = ref('desc');
 const folderId = ref(null);
@@ -34,6 +35,7 @@ const closeModal = () => {
 };
 
 const db = getFirestore();
+const router = useRouter();
 const folderCollection = collection(db, 'folders');
 
 const getFolders = async () => {
@@ -88,6 +90,11 @@ onMounted(() => {
   getFolders();
 });
 
+const clickForm = (id) => {
+  console.log('Clicked', id);
+  router.push(`/form-editor/${id}`);
+};
+
 console.log('form', forms);
 console.log('folders', folders);
 </script>
@@ -121,7 +128,7 @@ console.log('folders', folders);
         <IconsComp iconName="add-schedule" title="Opret skema" @click="openModal" />
       </template>
       <TableRow v-for="form in forms" v-bind:key="form.id">
-        <TableColumn> {{ form.name }} </TableColumn>
+        <TableColumn @click="() => clickForm(form.id)"> {{ form.name }} </TableColumn>
         <TableColumn>
           <IconsComp iconName="checkpoints" />
           <IconsComp iconName="delete" @click="() => deleteForm(form.id)" />
