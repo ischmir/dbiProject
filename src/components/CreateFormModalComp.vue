@@ -231,6 +231,7 @@ const currentComponent = computed(() => {
   }
   form.container__create-form {
     width: 100%;
+    overflow: auto;
   }
 
   .checkbox-group {

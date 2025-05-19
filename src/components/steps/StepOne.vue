@@ -123,8 +123,8 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
       >
         <option value="" disabled hidden>Skriv for at søge</option>
         <option value="admin-group">Administratorer</option>
-        <option value="user-1">Johnny Test</option>
-        <option value="user-2">John Dådyr</option>
+        <option value="user-1">Jane Doe</option>
+        <option value="user-2">John Doe</option>
       </select>
     </div>
     <div class="create-form__form-group">
@@ -147,8 +147,8 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
       >
         <option value="" disabled hidden>Skriv for at søge</option>
         <option value="admin-group">Administratorer</option>
-        <option value="user-1">Johnny Test</option>
-        <option value="user-2">John Dådyr</option>
+        <option value="user-1">Jane Doe</option>
+        <option value="user-2">John Doe</option>
       </select>
     </div>
   </div>
