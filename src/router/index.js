@@ -77,6 +77,15 @@ const routes = [
         },
       },
       {
+        path: '/form-overview',
+        name: 'Form Overview',
+        component: FormOverviewView,
+        meta: {
+          title: 'Skemaoversigt',
+          iconName: 'schema',
+        },
+      },
+      {
         path: '/users',
         name: 'Users',
         component: MockupComponent,
@@ -135,15 +144,6 @@ const routes = [
           iconName: 'settings',
           requireAuth: true,
           requiresAdmin: true,
-        },
-      },
-      {
-        path: '/form-overview',
-        name: 'Form Overview',
-        component: FormOverviewView,
-        meta: {
-          title: 'Skemaoversigt',
-          iconName: 'schema',
         },
       },
       {

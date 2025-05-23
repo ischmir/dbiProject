@@ -5,9 +5,8 @@ import TableColumn from '@/components/TableColumnComp.vue';
 import TableComp from '@/components/TableComp.vue';
 import TableRow from '@/components/TableRowComp.vue';
 import SearchInputComp from '@/components/SearchInputComp.vue';
-// const dummyFolders = ['Mappe1', 'Mappe2', 'Mappe3'];
-
-import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
+import { sort, filter } from '@/components/utils.js';
+import { collection, getDocs, getFirestore, query } from 'firebase/firestore';
 import { onMounted, ref } from 'vue';
 
 const forms = ref([]);
@@ -15,15 +14,15 @@ const db = getFirestore();
 const formCollection = collection(db, 'forms');
 const ordering = ref('desc');
 
-const getForms = async (order = ordering.value) => {
+const getForms = async (order = ordering.value, searchTerm = '') => {
   ordering.value = order;
-  const q = query(formCollection, orderBy('name', ordering.value));
+  const q = query(formCollection);
   const querySnapshot = await getDocs(q);
   const array = [];
   querySnapshot.forEach((doc) => {
     array.push({ ...doc.data(), id: doc.id });
   });
-  forms.value = array;
+  forms.value = filter(sort(array, 'name', order), 'name', searchTerm);
 };
 
 onMounted(() => {
@@ -36,7 +35,7 @@ onMounted(() => {
   <div class="container">
     <TableComp :cols="['Skemaer']">
       <template #header>
-        <SearchInputComp />
+        <SearchInputComp :onChange="(text) => getForms(ordering.value, text)" />
         <IconsComp
           iconName="sort"
           title="Sorter alfabetisk"
