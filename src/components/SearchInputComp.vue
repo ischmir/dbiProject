@@ -1,10 +1,22 @@
 <script setup>
 import IconsComp from './IconsComp.vue';
+
+// Props for the icon component
+const props = defineProps({
+  onChange: {
+    type: Function,
+  },
+});
 </script>
 
 <template>
   <div class="search__input">
-    <input type="text" class="search__input-input" placeholder="Søg" />
+    <input
+      type="text"
+      class="search__input-input"
+      v-on:input="(e) => props.onChange(e.target.value)"
+      placeholder="Søg"
+    />
     <IconsComp class="search__input-icon" iconName="search" />
   </div>
 </template>
@@ -27,7 +39,6 @@ import IconsComp from './IconsComp.vue';
   top: 50%;
   right: 0px;
   transform: translateY(-50%);
-  filter: invert(84%) sepia(7%) saturate(128%) hue-rotate(155deg) brightness(84%)
-    contrast(86%);
+  filter: invert(84%) sepia(7%) saturate(128%) hue-rotate(155deg) brightness(84%) contrast(86%);
 }
 </style>

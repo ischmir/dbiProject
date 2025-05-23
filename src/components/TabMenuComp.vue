@@ -53,7 +53,7 @@ const menuItems = [
   &.active {
     background-color: var(--primary-color);
     margin: 0%;
-    box-shadow: 0px -4px 3px 2px var(--strokes-lines);
+    box-shadow: 1px -2px 1px 1px var(--strokes-lines);
   }
 }
 </style>
