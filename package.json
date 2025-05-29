@@ -10,10 +10,8 @@
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
     "test:unit": "jest",
-    "test:unit:dev": "cypress open --component",
     "lint": "eslint . --fix",
-    "linter": "echo 'perfekt!'",
-    "test": "jest"
+    "linter": "echo 'perfekt!'"
   },
   "dependencies": {
     "@fontsource/montserrat": "^5.2.5",
