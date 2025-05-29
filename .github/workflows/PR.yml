@@ -29,5 +29,3 @@ jobs:
             fi
       - name: Update Coverage Badge
         uses: we-cli/coverage-badge-action@main
-        env:
-          IS_DEFAULT_BRANCH: 'true'
