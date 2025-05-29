@@ -74,7 +74,7 @@ const register = () => {
         </div>
         <p v-if="loginErrorMessage" class="authentication__error">{{ loginErrorMessage }}</p>
         <div class="button-group">
-          <button class="button--secondary" type="button" @click="register">Opret Bruger</button>
+          <button class="button--secondary" type="button" data-cy="register-link" @click="register">Opret Bruger</button>
           <button class="button--primary" type="submit" data-cy="login-submit">Login</button>
         </div>
       </form>
