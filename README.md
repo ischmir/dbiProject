@@ -1,4 +1,5 @@
 # Debbie
++ [![cov](https://Maiichsen.github.io/dbiProject/badges/coverage.svg?2)](https://github.com/Maiichsen/dbiProject/actions)
 
 This template should help get you started developing with Vue 3 in Vite.
 
