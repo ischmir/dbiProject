@@ -47,11 +47,11 @@ const validatePassword = () => {
   validationStates.value.length = passwordRegex.length.test(password.value);
 
   registerErrorMessages.value = [];
-  if (!validationStates.value.lowercase) registerErrorMessages.value.push('Password must contain a lowercase letter.');
-  if (!validationStates.value.uppercase) registerErrorMessages.value.push('Password must contain an uppercase letter.');
-  if (!validationStates.value.number) registerErrorMessages.value.push('Password must contain a number.');
-  if (!validationStates.value.special) registerErrorMessages.value.push('Password must contain a special character.');
-  if (!validationStates.value.length) registerErrorMessages.value.push('Password must be at least 16 characters long.');
+  if (!validationStates.value.lowercase) registerErrorMessages.value.push('Adgangskode skal indeholde mindst ét lille bogstav.');
+  if (!validationStates.value.uppercase) registerErrorMessages.value.push('Adgangskode skal indeholde mindst ét stort bogstav.');
+  if (!validationStates.value.number) registerErrorMessages.value.push('Adgangskode skal indeholde mindst ét tal.');
+  if (!validationStates.value.special) registerErrorMessages.value.push('Adgangskode skal indeholde minst et specialtegn.');
+  if (!validationStates.value.length) registerErrorMessages.value.push('Adgangskode skal indeholde mindst 16 tegn.');
 };
 
 const isPasswordValid = computed(() =>
@@ -64,7 +64,7 @@ const register = async () => {
   if (!isPasswordValid.value) return;
 
   if (password.value !== confirmPassword.value) {
-    registerErrorMessages.value = ['Passwords do not match.'];
+    registerErrorMessages.value = ['Adgangskoder stemmer ikke overens.'];
     return;
   }
 
@@ -80,10 +80,10 @@ const register = async () => {
 
     router.push('/dashboard');
   } catch (error) {
-    if (error.code === 'auth/invalid-email') {
-      registerErrorMessages.value = ['Invalid email address.'];
+    if (error.code === 'auth/email-already-in-use') {
+      registerErrorMessages.value = ['Ugyldig email'];
     } else {
-      registerErrorMessages.value = ['An error occurred. Please try again.'];
+      registerErrorMessages.value = ['Noget gik galt. Prøv igen.'];
     }
     console.error('Register error:', error);
   }
@@ -105,6 +105,7 @@ const login = () => {
             id="name"
             v-model="name"
             required
+            data-cy="register-name"
           />
           <label for="name">Navn</label>
         </div>
@@ -114,6 +115,7 @@ const login = () => {
             id="email"
             v-model="email"
             required
+            data-cy="register-email"
           />
           <label for="email">Email</label>
         </div>
@@ -124,6 +126,7 @@ const login = () => {
             @input="validatePassword"
             @blur="() => { touchedFields.password = true; validatePassword(); }"
             required
+            data-cy="register-password"
           />
           <label for="password">Adgangskode</label>
         </div>
@@ -133,6 +136,7 @@ const login = () => {
             type="password"
             @blur="touchedFields.confirmPassword = true"
             required
+            data-cy="register-confirm-password"
           />
           <label for="confirm-password">Gentag Adgangskode</label>
         </div>
@@ -140,8 +144,8 @@ const login = () => {
           <li v-for="(msg, index) in registerErrorMessages" :key="index">{{ msg }}</li>
         </ul>
         <div class="button-group">
-          <button class="button--secondary" type="button" @click="login">Annuller</button>
-          <button class="button--primary" type="submit">Opret Bruger</button>
+          <button class="button--secondary" type="button" @click="login" data-cy="register-cancel">Annuller</button>
+          <button class="button--primary" type="submit" data-cy="register-submit">Opret Bruger</button>
         </div>
     </form>
     </div>
