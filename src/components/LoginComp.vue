@@ -25,13 +25,7 @@ const login = async () => {
 
     router.replace(redirectPath);
   } catch (error) {
-    console.log(error);
-    if (
-      error.code === 'auth/user-not-found' ||
-      error.code === 'auth/wrong-password' ||
-      error.code === 'auth/invalid-email' ||
-      error.code === 'auth/invalid-credential'
-    ) {
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-email') {
       loginErrorMessage.value = 'Forkert email eller adgangskode.';
     } else {
       loginErrorMessage.value = 'Noget gik galt. Prøv igen.';
@@ -57,7 +51,6 @@ const register = () => {
             v-model="email"
             autocomplete="email"
             required
-            data-cy="login-email"
           />
           <label for="email">Email</label>
         </div>
@@ -68,14 +61,13 @@ const register = () => {
             v-model="password"
             autocomplete="current-password"
             required
-            data-cy="login-password"
           />
           <label for="password">Adgangskode</label>
         </div>
         <p v-if="loginErrorMessage" class="authentication__error">{{ loginErrorMessage }}</p>
         <div class="button-group">
-          <button class="button--secondary" type="button" data-cy="register-link" @click="register">Opret Bruger</button>
-          <button class="button--primary" type="submit" data-cy="login-submit">Login</button>
+          <button class="button--secondary" type="button" @click="register">Opret Bruger</button>
+          <button class="button--primary" type="submit">Login</button>
         </div>
       </form>
     </div>

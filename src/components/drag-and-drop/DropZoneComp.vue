@@ -88,12 +88,11 @@ console.log('Data', droppedItems.value);
           class="dropzone-actions__icon"
           iconName="save"
           @click="saveComponents"
-          data-cy="save-form-btn"
         />
       </div>
     </div>
     <hr class="dropzone__divider" />
-    <div class="dropzone__container" data-cy="drop-zone" @dragover.prevent @drop="onDrop">
+    <div class="dropzone__container" @dragover.prevent @drop="onDrop">
       <component
         v-for="(item, index) in droppedItems"
         :is="componentMap[item.type]"
