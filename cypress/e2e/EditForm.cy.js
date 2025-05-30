@@ -1,5 +1,6 @@
 describe('create form modal flow', () => {
   beforeEach(() => {
+    // Login first
     cy.visit('/login');
     cy.get('[data-cy="login-email"]').type('test@mail.com');
     cy.get('[data-cy="login-password"]').type('password123');
@@ -9,7 +10,10 @@ describe('create form modal flow', () => {
   });
 
   it('edit form in form editor', () => {
-    cy.visit('/form-editor/liqwC3KrFzmrhskGFRs7');
+    // Navigate to form overview and access the first form in the first folder
+    cy.visit('/form-overview/');
+    cy.get ('[data-cy="create-folder"]').first().click();
+    cy.get ('[data-cy="first-form"]').first().click();
     cy.contains('Skema Titel').should('exist');
     // Drag and drop the title palette item into the drop zone
     cy.get('[data-cy="palette-item-title"]').drag('[data-cy="drop-zone"]');
