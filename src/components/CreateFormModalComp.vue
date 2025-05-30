@@ -64,7 +64,7 @@ const goToNextPage = async () => {
     }
   }
 };
-//test 2
+
 const goToPreviousPage = () => {
   if (canGoBack.value) currentPage.value--;
 };
@@ -112,7 +112,7 @@ const currentComponent = computed(() => {
 
       <!-- Navigation Buttons -->
       <div id="create-form__button-group">
-        <button class="button--secondary" data-cy="close-create-form-modal-btn" type="button" @click="$emit('close')">
+        <button class="button--secondary" type="button" @click="$emit('close')">
           Annuller
         </button>
         <button
@@ -128,7 +128,6 @@ const currentComponent = computed(() => {
           type="button"
           :disabled="currentPage === 1 && !canGoNext"
           @click="goToNextPage"
-          data-cy="next-create-form-modal-btn"
         >
           {{ currentPage === totalPages ? "Opret" : "Næste" }}
         </button>

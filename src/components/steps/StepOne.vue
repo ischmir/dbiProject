@@ -36,7 +36,6 @@ const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
           'form-group__input--valid': isFormNameValid,
         }"
         type="text"
-        data-cy="form-name-input"
         id="formName"
         :value="props.modelValue.name"
         @input="
