@@ -7,7 +7,7 @@ import PaletteItem from '@/components/drag-and-drop/PaletteItemComp.vue';
     <h2 class="item-palette__title">Design</h2>
     <hr class="item-palette__divider" />
     <div class="item-palette__items">
-      <PaletteItem type="title" title="Overskrift" icon="title" />
+      <PaletteItem type="title" data-cy="palette-item-title" title="Overskrift" icon="title" />
       <PaletteItem type="text" title="Brødtekst" icon="text-fields" />
     </div>
     <h2 class="item-palette__title">Spørgsmål</h2>
