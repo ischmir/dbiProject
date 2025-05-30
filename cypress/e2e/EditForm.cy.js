@@ -11,8 +11,14 @@ describe('create form modal flow', () => {
   it('edit form in form editor', () => {
     cy.visit('/form-editor/liqwC3KrFzmrhskGFRs7');
     cy.contains('Skema Titel').should('exist');
-    cy.get('[data-cy="form-title-input"]').clear();
-    cy.get('[data-cy="form-title-input"]').type('Mit nye skema');
+    // Drag and drop the title palette item into the drop zone
+    cy.get('[data-cy="palette-item-title"]').drag('[data-cy="drop-zone"]');
+    cy.get('[data-cy="drop-zone"]').should('contain', 'Overskrift');
+    // Edit the title field
+    cy.get('[data-cy="form-title-input"]').first().clear();
+    cy.get('[data-cy="form-title-input"]').first().type('Mit nye skema');
+    cy.get('[data-cy="form-title-input"]').should('have.value', 'Mit nye skema');
     cy.get('[data-cy="save-form-btn"]').click();
+    // Assert redirect or success message (adjust as needed)
   });
 });

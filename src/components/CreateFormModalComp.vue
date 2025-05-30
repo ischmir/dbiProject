@@ -128,6 +128,7 @@ const currentComponent = computed(() => {
           type="button"
           :disabled="currentPage === 1 && !canGoNext"
           @click="goToNextPage"
+          data-cy="next-create-form-modal-btn"
         >
           {{ currentPage === totalPages ? "Opret" : "Næste" }}
         </button>
