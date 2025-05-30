@@ -83,6 +83,7 @@ const routes = [
         meta: {
           title: 'Skemaoversigt',
           iconName: 'schema',
+          'data-cy': 'form-overview',
         },
       },
       {

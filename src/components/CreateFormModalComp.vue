@@ -112,7 +112,7 @@ const currentComponent = computed(() => {
 
       <!-- Navigation Buttons -->
       <div id="create-form__button-group">
-        <button class="button--secondary" type="button" @click="$emit('close')">
+        <button class="button--secondary" data-cy="close-create-form-modal-btn" type="button" @click="$emit('close')">
           Annuller
         </button>
         <button
