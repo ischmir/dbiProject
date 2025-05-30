@@ -43,7 +43,7 @@ const createFormActions = [
       </caption>
       <div class="content__input-container">
         <IconsComp class="content__icon" iconName="title" />
-        <input class="content__input" v-model="data.inputTitle" />
+        <input class="content__input" data-cy="form-title-input" v-model="data.inputTitle" />
       </div>
     </div>
     <div class="dropped-component__actions">

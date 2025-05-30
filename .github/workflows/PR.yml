@@ -5,7 +5,7 @@ name: PR
 on: pull_request
 permissions:
   checks: write
-  contents: read
+  contents: write
   pull-requests: write
 jobs:
   pr:
@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm install
       - run: npm run build
-    #   - name: Unit tests
-    #     run: npm run test:unit
+      - name: Unit tests
+        run: npm run test:unit
     #   - name: End-to-end tests
     #     run: npm run test:e2e
       - run: npm run lint
@@ -27,3 +27,5 @@ jobs:
             git --no-pager diff --stat
             exit 1
             fi
+      - name: Update Coverage Badge
+        uses: we-cli/coverage-badge-action@main

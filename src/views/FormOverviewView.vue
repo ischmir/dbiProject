@@ -109,6 +109,7 @@ console.log('folders', folders);
         :class="{ isActive: folderId == folder.id }"
         @click="() => clickFolder(folder.id)"
         class="cursor"
+        data-cy="create-folder"
       >
         <TableColumn> {{ folder.name }} </TableColumn>
         <TableColumn> <IconsComp iconName="arrow-right" /> </TableColumn>
@@ -123,9 +124,9 @@ console.log('folders', folders);
           title="Sorter alfabetist"
           @click="() => clickFolder(folderId, ordering == 'asc' ? 'desc' : 'asc')"
         />
-        <IconsComp iconName="add-schedule" title="Opret skema" @click="openModal" class="cursor" />
+        <IconsComp iconName="add-schedule" data-cy="open-create-form-modal-btn" title="Opret skema" @click="openModal" class="cursor" />
       </template>
-      <TableRow v-for="form in forms" v-bind:key="form.id">
+      <TableRow v-for="form in forms" data-cy="first-form" v-bind:key="form.id">
         <TableColumn @click="() => clickForm(form.id)" class="cursor">
           {{ form.name }}
         </TableColumn>
