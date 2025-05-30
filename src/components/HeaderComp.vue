@@ -26,7 +26,7 @@ const handleMouseLeave = () => {
       <img
         alt="DBI Logo"
         class="header__logo-image"
-        src="../assets/img/dbi-logo-black.svg"
+        src="/dbi-logo-black.svg"
       />
       <span class="header__logo-title">Egenkontrol</span>
     </router-link>
