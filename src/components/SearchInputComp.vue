@@ -1,8 +1,10 @@
 <script setup>
+// Importerer ikon komponenten
 import IconsComp from './IconsComp.vue';
 
-// Props for the icon component
+// Props for ikon komponenten
 const props = defineProps({
+  // onChange er en funktion der kaldes når brugeren ændrer inputtet
   onChange: {
     type: Function,
   },

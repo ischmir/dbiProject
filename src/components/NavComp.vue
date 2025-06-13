@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import IconsComp from './IconsComp.vue';
-
+// router bruges til at navigere mellem sider
 const router = useRouter();
 
 // Get only the children of the DefaultLayout route
@@ -11,11 +11,12 @@ const routes =
 
 // Track hover state for each route
 const hoveredRoute = ref(null);
-
+// handleMouseOver gemmer hvilken knap der er 'hover'et over, så vi kan vise den rigtige popup
 const handleMouseOver = (path) => {
   hoveredRoute.value = path;
 };
 
+// handleMouseLeave nulstiller hovered knappen når musen fjernes, så popup'en forsvinder  
 const handleMouseLeave = () => {
   hoveredRoute.value = null;
 };

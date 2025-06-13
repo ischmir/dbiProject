@@ -1,18 +1,22 @@
 <script setup>
+// Importerer nødvendige Vue funktioner og komponenter
 import { onMounted, ref } from 'vue';
 import DroppedTitleItemComp from '../drag-and-drop/dropped-items/DroppedTitleItemComp.vue';
 import DroppedTextItemComp from '../drag-and-drop/dropped-items/DroppedTextItemComp.vue';
 import IconsComp from '../IconsComp.vue';
+// Importerer Firebase funktioner til at arbejde med databasen
 import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
 import { useRoute, useRouter } from 'vue-router';
 
+// Holder styr på de komponenter der er blevet droppet i zonen
 const droppedItems = ref([]);
 
+// Initialiserer Firebase og router
 const db = getFirestore();
-
 const route = useRoute();
 const router = useRouter();
 
+// Henter eksisterende komponenter fra databasen når siden indlæses
 const getFormComponents = async () => {
   const formRef = doc(db, 'forms', route.params.id);
   const form = await getDoc(formRef);
@@ -32,6 +36,7 @@ const getFormComponents = async () => {
   // forms.value = array;
 };
 
+// Gemmer ændringer i komponenterne til databasen
 const saveComponents = async () => {
   const formRef = doc(db, 'forms', route.params.id);
   const form = await getDoc(formRef);
@@ -45,21 +50,25 @@ const saveComponents = async () => {
   router.go(-1);
 };
 
+// Henter komponenter når siden indlæses
 onMounted(() => {
   getFormComponents();
 });
 
+// Mapper komponent typer til deres respektive komponenter
 const componentMap = {
   title: DroppedTitleItemComp,
   text: DroppedTextItemComp,
 };
 
+// Håndterer når en komponent bliver droppet i zonen
 function onDrop(event) {
   const json = event.dataTransfer.getData('application/json');
   if (!json) return;
 
   const data = JSON.parse(json);
   console.log(data);
+  // Tilføjer den nye komponent til listen med et unikt ID
   droppedItems.value.push({
     ...data,
     id: Date.now(),
@@ -67,8 +76,10 @@ function onDrop(event) {
   });
 }
 
+// Kopierer en eksisterende komponent
 function duplicateItem(index) {
   const item = droppedItems.value[index];
+  // Indsætter en kopi af komponenten lige efter originalen
   droppedItems.value.splice(index + 1, 0, {
     ...item,
     id: Date.now(),

@@ -1,4 +1,5 @@
 <script setup>
+// Importerer nødvendige Vue funktioner og komponenter
 import { onMounted, ref } from 'vue';
 import TabMenuComp from '@/components/TabMenuComp.vue';
 import IconsComp from '@/components/IconsComp.vue';
@@ -7,6 +8,7 @@ import TableComp from '@/components/TableComp.vue';
 import { sort } from '@/components/utils.js';
 import TableRow from '@/components/TableRowComp.vue';
 import CreateFormModalComp from '@/components/CreateFormModalComp.vue';
+// Importerer Firebase funktioner til at arbejde med 'folders' og 'forms'
 import {
   addDoc,
   collection,
@@ -19,12 +21,14 @@ import {
 } from 'firebase/firestore';
 import { useRouter } from 'vue-router';
 
+// Opretter reaktive variabler til at holde styr på sortering, 'folders' og 'forms'
 const ordering = ref('desc');
 const folderId = ref(null);
 const folders = ref([]);
 const forms = ref([]);
 const isModalVisible = ref(null);
 
+// Funktioner til at åbne og lukke modal vinduet
 const openModal = (folderId) => {
   isModalVisible.value = folderId;
 };
@@ -34,10 +38,12 @@ const closeModal = () => {
   clickFolder(folderId.value);
 };
 
+// Initialiserer Firebase og router
 const db = getFirestore();
 const router = useRouter();
 const folderCollection = collection(db, 'folders');
 
+// Henter alle 'folders' fra databasen
 const getFolders = async () => {
   const querySnapshot = await getDocs(folderCollection);
   const array = [];
@@ -47,6 +53,7 @@ const getFolders = async () => {
   folders.value = array;
 };
 
+// Opretter en ny 'folder'
 const addFolder = async () => {
   const name = prompt('Navn');
   if (name) {
@@ -59,20 +66,20 @@ const addFolder = async () => {
   }
 };
 
+// Sletter en 'form'
 const deleteForm = async (id) => {
   console.log('Delete', id);
-
   const document = doc(db, 'forms', id);
   await deleteDoc(document);
   clickFolder(folderId.value);
 };
 
+// Håndterer klik på en mappe - henter skemaer i den valgte mappe
 const clickFolder = async (id, order = ordering.value) => {
   folderId.value = id;
   ordering.value = order;
 
-  // Find forms med det rigtige folderId
-  console.log(order);
+  // Finder alle 'forms' i den valgte mappe
   const q = query(collection(db, 'forms'), where('folderId', '==', id));
 
   const querySnapshot = await getDocs(q);
@@ -80,13 +87,16 @@ const clickFolder = async (id, order = ordering.value) => {
   querySnapshot.forEach((doc) => {
     array.push({ ...doc.data(), id: doc.id });
   });
+  // Sorterer 'forms' efter navn
   forms.value = sort(array, 'name', order);
 };
 
+// Henter 'folders' når siden indlæses
 onMounted(() => {
   getFolders();
 });
 
+// Håndterer klik på en 'form' - sender brugeren til 'form' editoren
 const clickForm = (id) => {
   console.log('Clicked', id);
   router.push(`/form-editor/${id}`);

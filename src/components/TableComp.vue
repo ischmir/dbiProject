@@ -1,4 +1,5 @@
 <script setup>
+// definerer props for at sikre at cols er en array og at det er obligatorisk
 const props = defineProps({
   cols: {
     type: Array,

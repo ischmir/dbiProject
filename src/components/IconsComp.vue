@@ -61,7 +61,7 @@ const iconPositions = {
   checkbox: '-420px -240px',
   history: '-480px -240px',
 };
-
+//computed property for at få background positionen for den valgte icon
 const backgroundPosition = computed(() => iconPositions[props.iconName] || '0 0');
 </script>
 

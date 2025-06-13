@@ -1,4 +1,5 @@
 <script setup>
+// definerer menuItems som en array af objekter med navn og path
 const menuItems = [
   { name: 'Skemaer', path: '/form-overview' },
   { name: 'Skemabibliotek', path: '/form-library' },
