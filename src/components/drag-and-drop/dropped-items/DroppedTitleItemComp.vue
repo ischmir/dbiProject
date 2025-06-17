@@ -1,14 +1,14 @@
 <script setup>
-import { reactive, watch } from 'vue';
-import IconsComp from '@/components/IconsComp.vue';
+import { reactive, watch } from "vue";
+import IconsComp from "@/components/IconsComp.vue";
 
-const props = defineProps(['componentData', 'onChange']);
-const emit = defineEmits(['delete', 'duplicate', 'change']);
+const props = defineProps(["componentData", "onChange"]);
+const emit = defineEmits(["delete", "duplicate", "change"]);
 const data = reactive({ ...props.componentData });
 
 function save() {
-  console.log('Saved:', data);
-  emit('change', data);
+  console.log("Saved:", data);
+  emit("change", data);
 }
 
 function revert() {
@@ -16,20 +16,25 @@ function revert() {
 }
 
 // Tilføj watch på data.inputTitle
-watch(() => data.inputTitle, () => {
-  save();
-});
+watch(
+  () => data.inputTitle,
+  () => {
+    save();
+  }
+);
 
 const createFormActions = [
-  { title: 'Gem og se resultat', iconName: 'save', handler: save },
-  { title: 'Gå tilbage', iconName: 'history', handler: revert },
-  { title: 'kopier sektion', iconName: 'copy', handler: () => emit('duplicate') },
-  { title: 'Slet sektion', iconName: 'delete', handler: () => emit('delete') },
+  { title: "Gem og se resultat", iconName: "save", handler: save },
+  { title: "Gå tilbage", iconName: "history", handler: revert },
+  { title: "kopier sektion", iconName: "copy", handler: () => emit("duplicate") },
+  { title: "Slet sektion", iconName: "delete", handler: () => emit("delete") },
+  { title: "Op", iconName: "arrow-up", handler: () => emit("up") },
+  { title: "Ned", iconName: "arrow-down", handler: () => emit("down") },
 ];
 </script>
 
 <template>
-  <div class="dropped-component">
+  <div class="dropped-component" :data-id="data.id">
     <div class="dropped-component__content">
       <caption class="content__info">
         Svartype:
@@ -56,7 +61,6 @@ const createFormActions = [
       />
     </div>
   </div>
-  <hr class="droppedItem__divider" />
 </template>
 
 <style scoped>
