@@ -1,6 +1,6 @@
 <!-- Login View -->
 <script setup>
-import LoginComp from '@/components/LoginComp.vue';
+import LoginComp from "@/components/LoginComp.vue";
 </script>
 
 <template>

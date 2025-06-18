@@ -9,7 +9,7 @@ const router = useRouter();
 const routes =
   router.options.routes.find((route) => route.name === "Default")?.children || [];
 
- // Holder styr på hvilken menu musen er over
+// Holder styr på hvilken menu musen er over
 const hoveredRoute = ref(null);
 // Gemmer hvilken menu musen er over
 const handleMouseOver = (path) => {

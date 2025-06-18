@@ -1,6 +1,6 @@
 <script setup>
-import DropZone from '@/components/drag-and-drop/DropZoneComp.vue';
-import ItemPaletteComp from '@/components/drag-and-drop/PaletteComp.vue';
+import DropZone from "@/components/drag-and-drop/DropZoneComp.vue";
+import ItemPaletteComp from "@/components/drag-and-drop/PaletteComp.vue";
 </script>
 
 <template>

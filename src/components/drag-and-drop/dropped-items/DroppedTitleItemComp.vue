@@ -22,7 +22,7 @@ watch(
   () => data.inputTitle,
   () => {
     save();
-  }
+  },
 );
 
 const createFormActions = [

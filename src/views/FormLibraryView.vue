@@ -1,26 +1,26 @@
 <script setup>
 // Importerer nødvendige komponenter til at bygge skema biblioteket
-import TabMenuComp from '@/components/TabMenuComp.vue';
-import IconsComp from '@/components/IconsComp.vue';
-import TableColumn from '@/components/TableColumnComp.vue';
-import TableComp from '@/components/TableComp.vue';
-import TableRow from '@/components/TableRowComp.vue';
-import SearchInputComp from '@/components/SearchInputComp.vue';
+import TabMenuComp from "@/components/TabMenuComp.vue";
+import IconsComp from "@/components/IconsComp.vue";
+import TableColumn from "@/components/TableColumnComp.vue";
+import TableComp from "@/components/TableComp.vue";
+import TableRow from "@/components/TableRowComp.vue";
+import SearchInputComp from "@/components/SearchInputComp.vue";
 // Importerer hjælpefunktioner til at sortere og filtrere data
-import { sort, filter } from '@/components/utils.js';
+import { sort, filter } from "@/components/utils.js";
 // Importerer Firebase funktioner til at hente data fra databasen
-import { collection, getDocs, getFirestore, query } from 'firebase/firestore';
-import { onMounted, ref } from 'vue';
+import { collection, getDocs, getFirestore, query } from "firebase/firestore";
+import { onMounted, ref } from "vue";
 
 // Opretter reaktive variabler til at holde styr på skemaer og sortering
 const forms = ref([]);
 const db = getFirestore();
-const formCollection = collection(db, 'forms');
-const ordering = ref('desc');
+const formCollection = collection(db, "forms");
+const ordering = ref("desc");
 
 // Funktion der henter skemaer fra databasen
 // Kan sortere og filtrere skemaerne baseret på parametre
-const getForms = async (order = ordering.value, searchTerm = '') => {
+const getForms = async (order = ordering.value, searchTerm = "") => {
   ordering.value = order;
   // Henter alle skemaer fra databasen
   const q = query(formCollection);
@@ -31,7 +31,7 @@ const getForms = async (order = ordering.value, searchTerm = '') => {
     array.push({ ...doc.data(), id: doc.id });
   });
   // Sorterer og filtrerer skemaerne baseret på navn
-  forms.value = filter(sort(array, 'name', order), 'name', searchTerm);
+  forms.value = filter(sort(array, "name", order), "name", searchTerm);
 };
 
 // Henter skemaer når siden indlæses

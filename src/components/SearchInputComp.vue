@@ -1,6 +1,6 @@
 <script setup>
 // Importerer ikon komponenten
-import IconsComp from './IconsComp.vue';
+import IconsComp from "./IconsComp.vue";
 
 // Props for ikon komponenten
 const props = defineProps({

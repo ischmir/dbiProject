@@ -12,7 +12,7 @@ watch(
   (newValue) => {
     emit("change", newValue);
   },
-  { deep: true }
+  { deep: true },
 );
 
 function save() {

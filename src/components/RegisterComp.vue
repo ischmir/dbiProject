@@ -1,21 +1,21 @@
 <script setup>
 // Importerer nødvendige Vue funktioner
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 // Importerer Firebase authication og firestore funktioner
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import {
   getFirestore,
   doc,
   setDoc,
   serverTimestamp,
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
 // Opretter variabler til registreringsformularen
-const name = ref('');
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
+const name = ref("");
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
 const registerErrorMessages = ref([]);
 const router = useRouter();
 const auth = getAuth();
@@ -56,11 +56,11 @@ const validatePassword = () => {
 
   // Samler eventuelle fejlbeskeder
   registerErrorMessages.value = [];
-  if (!validationStates.value.lowercase) registerErrorMessages.value.push('Password must contain a lowercase letter.');
-  if (!validationStates.value.uppercase) registerErrorMessages.value.push('Password must contain an uppercase letter.');
-  if (!validationStates.value.number) registerErrorMessages.value.push('Password must contain a number.');
-  if (!validationStates.value.special) registerErrorMessages.value.push('Password must contain a special character.');
-  if (!validationStates.value.length) registerErrorMessages.value.push('Password must be at least 16 characters long.');
+  if (!validationStates.value.lowercase) registerErrorMessages.value.push("Password must contain a lowercase letter.");
+  if (!validationStates.value.uppercase) registerErrorMessages.value.push("Password must contain an uppercase letter.");
+  if (!validationStates.value.number) registerErrorMessages.value.push("Password must contain a number.");
+  if (!validationStates.value.special) registerErrorMessages.value.push("Password must contain a special character.");
+  if (!validationStates.value.length) registerErrorMessages.value.push("Password must be at least 16 characters long.");
 };
 
 // Tjekker om adgangskoden er gyldig (alle krav er opfyldt)
@@ -77,7 +77,7 @@ const register = async () => {
 
   // tjekker om adgangskoderne matcher, hvis ikke returneres en fejlbesked
   if (password.value !== confirmPassword.value) {
-    registerErrorMessages.value = ['Passwords do not match.'];
+    registerErrorMessages.value = ["Passwords do not match."];
     return;
   }
 
@@ -86,30 +86,30 @@ const register = async () => {
     const { user } = await createUserWithEmailAndPassword(auth, email.value, password.value);
 
     // Gemmer brugerdata i Firestore
-    await setDoc(doc(db, 'users', user.uid), {
-      role: 'user',
+    await setDoc(doc(db, "users", user.uid), {
+      role: "user",
       name: name.value,
       email: user.email,
       createdAt: serverTimestamp(),
     });
 
     // Sender brugeren til dashboard
-    router.push('/dashboard');
+    router.push("/dashboard");
   } catch (error) {
     // Håndterer fejl under registrering
-    if (error.code === 'auth/invalid-email') {
-      registerErrorMessages.value = ['Invalid email address.'];
+    if (error.code === "auth/invalid-email") {
+      registerErrorMessages.value = ["Invalid email address."];
     } else {
-      registerErrorMessages.value = ['An error occurred. Please try again.'];
+      registerErrorMessages.value = ["An error occurred. Please try again."];
     }
-    console.error('Register error:', error);
+    console.error("Register error:", error);
   }
 };
 
 // Funktion der sender brugeren til login siden
 const login = () => {
-  console.log('Redirect to login page');
-  router.push('/login');
+  console.log("Redirect to login page");
+  router.push("/login");
 };
 </script>
 

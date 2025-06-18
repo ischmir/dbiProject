@@ -55,12 +55,12 @@ onMounted(() => {
   getFormComponents();
 });
 
- // Kobler component type til den rigtige Vue component
+// Kobler component type til den rigtige Vue component
 const componentMap = {
   title: DroppedTitleItemComp,
   text: DroppedTextItemComp,
 };
- // Flyt component op eller ned
+// Flyt component op eller ned
 function moveItem(fromIndex, toIndex) {
   if (fromIndex < 0) {
     return;
@@ -75,40 +75,40 @@ function moveItem(fromIndex, toIndex) {
   droppedItems.value[toIndex] = sourceElement;
 }
 
- // Når en component bliver droppet i dropzone
+// Når en component bliver droppet i dropzone
 function onDrop(event) {
-   // Henter drag data
+  // Henter drag data
   const json = event.dataTransfer.getData("application/json");
   if (!json) return;
 
-   // Finder drop target element
+  // Finder drop target element
   const insertTarget = event.toElement || event.target;
   const data = JSON.parse(json);
 
-   // Hvis ikke fundet, insert til sidst
+  // Hvis ikke fundet, insert til sidst
   let index = droppedItems.value.length;
   if (insertTarget.dataset && insertTarget.dataset.id) {
-     // Tjekker om det er en zone position
+    // Tjekker om det er en zone position
     const zoneMatch = insertTarget.dataset.id.match(/^zone-(\d+)$/);
     if (zoneMatch) {
-       // Drop zone før item ved index
+      // Drop zone før item ved index
       index = parseInt(zoneMatch[1], 10);
     } else if (insertTarget.dataset.id === "zone-end") {
       index = droppedItems.value.length;
     } else {
-       // Fallback: find item via id
+      // Fallback: find item via id
       index = droppedItems.value.findIndex(
         (elem) => elem.id.toString() === insertTarget.dataset.id,
       );
       if (index !== -1) {
-         // Tjek om drop er over eller under
+        // Tjek om drop er over eller under
         const rect = insertTarget.getBoundingClientRect();
         const offsetY = event.clientY - rect.top;
         if (offsetY > rect.height / 2) {
-           // Hvis nederste halvdel, insert efter
+          // Hvis nederste halvdel, insert efter
           index = index + 1;
         }
-         // Ellers insert før
+        // Ellers insert før
       }
     }
   }
@@ -119,7 +119,7 @@ function onDrop(event) {
     inputValue: "",  // Klar til input
   };
 
-   // Insert på rigtig plads
+  // Insert på rigtig plads
   droppedItems.value = [
     ...droppedItems.value.slice(0, index),
     droppedItem,
@@ -127,10 +127,10 @@ function onDrop(event) {
   ];
 }
 
- // Kopier en component
+// Kopier en component
 function duplicateItem(index) {
   const item = droppedItems.value[index];
-   // Kopier indsættes efter original
+  // Kopier indsættes efter original
   droppedItems.value.splice(index + 1, 0, {
     ...item,
     id: Date.now(),

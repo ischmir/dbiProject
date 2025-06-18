@@ -1,5 +1,5 @@
 <script setup>
-import PaletteItem from '@/components/drag-and-drop/PaletteItemComp.vue';
+import PaletteItem from "@/components/drag-and-drop/PaletteItemComp.vue";
 </script>
 
 <template>

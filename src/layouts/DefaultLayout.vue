@@ -1,6 +1,6 @@
 <script setup>
-import HeaderComp from '@/components/HeaderComp.vue';
-import NavComp from '@/components/NavComp.vue';
+import HeaderComp from "@/components/HeaderComp.vue";
+import NavComp from "@/components/NavComp.vue";
 </script>
 
 <template>

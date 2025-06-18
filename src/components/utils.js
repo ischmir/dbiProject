@@ -1,6 +1,6 @@
 export function sort(array, key, order) {
   return array.sort((a, b) => {
-    if (order === 'asc') {
+    if (order === "asc") {
       return b[key].localeCompare(a[key]);
     }
 

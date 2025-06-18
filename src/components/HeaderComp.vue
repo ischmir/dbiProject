@@ -2,11 +2,11 @@
 // importes nødvendige dele fra Vue og vores egne komponenter
 // computed og ref bruges til at håndtere data der kan ændre sig
 // useRoute bruges til at få information om den aktuelle side vi er på
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import IconsComp from './IconsComp.vue';
-import LogoutComp from './LogoutComp.vue';
-import SearchInputComp from './SearchInputComp.vue';
+import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
+import IconsComp from "./IconsComp.vue";
+import LogoutComp from "./LogoutComp.vue";
+import SearchInputComp from "./SearchInputComp.vue";
 
 // Vi gemmer den aktuelle rute og dens titel
 // Dette gør at headeren automatisk viser den rigtige titel for hver side
