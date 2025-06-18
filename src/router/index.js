@@ -1,13 +1,18 @@
+// Importerer Vue Router funktioner til at oprette router og historik
 import { createRouter, createWebHistory } from 'vue-router';
+// Importerer bruger store til at håndtere authentication state
 import { useUserStore } from '@/stores/userStore.js';
+// Importerer view komponenter for forskellige sider
 import RegisterView from '@/views/RegisterView.vue';
 import LoginView from '@/views/LoginView.vue';
 import FormOverviewView from '@/views/FormOverviewView.vue';
 import FormLibraryView from '@/views/FormLibraryView.vue';
 import CheckpointsView from '@/views/CheckpointsView.vue';
 
-const MockupComponent = { template: '<div>Mockup Page</div>' }; // Fallback for mockup routes
+// simpel placeholder-komponent til ruter, der endnu ikke har en rigtig side
+const MockupComponent = { template: '<div>Mockup Page</div>' };
 
+// Definerer alle ruter i applikationen
 const routes = [
 	{
 		path: '/login',
@@ -15,7 +20,7 @@ const routes = [
 		component: LoginView,
 		meta: {
 			title: 'Login',
-			requireAuth: false,
+			requireAuth: false, // Kræver IKKE admin
 		},
 	},
 	{
@@ -24,22 +29,23 @@ const routes = [
 		component: RegisterView,
 		meta: {
 			title: 'Register',
-			requireAuth: false,
+			requireAuth: false, // Kræver IKKE admin
 		},
 	},
 	{
 		path: '/',
 		name: 'Default',
-		component: () => import('@/layouts/DefaultLayout.vue'),
-		redirect: '/dashboard',
+		component: () => import('@/layouts/DefaultLayout.vue'), // Lazy loading af layout
+		redirect: '/dashboard', // Automatisk redirect til dashboard
 		meta: {
-			requireAuth: true,
+			requireAuth: true, // Kræver admin
 		},
 		children: [
+			// Nested ruter - alle disse vises inden i DefaultLayout
 			{
 				path: '/dashboard',
 				name: 'Dashboard',
-				component: () => import('@/views/DashboardView.vue'),
+				component: () => import('@/views/DashboardView.vue'), // Lazy loading
 				meta: {
 					title: 'Dashboard',
 					iconName: 'dashboard',
@@ -49,11 +55,11 @@ const routes = [
 			{
 				path: '/reports',
 				name: 'Reports',
-				component: MockupComponent,
+				component: MockupComponent, // Mockup komponent
 				meta: {
 					title: 'Rapporter',
 					iconName: 'report',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -63,7 +69,7 @@ const routes = [
 				meta: {
 					title: 'Overskredet Deadline',
 					iconName: 'warning',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -73,7 +79,7 @@ const routes = [
 				meta: {
 					title: 'Udfyld skema',
 					iconName: 'edit-schedule',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -92,7 +98,7 @@ const routes = [
 				meta: {
 					title: 'Brugere',
 					iconName: 'users',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -102,7 +108,7 @@ const routes = [
 				meta: {
 					title: 'Grupper',
 					iconName: 'groups',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -112,7 +118,7 @@ const routes = [
 				meta: {
 					title: 'Dokumenter',
 					iconName: 'folder',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -122,7 +128,7 @@ const routes = [
 				meta: {
 					title: 'Planlægning',
 					iconName: 'edit-calendar',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -132,7 +138,7 @@ const routes = [
 				meta: {
 					title: 'Kalender',
 					iconName: 'calendar',
-					requireAuth: true,
+					requireAuth: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -143,7 +149,7 @@ const routes = [
 					title: 'Administration',
 					iconName: 'settings',
 					requireAuth: true,
-					requiresAdmin: true,
+					requiresAdmin: true, // Kræver admin rolle
 				},
 			},
 			{
@@ -153,7 +159,7 @@ const routes = [
 				meta: {
 					title: 'Skemabibliotek',
 					iconName: 'library',
-					hide: true,
+					hide: true, // Skjules fra navigation menu
 				},
 			},
 			{
@@ -163,58 +169,64 @@ const routes = [
 				meta: {
 					title: 'Tjekpunkter',
 					iconName: 'checkpoints',
-					hide: true,
+					hide: true, // Skjules fra navigation menu
 				},
 			},
 			{
-				path: '/form-editor/:id',
+				path: '/form-editor/:id', // Dynamisk parameter - id af skemaet
 				name: 'Create Form',
-				component: () => import('@/views/FormEditorView.vue'),
+				component: () => import('@/views/FormEditorView.vue'), // Lazy loading
 				meta: {
 					title: 'Skema',
-					hide: true,
+					hide: true, // Skjules fra navigation menu
 					requireAuth: true,
-					requiresAdmin: true,
+					requiresAdmin: true, // Kun admins kan redigere skemaer
 				},
 			},
 		],
 	},
 ];
 
+// Opretter router instans med web history mode (URLs uden #)
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes,
 });
 
+// Navigation Guard - køres før hver navigation
 router.beforeEach(async (to, from, next) => {
-	// from; Not in use
+	// from; bruges ikke
 	const user = useUserStore();
 
-	// Wait for the user store to initialize if not ready
+	// Venter på at user store er initialiseret hvis den ikke er klar
 	if (!user.ready) {
 		console.log('Waiting for user store to initialize...');
 		await user.init();
 	}
 
-	// Guard the route based on meta fields
-	const requiresAuth = to.matched.some(r => r.meta.requireAuth);
-	const requiresAdmin = to.matched.some(r => r.meta.requiresAdmin);
+	// Tjekker route meta felter for at bestemme adgangskrav
+	const requiresAuth = to.matched.some(r => r.meta.requireAuth); // Kræver authentication?
+	const requiresAdmin = to.matched.some(r => r.meta.requiresAdmin); // Kræver admin rolle?
 
+	// Hvis siden kræver authentication og bruger ikke er logget ind
 	if (requiresAuth && !user.loggedIn) {
 		console.log('Redirecting to login...');
 		if (to.path !== '/login') {
+			// Redirect til login med original destination gemt i query parameter
 			return next({ path: '/login', query: { redirect: to.fullPath } });
 		}
 		return next();
 	}
 
+	// Hvis siden kræver admin rolle og bruger ikke er admin
 	if (requiresAdmin && user.role !== 'admin') {
 		console.log('Redirecting to not authorized...');
 		return next('/not-authorized');
 	}
 
+	// Alt er OK - fortsæt til destination
 	next();
 });
 
-export { routes }; // Export the routes array
-export default router; // Export the router instance
+export { routes }; // Eksporterer routes array
+export default router; // Eksporterer router instans

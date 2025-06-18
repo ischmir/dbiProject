@@ -8,7 +8,7 @@ import TableComp from '@/components/TableComp.vue';
 import { sort } from '@/components/utils.js';
 import TableRow from '@/components/TableRowComp.vue';
 import CreateFormModalComp from '@/components/CreateFormModalComp.vue';
-// Importerer Firebase funktioner til at arbejde med 'folders' og 'forms'
+// Importerer Firebase funktioner til at Hente, tilføje og slette i 'folders' og 'forms'
 import {
   addDoc,
   collection,
@@ -38,7 +38,7 @@ const closeModal = () => {
   clickFolder(folderId.value);
 };
 
-// Initialiserer Firebase og router
+//  sætter Firestore og vue-router op.
 const db = getFirestore();
 const router = useRouter();
 const folderCollection = collection(db, 'folders');
@@ -56,20 +56,24 @@ const getFolders = async () => {
 // Opretter en ny 'folder'
 const addFolder = async () => {
   const name = prompt('Navn');
+  // tjekker om navn ikke er tomt
   if (name) {
     const folderCollection = collection(db, 'folders');
+    //opretter ny mappe
     const newDoc = await addDoc(folderCollection, {
       name,
     });
+    // Genindlæser mapper og vælger den nye.
     await getFolders();
     await clickFolder(newDoc.id);
   }
 };
 
-// Sletter en 'form'
+// Sletter en 'form' fra db
 const deleteForm = async (id) => {
   console.log('Delete', id);
   const document = doc(db, 'forms', id);
+  // genindlæser indholdet i mappen.
   await deleteDoc(document);
   clickFolder(folderId.value);
 };
@@ -83,8 +87,10 @@ const clickFolder = async (id, order = ordering.value) => {
   const q = query(collection(db, 'forms'), where('folderId', '==', id));
 
   const querySnapshot = await getDocs(q);
+
   const array = [];
   querySnapshot.forEach((doc) => {
+    // pusher data og id i array
     array.push({ ...doc.data(), id: doc.id });
   });
   // Sorterer 'forms' efter navn

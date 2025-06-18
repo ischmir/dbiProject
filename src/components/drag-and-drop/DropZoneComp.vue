@@ -16,7 +16,7 @@ const db = getFirestore();
 const route = useRoute();
 const router = useRouter();
 
-// Henter eksisterende komponenter fra databasen når siden indlæses
+// Henter  komponenter fra databasen når siden indlæses
 const getFormComponents = async () => {
   const formRef = doc(db, "forms", route.params.id);
   const form = await getDoc(formRef);
@@ -47,7 +47,7 @@ const saveComponents = async () => {
   });
 
   alert("Saved");
-  router.go(-1);
+  router.go(-1); // gå tilbage
 };
 
 // Henter komponenter når siden indlæses
@@ -55,12 +55,12 @@ onMounted(() => {
   getFormComponents();
 });
 
-// Mapper komponent typer til deres respektive komponenter
+ // Kobler component type til den rigtige Vue component
 const componentMap = {
   title: DroppedTitleItemComp,
   text: DroppedTextItemComp,
 };
-
+ // Flyt component op eller ned
 function moveItem(fromIndex, toIndex) {
   if (fromIndex < 0) {
     return;
@@ -75,50 +75,51 @@ function moveItem(fromIndex, toIndex) {
   droppedItems.value[toIndex] = sourceElement;
 }
 
-// Håndterer når en komponent bliver droppet i zonen
+ // Når en component bliver droppet i dropzone
 function onDrop(event) {
+   // Henter drag data
   const json = event.dataTransfer.getData("application/json");
   if (!json) return;
 
-  // Find the drop target element
+   // Finder drop target element
   const insertTarget = event.toElement || event.target;
   const data = JSON.parse(json);
 
-  // Default to end if not found
+   // Hvis ikke fundet, insert til sidst
   let index = droppedItems.value.length;
-
   if (insertTarget.dataset && insertTarget.dataset.id) {
+     // Tjekker om det er en zone position
     const zoneMatch = insertTarget.dataset.id.match(/^zone-(\d+)$/);
     if (zoneMatch) {
-      // Drop zone before item at index
+       // Drop zone før item ved index
       index = parseInt(zoneMatch[1], 10);
     } else if (insertTarget.dataset.id === "zone-end") {
       index = droppedItems.value.length;
     } else {
-      // Fallback: try to find by item id (legacy)
+       // Fallback: find item via id
       index = droppedItems.value.findIndex(
-        (elem) => elem.id.toString() === insertTarget.dataset.id
+        (elem) => elem.id.toString() === insertTarget.dataset.id,
       );
       if (index !== -1) {
-        // Determine if drop is above or below
+         // Tjek om drop er over eller under
         const rect = insertTarget.getBoundingClientRect();
         const offsetY = event.clientY - rect.top;
         if (offsetY > rect.height / 2) {
-          // Drop is in the lower half, insert after
+           // Hvis nederste halvdel, insert efter
           index = index + 1;
         }
-        // else: drop is in upper half, insert before (default)
+         // Ellers insert før
       }
     }
   }
 
   const droppedItem = {
     ...data,
-    id: Date.now(),
-    inputValue: "",
+    id: Date.now(),  // Unikt id (milisekunder)
+    inputValue: "",  // Klar til input
   };
 
-  // Insert at the calculated index
+   // Insert på rigtig plads
   droppedItems.value = [
     ...droppedItems.value.slice(0, index),
     droppedItem,
@@ -126,10 +127,10 @@ function onDrop(event) {
   ];
 }
 
-// Kopierer en eksisterende komponent
+ // Kopier en component
 function duplicateItem(index) {
   const item = droppedItems.value[index];
-  // Indsætter en kopi af komponenten lige efter originalen
+   // Kopier indsættes efter original
   droppedItems.value.splice(index + 1, 0, {
     ...item,
     id: Date.now(),

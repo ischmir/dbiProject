@@ -1,18 +1,18 @@
 <script setup>
-// Importerer ikon komponenten som bruges til at vise ikoner
+ // Importerer IconsComp til visning af icon
 import IconsComp from '@/components/IconsComp.vue';
 
-// Definerer de properties som komponenten modtager fx. type, title og icon
+ // Props: type, title, icon
 const props = defineProps(['type', 'title', 'icon']);
 
-// Funktion der håndterer når brugeren begynder at trække komponenten
+ // Når brugeren starter drag af item
 function onDragStart(event) {
-  // Konverterer komponentens data til JSON og gemmer det i drag eventet
-  // Dette data bruges senere når komponenten droppes
+   // Lægger item data i drag event som JSON
+   // Data bruges ved drop
   event.dataTransfer.setData('application/json', JSON.stringify({
-    type: props.type,    // Sender typen videre (f.eks. "title" eller "text")
-    title: props.title,  // Sender titlen videre
-    iconName: props.icon, // Sender ikon navnet videre
+    type: props.type,     // type sendes videre
+    title: props.title,   // title sendes videre
+    iconName: props.icon,  // icon sendes videre
   }));
 }
 </script>

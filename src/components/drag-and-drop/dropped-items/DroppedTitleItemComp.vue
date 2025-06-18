@@ -1,21 +1,23 @@
 <script setup>
-import { reactive, watch } from "vue";
+import { reactive, watch } from "vue"; // ser og reagere på ændringer
 import IconsComp from "@/components/IconsComp.vue";
 
 const props = defineProps(["componentData", "onChange"]);
 const emit = defineEmits(["delete", "duplicate", "change"]);
 const data = reactive({ ...props.componentData });
 
+//Kaldes, når man vil gemme ændringerne og fortælle det til parent.
 function save() {
   console.log("Saved:", data);
   emit("change", data);
 }
 
+// Går tilbage til originalen (fortryd ændringer).
 function revert() {
   Object.assign(data, props.componentData);
 }
 
-// Tilføj watch på data.inputTitle
+// hvis inputTitle ændre sig, køre funktionen save
 watch(
   () => data.inputTitle,
   () => {

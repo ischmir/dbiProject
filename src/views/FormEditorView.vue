@@ -7,8 +7,10 @@ import ItemPaletteComp from '@/components/drag-and-drop/PaletteComp.vue';
     <div class="background__form-editor">
         <div class="form-editor">
         <div class="form-editor__drop-zone">
+          <!-- Hovedområde hvor komponenter placeres -->
             <DropZone />
         </div>
+        <!-- Sidepanel med tilgængelige komponenter -->
         <div class="form-editor__palette">
             <ItemPaletteComp />
         </div>
