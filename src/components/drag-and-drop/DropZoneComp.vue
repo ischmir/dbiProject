@@ -53,17 +53,24 @@ const componentMap = {
   title: DroppedTitleItemComp,
   text: DroppedTextItemComp,
 };
-// Flyt component op eller ned
+
+//  Bytter rundt på to komponenter i droppedItems arrayet baseret på deres index.
+//  Bruges til at flytte en komponent op eller ned i listen.
+
 function moveItem(fromIndex, toIndex) {
+  // Hvis fromIndex er uden for arrayet, gør ingenting
   if (fromIndex < 0) {
     return;
   }
 
+  // Hvis toIndex er uden for arrayet, gør ingenting
   if (toIndex > droppedItems.value.length - 1) {
     return;
   }
 
+  // Gemmer komponenten der skal flyttes
   const sourceElement = droppedItems.value[fromIndex];
+  // Bytter komponenten på fromIndex med komponenten på toIndex
   droppedItems.value[fromIndex] = droppedItems.value[toIndex];
   droppedItems.value[toIndex] = sourceElement;
 }
@@ -72,40 +79,24 @@ function moveItem(fromIndex, toIndex) {
 function onDrop(event) {
   // Henter drag data
   const json = event.dataTransfer.getData("application/json");
-  if (!json) return;
+  if (!json) {
+    return;
+  }
 
   // Finder drop target element
   const insertTarget = event.toElement || event.target;
-  const data = JSON.parse(json);
 
   // Hvis ikke fundet, insert til sidst
   let index = droppedItems.value.length;
   if (insertTarget.dataset && insertTarget.dataset.id) {
-    // Tjekker om det er en zone position
-    if (insertTarget.dataset.id === "zone-end") {
-      index = droppedItems.value.length;
-    } else if (insertTarget.dataset.id.startsWith("zone-")) {
+    if (insertTarget.dataset.id.startsWith("zone-") && insertTarget.dataset.id !== "zone-end") {
       // Drop zone før item ved index
       const numberPart = insertTarget.dataset.id.substring(5); // Få ID'et efter "zone-"
       index = parseInt(numberPart, 10);
-    } else {
-      // Fallback: find item via id
-      index = droppedItems.value.findIndex((elem) => {
-        return elem.id.toString() === insertTarget.dataset.id;
-      });
-      if (index !== -1) {
-        // Tjek om drop er over eller under
-        const rect = insertTarget.getBoundingClientRect();
-        const offsetY = event.clientY - rect.top;
-        if (offsetY > rect.height / 2) {
-          // Hvis nederste halvdel, insert efter
-          index = index + 1;
-        }
-        // Ellers insert før
-      }
     }
   }
 
+  const data = JSON.parse(json);
   const droppedItem = {
     ...data,
     id: Date.now(), // Unikt id (milisekunder)
