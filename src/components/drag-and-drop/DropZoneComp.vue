@@ -27,13 +27,6 @@ const getFormComponents = async () => {
 
   console.log(data);
 
-  // const q = query(formCollection, where('id', ));
-  // const querySnapshot = await getDocs(q);
-  // const array = [];
-  // querySnapshot.forEach((doc) => {
-  //   array.push({ ...doc.data(), id: doc.id });
-  // });
-  // forms.value = array;
 };
 
 // Gemmer ændringer i komponenterne til databasen
@@ -89,17 +82,17 @@ function onDrop(event) {
   let index = droppedItems.value.length;
   if (insertTarget.dataset && insertTarget.dataset.id) {
     // Tjekker om det er en zone position
-    const zoneMatch = insertTarget.dataset.id.match(/^zone-(\d+)$/);
-    if (zoneMatch) {
-      // Drop zone før item ved index
-      index = parseInt(zoneMatch[1], 10);
-    } else if (insertTarget.dataset.id === "zone-end") {
+    if (insertTarget.dataset.id === "zone-end") {
       index = droppedItems.value.length;
+    } else if (insertTarget.dataset.id.startsWith("zone-")) {
+      // Drop zone før item ved index
+      const numberPart = insertTarget.dataset.id.substring(5); // Få ID'et efter "zone-"
+      index = parseInt(numberPart, 10);
     } else {
       // Fallback: find item via id
-      index = droppedItems.value.findIndex(
-        (elem) => elem.id.toString() === insertTarget.dataset.id,
-      );
+      index = droppedItems.value.findIndex((elem) => {
+        return elem.id.toString() === insertTarget.dataset.id;
+      });
       if (index !== -1) {
         // Tjek om drop er over eller under
         const rect = insertTarget.getBoundingClientRect();
@@ -115,8 +108,8 @@ function onDrop(event) {
 
   const droppedItem = {
     ...data,
-    id: Date.now(),  // Unikt id (milisekunder)
-    inputValue: "",  // Klar til input
+    id: Date.now(), // Unikt id (milisekunder)
+    inputValue: "", // Klar til input
   };
 
   // Insert på rigtig plads
