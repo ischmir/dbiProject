@@ -54,9 +54,7 @@ const componentMap = {
   text: DroppedTextItemComp,
 };
 
-//  Bytter rundt på to komponenter i droppedItems arrayet baseret på deres index.
-//  Bruges til at flytte en komponent op eller ned i listen.
-
+//  Bytter rundt på to komponenter baseret på deres index.
 function moveItem(fromIndex, toIndex) {
   // Hvis fromIndex er uden for arrayet, gør ingenting
   if (fromIndex < 0) {
