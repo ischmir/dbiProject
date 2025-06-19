@@ -87,6 +87,7 @@ function onDrop(event) {
   // Hvis ikke fundet, insert til sidst
   let index = droppedItems.value.length;
   if (insertTarget.dataset && insertTarget.dataset.id) {
+    // kigger om den starter med zone- og ikke zone-end
     if (insertTarget.dataset.id.startsWith("zone-") && insertTarget.dataset.id !== "zone-end") {
       // Drop zone før item ved index
       const numberPart = insertTarget.dataset.id.substring(5); // Få ID'et efter "zone-"
