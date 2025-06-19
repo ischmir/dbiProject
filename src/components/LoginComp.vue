@@ -1,41 +1,52 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { useUserStore } from '@/stores/userStore';
+// Importerer nødvendige Vue funktioner og komponenter
+import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useUserStore } from "@/stores/userStore";
 
-const email = ref('');
-const password = ref('');
-const loginErrorMessage = ref('');
+// Opretter reaktive variabler til login formular
+const email = ref("");
+const password = ref("");
+const loginErrorMessage = ref("");
+
+// Initialiserer Firebase auth og router
 const auth = getAuth();
 const router = useRouter();
 const route = useRoute();
 const userStore = useUserStore();
 
+// Login funktion der håndterer bruger login
 const login = async () => {
   try {
+    // Prøver at logge ind med email og password
     await signInWithEmailAndPassword(auth, email.value, password.value);
 
-    loginErrorMessage.value = '';
+    // Rydder eventuelle fejlbeskeder
+    loginErrorMessage.value = "";
 
     // Update the user store with the logged-in user
     await userStore.init();
 
-    const redirectPath = route.query.redirect || '/dashboard';
+    // Finder den side brugeren skal redirectes til efter login
+    const redirectPath = route.query.redirect || "/dashboard";
 
+    // Redirecter brugeren
     router.replace(redirectPath);
   } catch (error) {
-    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-email') {
-      loginErrorMessage.value = 'Forkert email eller adgangskode.';
+    // Håndterer forskellige login fejl
+    if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password" || error.code === "auth/invalid-email") {
+      loginErrorMessage.value = "Forkert email eller adgangskode.";
     } else {
-      loginErrorMessage.value = 'Noget gik galt. Prøv igen.';
+      loginErrorMessage.value = "Noget gik galt. Prøv igen.";
     }
   }
 };
 
+// Funktion der sender brugeren til registreringssiden
 const register = () => {
-  console.log('Redirect to registration page');
-  router.push('/register');
+  console.log("Redirect to registration page");
+  router.push("/register");
 };
 </script>
 

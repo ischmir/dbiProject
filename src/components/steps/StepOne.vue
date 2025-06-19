@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps, defineEmits, computed } from 'vue';
+import { defineProps, defineEmits, computed } from "vue";
 
-// Declare the prop and emit
+// Props og emit
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -9,19 +9,23 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:modelValue']);
+// emit: opdaterer parent med ny state
+const emit = defineEmits(["update:modelValue"]);
 
-// Toggle checkbox state
+// Skifter checkbox option
 const toggleCheckbox = (option) => {
-  emit('update:modelValue', {
+  // Opdaterer parent med ny state
+  emit("update:modelValue", {
     ...props.modelValue,
     options: {
+      // sender en ny værdi til parent komponenten, så vi kan opdatere state
       ...props.modelValue.options,
       [option]: !props.modelValue.options[option],
     },
   });
 };
 
+// Validerer at form navn er min. 3 tegn
 const isFormNameValid = computed(() => props.modelValue.name.length >= 3);
 </script>
 

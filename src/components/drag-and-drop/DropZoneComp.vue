@@ -1,39 +1,37 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import DroppedTitleItemComp from '../drag-and-drop/dropped-items/DroppedTitleItemComp.vue';
-import DroppedTextItemComp from '../drag-and-drop/dropped-items/DroppedTextItemComp.vue';
-import IconsComp from '../IconsComp.vue';
-import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
-import { useRoute, useRouter } from 'vue-router';
+// Importerer nødvendige Vue funktioner og komponenter
+import { onMounted, ref } from "vue";
+import DroppedTitleItemComp from "../drag-and-drop/dropped-items/DroppedTitleItemComp.vue";
+import DroppedTextItemComp from "../drag-and-drop/dropped-items/DroppedTextItemComp.vue";
+import IconsComp from "../IconsComp.vue";
+// Importerer Firebase funktioner til at arbejde med databasen
+import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
+import { useRoute, useRouter } from "vue-router";
 
+// Holder styr på de komponenter der er blevet droppet i zonen
 const droppedItems = ref([]);
 
+// Initialiserer Firebase og router
 const db = getFirestore();
-
 const route = useRoute();
 const router = useRouter();
 
+// Henter  komponenter fra databasen når siden indlæses
 const getFormComponents = async () => {
-  const formRef = doc(db, 'forms', route.params.id);
+  const formRef = doc(db, "forms", route.params.id);
   const form = await getDoc(formRef);
 
   const data = form.data();
 
-  droppedItems.value = data.components ||[];
+  droppedItems.value = data.components || [];
 
   console.log(data);
 
-  // const q = query(formCollection, where("id", ));
-  // const querySnapshot = await getDocs(q);
-  // const array = [];
-  // querySnapshot.forEach((doc) => {
-  //   array.push({ ...doc.data(), id: doc.id });
-  // });
-  // forms.value = array;
 };
 
+// Gemmer ændringer i komponenterne til databasen
 const saveComponents = async () => {
-  const formRef = doc(db, 'forms', route.params.id);
+  const formRef = doc(db, "forms", route.params.id);
   const form = await getDoc(formRef);
 
   await updateDoc(formRef, {
@@ -41,41 +39,86 @@ const saveComponents = async () => {
     components: droppedItems.value,
   });
 
-  alert('Saved');
-  router.go(-1);
+  alert("Saved");
+  router.go(-1); // gå tilbage
 };
 
+// Henter komponenter når siden indlæses
 onMounted(() => {
   getFormComponents();
 });
 
+// Kobler component type til den rigtige Vue component
 const componentMap = {
   title: DroppedTitleItemComp,
   text: DroppedTextItemComp,
 };
 
-function onDrop(event) {
-  const json = event.dataTransfer.getData('application/json');
-  if (!json) return;
+//  Bytter rundt på to komponenter baseret på deres index.
+function moveItem(fromIndex, toIndex) {
+  // Hvis fromIndex er uden for arrayet, gør ingenting
+  if (fromIndex < 0) {
+    return;
+  }
 
-  const data = JSON.parse(json);
-  console.log(data);
-  droppedItems.value.push({
-    ...data,
-    id: Date.now(),
-    inputValue: '',
-  });
+  // Hvis toIndex er uden for arrayet, gør ingenting
+  if (toIndex > droppedItems.value.length - 1) {
+    return;
+  }
+
+  // Gemmer komponenten der skal flyttes
+  const sourceElement = droppedItems.value[fromIndex];
+  // Bytter komponenten på fromIndex med komponenten på toIndex
+  droppedItems.value[fromIndex] = droppedItems.value[toIndex];
+  droppedItems.value[toIndex] = sourceElement;
 }
 
+// Når en component bliver droppet i dropzone
+function onDrop(event) {
+  // Henter drag data
+  const json = event.dataTransfer.getData("application/json");
+  if (!json) {
+    return;
+  }
+
+  // Finder drop target element
+  const insertTarget = event.toElement || event.target;
+
+  // Hvis ikke fundet, insert til sidst
+  let index = droppedItems.value.length;
+  if (insertTarget.dataset && insertTarget.dataset.id) {
+    // kigger om den starter med zone- og ikke zone-end
+    if (insertTarget.dataset.id.startsWith("zone-") && insertTarget.dataset.id !== "zone-end") {
+      // Drop zone før item ved index
+      const numberPart = insertTarget.dataset.id.substring(5); // Få ID'et efter "zone-"
+      index = parseInt(numberPart, 10);
+    }
+  }
+
+  const data = JSON.parse(json);
+  const droppedItem = {
+    ...data,
+    id: Date.now(), // Unikt id (milisekunder)
+    inputValue: "", // Klar til input
+  };
+
+  // Insert på rigtig plads
+  droppedItems.value = [
+    ...droppedItems.value.slice(0, index),
+    droppedItem,
+    ...droppedItems.value.slice(index),
+  ];
+}
+
+// Kopier en component
 function duplicateItem(index) {
   const item = droppedItems.value[index];
+  // Kopier indsættes efter original
   droppedItems.value.splice(index + 1, 0, {
     ...item,
     id: Date.now(),
   });
 }
-
-console.log('Data', droppedItems.value);
 </script>
 
 <template>
@@ -84,29 +127,35 @@ console.log('Data', droppedItems.value);
       <h2 class="header__title">Skema Titel</h2>
       <div class="header__dropzone-actions">
         <IconsComp class="dropzone-actions__icon" iconName="more-horizon" />
-        <IconsComp
-          class="dropzone-actions__icon"
-          iconName="save"
-          @click="saveComponents"
-        />
+        <IconsComp class="dropzone-actions__icon" iconName="save" @click="saveComponents" />
       </div>
     </div>
     <hr class="dropzone__divider" />
     <div class="dropzone__container" @dragover.prevent @drop="onDrop">
-      <component
-        v-for="(item, index) in droppedItems"
-        :is="componentMap[item.type]"
-        :key="item.id"
-        :componentData="item"
-        @delete="() => droppedItems.splice(index, 1)"
-        @duplicate="() => duplicateItem(index)"
-        @change="(data) => (droppedItems[index] = data)"
-      />
+      <div v-for="(item, index) in droppedItems" :key="'zone-' + index">
+        <div class="dropzone__container_zone" :data-id="'zone-' + index" />
+        <component
+          :is="componentMap[item.type]"
+          :key="item.id"
+          :componentData="item"
+          @delete="() => droppedItems.splice(index, 1)"
+          @duplicate="() => duplicateItem(index)"
+          @change="(data) => (droppedItems[index] = data)"
+          @up="() => moveItem(index, index - 1)"
+          @down="() => moveItem(index, index + 1)"
+        />
+      </div>
+      <div data-id="zone-end" class="dropzone__container_zone" />
     </div>
   </div>
 </template>
 
 <style scoped>
+.dropzone__container_zone {
+  width: 100%;
+  height: 50px;
+}
+
 .dropzone {
   height: 100%;
   border-radius: 8px;

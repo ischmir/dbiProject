@@ -1,21 +1,22 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import IconsComp from './IconsComp.vue';
-
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import IconsComp from "./IconsComp.vue";
+// router bruges til at navigere mellem sider
 const router = useRouter();
 
 // Get only the children of the DefaultLayout route
 const routes =
-  router.options.routes.find((route) => route.name === 'Default')?.children || [];
+  router.options.routes.find((route) => route.name === "Default")?.children || [];
 
-// Track hover state for each route
+// Holder styr på hvilken menu musen er over
 const hoveredRoute = ref(null);
-
+// Gemmer hvilken menu musen er over
 const handleMouseOver = (path) => {
   hoveredRoute.value = path;
 };
 
+// Fjerner markering når musen fjernes
 const handleMouseLeave = () => {
   hoveredRoute.value = null;
 };

@@ -1,12 +1,14 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import TabMenuComp from '@/components/TabMenuComp.vue';
-import IconsComp from '@/components/IconsComp.vue';
-import TableColumn from '@/components/TableColumnComp.vue';
-import TableComp from '@/components/TableComp.vue';
-import { sort } from '@/components/utils.js';
-import TableRow from '@/components/TableRowComp.vue';
-import CreateFormModalComp from '@/components/CreateFormModalComp.vue';
+// Importerer nødvendige Vue funktioner og komponenter
+import { onMounted, ref } from "vue";
+import TabMenuComp from "@/components/TabMenuComp.vue";
+import IconsComp from "@/components/IconsComp.vue";
+import TableColumn from "@/components/TableColumnComp.vue";
+import TableComp from "@/components/TableComp.vue";
+import { sort } from "@/components/utils.js";
+import TableRow from "@/components/TableRowComp.vue";
+import CreateFormModalComp from "@/components/CreateFormModalComp.vue";
+// Importerer Firebase funktioner til at Hente, tilføje og slette i 'folders' og 'forms'
 import {
   addDoc,
   collection,
@@ -16,15 +18,17 @@ import {
   getFirestore,
   query,
   where,
-} from 'firebase/firestore';
-import { useRouter } from 'vue-router';
+} from "firebase/firestore";
+import { useRouter } from "vue-router";
 
-const ordering = ref('desc');
+// Opretter reaktive variabler til at holde styr på sortering, 'folders' og 'forms'
+const ordering = ref("desc");
 const folderId = ref(null);
 const folders = ref([]);
 const forms = ref([]);
 const isModalVisible = ref(null);
 
+// Funktioner til at åbne og lukke modal vinduet
 const openModal = (folderId) => {
   isModalVisible.value = folderId;
 };
@@ -34,10 +38,12 @@ const closeModal = () => {
   clickFolder(folderId.value);
 };
 
+//  sætter Firestore og vue-router op.
 const db = getFirestore();
 const router = useRouter();
-const folderCollection = collection(db, 'folders');
+const folderCollection = collection(db, "folders");
 
+// Henter alle 'folders' fra databasen
 const getFolders = async () => {
   const querySnapshot = await getDocs(folderCollection);
   const array = [];
@@ -47,53 +53,63 @@ const getFolders = async () => {
   folders.value = array;
 };
 
+// Opretter en ny 'folder'
 const addFolder = async () => {
-  const name = prompt('Navn');
+  const name = prompt("Navn");
+  // tjekker om navn ikke er tomt
   if (name) {
-    const folderCollection = collection(db, 'folders');
+    const folderCollection = collection(db, "folders");
+    //opretter ny mappe
     const newDoc = await addDoc(folderCollection, {
       name,
     });
+    // Genindlæser mapper og vælger den nye.
     await getFolders();
     await clickFolder(newDoc.id);
   }
 };
 
+// Sletter en 'form' fra db
 const deleteForm = async (id) => {
-  console.log('Delete', id);
-
-  const document = doc(db, 'forms', id);
+  console.log("Delete", id);
+  const document = doc(db, "forms", id);
+  // genindlæser indholdet i mappen.
   await deleteDoc(document);
   clickFolder(folderId.value);
 };
 
+// Håndterer klik på en mappe - henter skemaer i den valgte mappe
 const clickFolder = async (id, order = ordering.value) => {
   folderId.value = id;
   ordering.value = order;
 
-  // Find forms med det rigtige folderId
-  console.log(order);
-  const q = query(collection(db, 'forms'), where('folderId', '==', id));
+  // Finder alle 'forms' i den valgte mappe
+  const q = query(collection(db, "forms"), where("folderId", "==", id));
 
   const querySnapshot = await getDocs(q);
+
   const array = [];
   querySnapshot.forEach((doc) => {
+    // pusher data og id i array
     array.push({ ...doc.data(), id: doc.id });
   });
-  forms.value = sort(array, 'name', order);
+  // Sorterer 'forms' efter navn
+  forms.value = sort(array, "name", order);
 };
 
+// Henter 'folders' når siden indlæses
 onMounted(() => {
   getFolders();
 });
 
+// Håndterer klik på en 'form' - sender brugeren til 'form' editoren
 const clickForm = (id) => {
-  console.log('Clicked', id);
+  console.log("Clicked", id);
   router.push(`/form-editor/${id}`);
 };
 
-console.log('form', forms);
-console.log('folders', folders);
+console.log("form", forms);
+console.log("folders", folders);
 </script>
 
 <template>

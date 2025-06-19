@@ -1,6 +1,6 @@
 <!-- Login View -->
 <script setup>
-import RegisterComp from '@/components/RegisterComp.vue';
+import RegisterComp from "@/components/RegisterComp.vue";
 </script>
 
 <template>

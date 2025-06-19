@@ -1,19 +1,28 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import IconsComp from './IconsComp.vue';
-import LogoutComp from './LogoutComp.vue';
-import SearchInputComp from './SearchInputComp.vue';
+// importes nødvendige dele fra Vue og vores egne komponenter
+// computed og ref bruges til at håndtere data der kan ændre sig
+// useRoute bruges til at få information om den aktuelle side vi er på
+import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
+import IconsComp from "./IconsComp.vue";
+import LogoutComp from "./LogoutComp.vue";
+import SearchInputComp from "./SearchInputComp.vue";
 
+// Vi gemmer den aktuelle rute og dens titel
+// Dette gør at headeren automatisk viser den rigtige titel for hver side
 const route = useRoute();
 const title = computed(() => route.meta.title);
 
+// Vi bruger denne variabel til at huske hvilken knap brugeren 'hover'er over
+// Når brugeren 'hover'er over en knap, gemmer vi hvilken knap det er
 const hoveredButton = ref(null);
 
+// Disse funktioner håndterer hvad der sker når brugeren holder musen over en knap
+// handleMouseOver gemmer hvilken knap der er hovered
 const handleMouseOver = (label) => {
   hoveredButton.value = label;
 };
-
+// handleMouseLeave nulstiller hovered knappen når musen fjernes
 const handleMouseLeave = () => {
   hoveredButton.value = null;
 };
@@ -21,7 +30,7 @@ const handleMouseLeave = () => {
 
 <template>
   <header>
-    <!-- Logo -->
+    <!-- Logo sektion med link til dashboard -->
     <router-link to="/dashboard" class="header__logo base-container">
       <img
         alt="DBI Logo"
@@ -31,7 +40,7 @@ const handleMouseLeave = () => {
       <span class="header__logo-title">Egenkontrol</span>
     </router-link>
 
-    <!-- Title and Search -->
+    <!-- titel og søgefunktion -->
     <div class="header__center base-container">
       <h1 class="header__title">{{ title }}</h1>
       <SearchInputComp />
@@ -39,6 +48,7 @@ const handleMouseLeave = () => {
 
     <!-- Action Buttons -->
     <div class="header__actions">
+      <!-- 'help' knap med hover effekt -->
       <button
         class="header__button base-container"
         @mouseover="handleMouseOver('Help')"
@@ -48,6 +58,7 @@ const handleMouseLeave = () => {
         <IconsComp class="header__button-icon" iconName="help" />
         <div v-if="hoveredButton === 'Help'" class="modal">Help</div>
       </button>
+      <!-- Notifikations knap med hover effekt -->
       <button
         class="header__button base-container"
         @mouseover="handleMouseOver('Notifications')"
@@ -57,6 +68,7 @@ const handleMouseLeave = () => {
         <IconsComp class="header__button-icon" iconName="notifications" />
         <div v-if="hoveredButton === 'Notifications'" class="modal">Notifications</div>
       </button>
+      <!-- Bruger knap med hover effekt -->
       <button
         class="header__button base-container"
         @mouseover="handleMouseOver('User')"
@@ -66,6 +78,7 @@ const handleMouseLeave = () => {
         <IconsComp class="header__button-icon" iconName="user" />
         <div v-if="hoveredButton === 'User'" class="modal">User</div>
       </button>
+      <!-- Log ud knap med hover effekt -->
       <button
         class="header__button base-container"
         @mouseover="handleMouseOver('Logout')"
@@ -80,6 +93,8 @@ const handleMouseLeave = () => {
 </template>
 
 <style lang="scss" scoped>
+/* Her definerer vi layoutet for hele headeren */
+/* Vi bruger grid til at dele headeren op i tre områder: logo, midte og knapper */
 header {
   display: grid;
   grid-template-columns: repeat(16, 1fr);
@@ -88,7 +103,7 @@ header {
   box-sizing: border-box;
 }
 
-/* ─── Logo Area ─────────────────────────────── */
+/* Styling for logo området */
 .header__logo {
   grid-area: logo;
   display: flex;
@@ -99,10 +114,12 @@ header {
   color: inherit; /* Inherit text color */
 }
 
+/* Størrelse på logo billedet */
 .header__logo-image {
   height: 3vw;
 }
 
+/* Styling for logo teksten */
 .header__logo-title {
   display: flex;
   align-items: flex-end;
@@ -111,7 +128,7 @@ header {
   padding-left: 0.25vh;
 }
 
-/* ─── Center Area ───────────────────────────── */
+/* Styling for centrum området med titel og søgefunktion */
 .header__center {
   grid-area: center;
   display: flex;
@@ -121,10 +138,12 @@ header {
   padding: 0 2vh;
 }
 
+/* Styling for søgefunktionen */
 .header__search {
   position: relative;
 }
 
+/* Styling for søge input feltet */
 .header__search-input {
   padding: 1.5vh 10vh 1.5vh 2vh;
   border: 1px solid var(--placeholder-text-inactive-text);
@@ -133,6 +152,7 @@ header {
   font-size: 1rem;
 }
 
+/* Styling for søg ikonet */
 .header__search-icon {
   position: absolute;
   top: 50%;
@@ -142,7 +162,7 @@ header {
     contrast(86%);
 }
 
-/* ─── Actions Area ──────────────────────────── */
+/* Styling for action buttons */
 .header__actions {
   grid-area: actions;
   display: grid;
@@ -150,7 +170,7 @@ header {
   column-gap: 1vh;
 }
 
-/* ─── Button Styling ────────────────────────── */
+/* Generel styling for knapperne */
 .header__button {
   display: flex;
   align-items: center;
@@ -160,10 +180,12 @@ header {
   border: none;
 }
 
+/* Styling for knap ikoner */
 .header__button-icon {
   cursor: pointer;
 }
 
+/* Hover og active effekter for knap ikoner */
 .header__button-icon:active {
   filter: invert(14%) sepia(86%) saturate(4039%) hue-rotate(347deg) brightness(86%)
     contrast(99%);
@@ -190,7 +212,7 @@ header {
   z-index: 10;
 }
 
-/* ─── Help Modal Arrow ──────────────────────── */
+/* Styling for modal pile */
 .modal::before {
   content: "";
   position: absolute;

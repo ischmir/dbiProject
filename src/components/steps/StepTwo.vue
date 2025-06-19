@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from "vue";
 
-// Declare the props and emit
+// Props: modelValue
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -9,19 +9,24 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:modelValue']);
+// emit: opdaterer parent med ny state
+const emit = defineEmits(["update:modelValue"]);
 
+// Sætter rights hvis ikke valgt
 if (!props.modelValue.options.rights) {
-  emit('update:modelValue', {
+  // Opdaterer parent med ny state
+  emit("update:modelValue", {
     ...props.modelValue,
-    options: { ...props.modelValue.options, rights: '' },
+    options: { ...props.modelValue.options, rights: "" },
   });
 }
 
+// Sætter checkpoints hvis ikke valgt
 if (!props.modelValue.options.checkpoints) {
-  emit('update:modelValue', {
+  // Opdaterer parent med ny state
+  emit("update:modelValue", {
     ...props.modelValue,
-    options: { ...props.modelValue.options, checkpoints: '' },
+    options: { ...props.modelValue.options, checkpoints: "" },
   });
 }
 </script>

@@ -1,78 +1,95 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router'; // Import useRouter
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import IconsComp from '@/components/IconsComp.vue';
-import StepOne from '@/components/steps/StepOne.vue';
-import StepTwo from '@/components/steps/StepTwo.vue';
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router"; // Import useRouter
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import IconsComp from "@/components/IconsComp.vue";
+import StepOne from "@/components/steps/StepOne.vue";
+import StepTwo from "@/components/steps/StepTwo.vue";
 
-const emit = defineEmits(['close']);
-const router = useRouter(); // Initialize router
+// Events til parent (fx close)
+const emit = defineEmits(["close"]);
+const router = useRouter(); // Initialiserer router
+
+// Aktuelt step i modal (1 eller 2)
 const currentPage = ref(1);
+// Antal steps i modal
 const totalPages = 2;
 
+// Props: folderId (id på folder)
 const props = defineProps({
   folderId: {
     type: String,
-    required: true,
+    required: true, // Skal være id på folder
   },
 });
-console.log('Props', props);
+console.log("Props", props);
 
+// Data for ny form
 const formData = ref({
-  name: '',
-  folderId: props.folderId,
-  components: [],
+  name: "", // Navn på form
+  folderId: props.folderId, // folderId fra props
+  components: [], // components (drag & drop)
   options: {
-    opt1: false,
-    opt2: false,
-    opt3: false,
-    frequency: '',
-    receiverOfBill: '',
-    receiverOfDeviation: '',
-    rights: '',
-    checkpoints: '',
+    // Checkbox options
+    opt1: false, // Mulighed for at gemme rapport
+    opt2: false, // Mulighed for at vise seneste rapport
+    opt3: false, // Mulighed for beredskabsadgang
+    // Dropdown options
+    frequency: "", // frequency (interval)
+    receiverOfBill: "", // receiverOfBill
+    receiverOfDeviation: "", // receiverOfDeviation
+    rights: "", // rights
+    checkpoints: "", // checkpoints
   },
 });
 
-// Only validate the name field on step one
+// Kan gå til næste step?
+// Validerer navn på step 1 (min 3 tegn)
 const canGoNext = computed(() => {
   if (currentPage.value === 1) {
-    return formData.value.name.length >= 3;
+    return formData.value.name.length >= 3; // Skemanavn skal være mindst 3 tegn
   }
-  return true; // No requirements for step two
+  return true; // Ingen krav for side 2 - brugeren kan altid gå videre
 });
 
+// Kan gå tilbage?
+// Kun hvis ikke på første step
 const canGoBack = computed(() => currentPage.value > 1);
 
+// Næste step eller opret form
 const goToNextPage = async () => {
   if (currentPage.value < totalPages) {
-    // Navigate to the next page if not on the last page
+    // Hvis ikke sidste step, gå til næste
     currentPage.value++;
   } else {
-    // Handle form submission when on the last page
+    // Opretter form hvis sidste step
     try {
       const db = getFirestore();
-      const formCollection = collection(db, 'forms');
+      const formCollection = collection(db, "forms");
       const docRef = await addDoc(formCollection, formData.value);
-      console.log('Form submitted successfully:', formData.value);
+      console.log("Form submitted successfully:", formData.value);
 
-      // Redirect to the form-editor route with the new form ID
+      // Gå til form editor med nyt id
+      // docRef.id er Firestore id
       router.push(`/form-editor/${docRef.id}`);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      // Fejl ved oprettelse af form
+      console.error("Error submitting form:", error);
     }
   }
 };
 
+// Gå til forrige step
 const goToPreviousPage = () => {
-  if (canGoBack.value) currentPage.value--;
+  if (canGoBack.value) currentPage.value--; // Kun hvis ikke på første step
 };
 
+// Viser komponent for aktuelt step
+// Afhænger af step
 const currentComponent = computed(() => {
-  if (currentPage.value === 1) return StepOne;
-  if (currentPage.value === 2) return StepTwo;
-  return null; // Fallback value to ensure a return
+  if (currentPage.value === 1) return StepOne; // StepOne på step 1
+  if (currentPage.value === 2) return StepTwo; // StepTwo på step 2
+  return null; // Fallback hvis fejl
 });
 </script>
 

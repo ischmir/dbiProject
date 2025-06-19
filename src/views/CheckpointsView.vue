@@ -1,21 +1,21 @@
 <script setup>
-import TabMenuComp from '@/components/TabMenuComp.vue';
-import IconsComp from '@/components/IconsComp.vue';
-import TableColumn from '@/components/TableColumnComp.vue';
-import TableComp from '@/components/TableComp.vue';
-import TableRow from '@/components/TableRowComp.vue';
+import TabMenuComp from "@/components/TabMenuComp.vue";
+import IconsComp from "@/components/IconsComp.vue";
+import TableColumn from "@/components/TableColumnComp.vue";
+import TableComp from "@/components/TableComp.vue";
+import TableRow from "@/components/TableRowComp.vue";
 // import { ref } from 'vue';
 
 const dummyFolders = [
-  'Navn på lokation',
-  'Navn på lokation',
-  'Førstehjælp (skoler)',
-  'Navn på lokation',
-  'Navn på lokation',
-  'Navn på lokation',
-  'Navn på lokation',
-  'Navn på lokation',
-  'Navn på lokation',
+  "Navn på lokation",
+  "Navn på lokation",
+  "Førstehjælp (skoler)",
+  "Navn på lokation",
+  "Navn på lokation",
+  "Navn på lokation",
+  "Navn på lokation",
+  "Navn på lokation",
+  "Navn på lokation",
 ];
 </script>
 

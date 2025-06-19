@@ -1,13 +1,18 @@
 <script setup>
-import IconsComp from '@/components/IconsComp.vue';
+// Importerer IconsComp til visning af icon
+import IconsComp from "@/components/IconsComp.vue";
 
-const props = defineProps(['type', 'title', 'icon']);
+// Props: type, title, icon
+const props = defineProps(["type", "title", "icon"]);
 
+// Når brugeren starter drag af item
 function onDragStart(event) {
-  event.dataTransfer.setData('application/json', JSON.stringify({
-    type: props.type, // Pass the type (e.g., "title" or "text")
-    title: props.title,
-    iconName: props.icon,
+  // Lægger item data i drag event som JSON
+  // Data bruges ved drop
+  event.dataTransfer.setData("application/json", JSON.stringify({
+    type: props.type,     // type sendes videre
+    title: props.title,   // title sendes videre
+    iconName: props.icon,  // icon sendes videre
   }));
 }
 </script>
